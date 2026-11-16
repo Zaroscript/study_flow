@@ -1,0 +1,13 @@
+import { compile } from 'tailwindcss';
+import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const root = new URL('../', import.meta.url);
+const theme = await readFile(require.resolve('tailwindcss/theme.css'), 'utf8');
+const preflight = await readFile(require.resolve('tailwindcss/preflight.css'), 'utf8');
+const sourceFiles = ['index.html', ...(await readdir(root)).filter(name => name.endsWith('.tsx'))];
+const content = (await Promise.all(sourceFiles.map(name => readFile(new URL(name, root), 'utf8')))).join('\n');
+const candidates = [...new Set(content.match(/[^\s"'`<>{}=;,]+/g) || [])];
+const compiler = await compile(`${theme}\n${preflight}\n@tailwind utilities;\n@custom-variant dark (&:where(.dark, .dark *));`);
+await writeFile(new URL('utilities.css', root), compiler.build(candidates));
+console.log('Generated static ENote utility styles.');
