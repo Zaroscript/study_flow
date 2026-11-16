@@ -816,10 +816,14 @@ html, body {
 
 .lp-feature {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 100px;
   align-items: center;
   padding: 65px 0 90px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .lp-feature:nth-child(even) .lp-feature-copy {
@@ -832,6 +836,11 @@ html, body {
 
 .lp-feature-copy {
   max-width: 420px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .lp-feature-symbol {
@@ -843,6 +852,10 @@ html, body {
   font-size: 39px;
   line-height: 1.5;
   letter-spacing: -.025em;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-wrap: pretty;
 }
 
 .lp-feature-copy > p {
@@ -850,6 +863,9 @@ html, body {
   color: var(--muted);
   margin-top: 19px;
   line-height: 1.9;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .lp-feature-copy > a {
@@ -1846,9 +1862,11 @@ html, body {
     left: 12%;
   }
   .lp-feature {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
     padding: 38px 0 55px;
+    width: 100%;
+    min-width: 0;
   }
   .lp-feature:nth-child(even) .lp-feature-copy {
     order: 0;
@@ -1857,21 +1875,34 @@ html, body {
     order: 1;
   }
   .lp-feature-copy {
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .lp-feature-copy h2 {
-    font-size: 28px;
+    font-size: clamp(24px, 5.5vw, 28px);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-wrap: pretty;
   }
   .lp-feature-art {
     height: auto;
-    min-height: 290px;
+    min-height: 250px;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     transform: none;
     display: grid;
     place-items: center;
+    overflow: hidden;
   }
   .lp-feature-copy > p {
-    font-size: 15px;
+    font-size: clamp(14px, 3.8vw, 15px);
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .lp-paper {
     width: 100%;
@@ -2141,38 +2172,47 @@ html, body {
     margin-top: 20px;
   }
   .lp-hero-art {
-    height: 480px;
+    height: 470px;
     width: 100%;
-    max-width: 330px;
+    max-width: min(340px, 92vw);
     margin-top: 18px;
+    overflow: visible;
   }
   .lp-hero-phone {
-    transform: rotate(-6deg) scale(0.78);
+    transform: rotate(-3deg) scale(0.82);
     transform-origin: center center;
   }
   .lp-orbit {
-    width: min(320px, 90vw);
-    height: min(250px, 70vw);
+    width: min(310px, 88vw);
+    height: min(240px, 66vw);
   }
   .lp-orbit-two {
-    width: min(340px, 94vw);
-    height: min(240px, 68vw);
+    width: min(330px, 92vw);
+    height: min(230px, 64vw);
   }
   .lp-floating-wrap-note {
-    top: 40px;
-    right: -4px;
+    top: 25px;
+    right: 4px;
+    transform: scale(0.82);
+    transform-origin: top right;
   }
   .lp-floating-wrap-task {
-    left: -2px;
-    bottom: 85px;
+    left: 4px;
+    bottom: 55px;
+    transform: scale(0.82);
+    transform-origin: bottom left;
   }
   .lp-floating-wrap-focus {
-    bottom: 16px;
-    right: 0;
+    bottom: 12px;
+    right: 6px;
+    transform: scale(0.82);
+    transform-origin: bottom right;
   }
   .lp-floating-wrap-ai {
-    top: 120px;
-    left: 0;
+    top: 95px;
+    left: 6px;
+    transform: scale(0.82);
+    transform-origin: top left;
   }
   .lp-floating-ai {
     padding: 8px 12px;
@@ -2242,9 +2282,11 @@ html, body {
     left: 14%;
   }
   .lp-feature {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
     padding: 30px 0 42px;
+    width: 100%;
+    min-width: 0;
   }
   .lp-feature:nth-child(even) .lp-feature-copy {
     order: 0;
@@ -2253,18 +2295,28 @@ html, body {
     order: 1;
   }
   .lp-feature-copy {
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .lp-feature-symbol {
     margin-bottom: 14px;
   }
   .lp-feature-copy h2 {
-    font-size: 26px;
+    font-size: clamp(22px, 6vw, 26px);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-wrap: pretty;
   }
   .lp-feature-copy > p {
     margin-top: 12px;
-    font-size: 14px;
+    font-size: clamp(13px, 3.8vw, 14px);
     max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   .lp-feature-copy > a {
     margin-top: 12px;
@@ -2275,13 +2327,16 @@ html, body {
   }
   .lp-feature-art {
     height: auto;
-    min-height: 280px;
+    min-height: 240px;
     transform: none;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
   }
   .lp-feature-art:before {
-    width: min(280px, 80vw);
-    height: min(280px, 80vw);
+    width: min(260px, 75vw);
+    height: min(260px, 75vw);
   }
   .lp-paper {
     transform: rotate(-1.5deg);
@@ -3605,4 +3660,20 @@ html, body {
   gap: 16px;
   flex-wrap: wrap;
   margin-top: 24px;
+}
+
+@media(max-width: 640px) {
+  .lp-final-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 380px;
+    margin-inline: auto;
+    gap: 12px;
+  }
+  .lp-final-actions .lp-button {
+    width: 100%;
+    min-height: 50px;
+    justify-content: center;
+  }
 }
