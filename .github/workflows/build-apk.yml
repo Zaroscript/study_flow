@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'lib/**'
+      - 'android/**'
       - 'pubspec.yaml'
       - '.github/workflows/build-apk.yml'
   workflow_dispatch:
@@ -36,40 +37,10 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Initialize Android Platform and Configure ENote Branding
+      - name: Verify Android Structure & Branding
         run: |
-          flutter create . --platforms=android --org=com.enote.studyflow
-          
-          python3 -c "
-          import re
-          path = 'android/app/build.gradle'
-          with open(path, 'r') as f:
-              content = f.read()
-          content = re.sub(r'compileSdk\s*=\s*flutter\.compileSdkVersion', 'compileSdk = 34', content)
-          content = re.sub(r'compileSdkVersion\s+flutter\.compileSdkVersion', 'compileSdkVersion 34', content)
-          content = re.sub(r'targetSdk\s*=\s*flutter\.targetSdkVersion', 'targetSdk = 34', content)
-          content = re.sub(r'targetSdkVersion\s+flutter\.targetSdkVersion', 'targetSdkVersion 34', content)
-          with open(path, 'w') as f:
-              f.write(content)
-          "
-          
-          python3 -c "
-          import os, shutil
-          manifest_path = 'android/app/src/main/AndroidManifest.xml'
-          if os.path.exists(manifest_path):
-              with open(manifest_path, 'r') as f:
-                  m = f.read()
-              m = m.replace('android:label=\"study_flow\"', 'android:label=\"ENote\"')
-              with open(manifest_path, 'w') as f:
-                  f.write(m)
-
-          icon_src = 'public/assets/enote-icon.png'
-          if os.path.exists(icon_src):
-              for density in ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']:
-                  d_path = f'android/app/src/main/res/mipmap-{density}'
-                  os.makedirs(d_path, exist_ok=True)
-                  shutil.copy(icon_src, os.path.join(d_path, 'ic_launcher.png'))
-          "
+          test -f android/app/build.gradle || { echo "android/app/build.gradle missing"; exit 1; }
+          ls -lh android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 
       - name: Install Flutter Dependencies
         run: flutter pub get
