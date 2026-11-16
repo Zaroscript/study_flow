@@ -52,7 +52,7 @@ function playMechanicalTick() {
 const copy = {
   ar: {
     nav: ['الفكرة', 'المميزات', 'جرّب بنفسك', 'أسئلة شائعة'], open: 'جرّب نسخة الويب', lang: 'English',
-    downloadApk: 'تحميل تطبيق أندرويد (APK)', downloadNav: 'تطبيق أندرويد', downloadTag: 'v1.0.0 · 2.9 MB',
+    downloadApk: 'تحميل تطبيق أندرويد (APK)', downloadNav: 'تطبيق أندرويد', downloadTag: 'v1.0.0 · 5.8 MB',
     headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، ولّد خططك بالذكاء الاصطناعي الحقيقي، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · ذكاء اصطناعي · ساعة 3D · مكافآت · إيقاعك أنت.',
     floatNote: 'الفكرة الحلوة؟ اكتبها.', floatTask: 'خطوة صغيرة. فرق كبير.', floatFocus: 'ساعة بومودورو 3D.', floatAi: 'مساعد ذكي حقيقي ✦',
     strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'ذكاء اصطناعي حقيقي ومجاني', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
@@ -108,7 +108,7 @@ const copy = {
   },
   en: {
     nav: ['The idea', 'Features', 'Try it out', 'Questions'], open: 'Try the web app', lang: 'العربية',
-    downloadApk: 'Download Android App (APK)', downloadNav: 'Android App', downloadTag: 'v1.0.0 · 2.9 MB',
+    downloadApk: 'Download Android App (APK)', downloadNav: 'Android App', downloadTag: 'v1.0.0 · 5.8 MB',
     headline: ['Room for ideas.', 'Time for you.'], intro: 'Give everything on your mind a place. Capture your notes, organize study materials, generate real AI plans, and earn rewards — with ENote.', explore: 'Meet ENote', note: 'Notes · Plans · Real AI · 3D Clock · Rewards · Your rhythm.',
     floatNote: 'Good idea? Keep it.', floatTask: 'Small steps. Big difference.', floatFocus: '3D Flip Clock Pomodoro.', floatAi: 'Real AI Assistant ✦',
     strip: ['Ideas worth keeping', 'Plans that fit your day', 'Real & free AI tutor', 'Mechanical 3D focus', 'Organized materials hub', 'Gamified reward badges'],

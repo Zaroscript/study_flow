@@ -33,6 +33,9 @@ Thumbs.db
 
 # Build artifacts & logs
 screenshots/
+gh_bin/
+.agent/
+_
 
 # Explicitly track production downloads (e.g. Android APK releases)
 !public/downloads/*.apk

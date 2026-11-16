@@ -49,4 +49,10 @@ class AppHaptics {
     if (!isEnabled) return;
     onRejection?.call();
   }
+
+  /// Ergonomic aliases
+  static void selectionClick() => selection();
+  static void lightImpact() => light();
+  static void mediumImpact() => medium();
+  static void heavyImpact() => milestone();
 }

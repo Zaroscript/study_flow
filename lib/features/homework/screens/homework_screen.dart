@@ -369,8 +369,9 @@ class HomeworkScreen extends ConsumerWidget {
               );
             },
           ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }

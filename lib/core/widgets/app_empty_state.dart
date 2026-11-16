@@ -24,13 +24,14 @@ class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
     super.key,
     required this.title,
-    required this.description,
+    String? description,
+    String? message,
     required this.icon,
     this.type = EmptyStateType.initial,
     this.actionLabel,
     this.actionIcon,
     this.onAction,
-  });
+  }) : description = description ?? message ?? '';
 
   /// Factory for when a user has no content yet
   factory AppEmptyState.initial({

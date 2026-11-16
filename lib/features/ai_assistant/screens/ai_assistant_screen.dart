@@ -728,7 +728,7 @@ class _FilterChip extends StatelessWidget {
               ? AppColors.primary
               : (isDark ? AppColors.cardDark : AppColors.backgroundLight),
           borderRadius: BorderRadius.circular(20),
-          border: Border.side(
+          border: Border.all(
             color: isSelected
                 ? AppColors.primary
                 : (isDark ? AppColors.borderDark : AppColors.borderLight),

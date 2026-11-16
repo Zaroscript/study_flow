@@ -368,7 +368,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                       child: AppEmptyState(
                         icon: Icons.notifications_none_rounded,
                         title: 'لا توجد تنبيهات حالياً',
-                        message: _selectedFilter == 'unread'
+                        description: _selectedFilter == 'unread'
                             ? 'أحسنت! لقد قرأت واطلعت على جميع الإشعارات.'
                             : 'ستظهر هنا التذكيرات اليومية بالمذاكرة ومؤقت التركيز وتحديثات الأهداف.',
                       ),
