@@ -311,7 +311,7 @@ export default function Landing() {
             scaleX: 1,
             ease: 'none',
             scrollTrigger: {
-              trigger: root.current,
+              trigger: document.body,
               start: 'top top',
               end: 'bottom bottom',
               scrub: 0.25,
@@ -327,61 +327,61 @@ export default function Landing() {
             .from('.lp-floating-wrap', { scale: 0.65, autoAlpha: 0, stagger: 0.12, duration: 0.85, ease: 'back.out(1.8)' }, '-=0.8')
             .from('.lp-orbit', { scale: 0.8, autoAlpha: 0, duration: 1.2, ease: 'power2.out' }, '-=0.9');
 
-          // 3. Parallax Multi-depth Scroll Scrub with mobile-adaptive bounds
-          const xMult = isMobile ? 0.2 : 1;
-          const yMult = isMobile ? 0.45 : 1;
-
-          gsap.to('.lp-hero-phone-wrap', {
-            y: -50 * yMult,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 1 },
+          // 3. Parallax Multi-depth Scroll Scrub (Single unified ScrollTrigger)
+          const yMult = isMobile ? 0.4 : 1;
+          const heroParallax = gsap.timeline({
+            scrollTrigger: {
+              trigger: '.lp-hero',
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 1,
+            },
           });
 
-          gsap.to('.lp-floating-wrap-note', {
-            y: -115 * yMult,
-            x: (language === 'ar' ? -15 : 15) * xMult,
-            rotation: isMobile ? 6 : 14,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 1.2 },
-          });
-
-          gsap.to('.lp-floating-wrap-task', {
-            y: -150 * yMult,
-            x: (language === 'ar' ? 20 : -20) * xMult,
-            rotation: isMobile ? -5 : -12,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 1.5 },
-          });
-
-          gsap.to('.lp-floating-wrap-focus', {
-            y: -80 * yMult,
-            x: (language === 'ar' ? -10 : 10) * xMult,
-            rotation: isMobile ? 4 : 10,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 0.9 },
-          });
-
-          gsap.to('.lp-floating-wrap-ai', {
-            y: -125 * yMult,
-            x: (language === 'ar' ? 18 : -18) * xMult,
-            rotation: isMobile ? -4 : -8,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 1.3 },
-          });
-
-          gsap.to('.lp-orbit', {
-            rotation: 40,
-            scale: 1.06,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 1.6 },
-          });
-
-          gsap.to('.lp-orbit-two', {
-            rotation: -35,
-            scale: 0.94,
-            ease: 'none',
-            scrollTrigger: { trigger: '.lp-hero', start: 'top top', end: 'bottom top', scrub: 2 },
-          });
+          heroParallax
+            .to('.lp-hero-phone-wrap', { y: -50 * yMult, ease: 'none' }, 0)
+            .to(
+              '.lp-floating-wrap-note',
+              {
+                y: -115 * yMult,
+                x: isMobile ? 0 : (language === 'ar' ? -15 : 15),
+                rotation: isMobile ? 6 : 14,
+                ease: 'none',
+              },
+              0
+            )
+            .to(
+              '.lp-floating-wrap-task',
+              {
+                y: -150 * yMult,
+                x: isMobile ? 0 : (language === 'ar' ? 20 : -20),
+                rotation: isMobile ? -5 : -12,
+                ease: 'none',
+              },
+              0
+            )
+            .to(
+              '.lp-floating-wrap-focus',
+              {
+                y: -80 * yMult,
+                x: isMobile ? 0 : (language === 'ar' ? -10 : 10),
+                rotation: isMobile ? 4 : 10,
+                ease: 'none',
+              },
+              0
+            )
+            .to(
+              '.lp-floating-wrap-ai',
+              {
+                y: -125 * yMult,
+                x: isMobile ? 0 : (language === 'ar' ? 18 : -18),
+                rotation: isMobile ? -4 : -8,
+                ease: 'none',
+              },
+              0
+            )
+            .to('.lp-orbit', { rotation: 40, scale: 1.06, ease: 'none' }, 0)
+            .to('.lp-orbit-two', { rotation: -35, scale: 0.94, ease: 'none' }, 0);
 
           // 4. Subtle Organic Floating Physics
           gsap.to('.lp-floating-note', {
