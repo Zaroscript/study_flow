@@ -96,33 +96,54 @@ export async function callRealAi(
     }
   }
 
-  // 2. Try Local Server Proxy first (Bypasses Cloudflare Turnstile, zero CORS, 100% Real LLM)
-  const isLocal =
-    typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1');
-
+  // 2. Try Serverless / Local AI Proxy (Bypasses Cloudflare Turnstile, zero CORS, 100% Real LLM)
   const encodedPrompt = encodeURIComponent(promptText.trim());
   const encodedSystem = systemMsg ? `&system=${encodeURIComponent(systemMsg)}` : '';
   const seed = Math.floor(Math.random() * 999999);
 
-  if (isLocal) {
-    try {
-      const proxyUrl = `/api/ai/${encodedPrompt}?model=${model}${encodedSystem}&seed=${seed}`;
-      const proxyRes = await fetch(proxyUrl, { method: 'GET' });
-      if (proxyRes.ok) {
-        const text = await proxyRes.text();
-        if (
-          text &&
-          !text.includes('Missing Turnstile token') &&
-          text.trim().length > 0
-        ) {
-          return text.trim();
-        }
+  // 2a. Preferred: POST to /api/ai proxy (works on Vercel Edge/Serverless and local Vite)
+  try {
+    const postRes = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages,
+        prompt: promptText.trim(),
+        system: systemMsg,
+        model,
+        seed,
+      }),
+    });
+    if (postRes.ok) {
+      const text = await postRes.text();
+      if (
+        text &&
+        !text.includes('Missing Turnstile token') &&
+        text.trim().length > 0
+      ) {
+        return text.trim();
       }
-    } catch (err) {
-      console.warn('Local proxy call failed, falling back:', err);
     }
+  } catch (err) {
+    // Silent fallback to GET proxy
+  }
+
+  // 2b. Secondary: GET to /api/ai proxy
+  try {
+    const proxyUrl = `/api/ai/${encodedPrompt}?model=${model}${encodedSystem}&seed=${seed}`;
+    const proxyRes = await fetch(proxyUrl, { method: 'GET' });
+    if (proxyRes.ok) {
+      const text = await proxyRes.text();
+      if (
+        text &&
+        !text.includes('Missing Turnstile token') &&
+        text.trim().length > 0
+      ) {
+        return text.trim();
+      }
+    }
+  } catch (err) {
+    console.warn('AI Proxy calls failed, trying direct fallback:', err);
   }
 
   // 3. Direct browser GET call
