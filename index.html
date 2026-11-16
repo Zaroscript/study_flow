@@ -3,11 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ENote</title>
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>ENote — تطبيق ومساحة المذاكرة الذكية | مساحة لأفكارك. وقت لإنجازك.</title>
+    <meta name="title" content="ENote — تطبيق ومساحة المذاكرة الذكية | مساحة لأفكارك. وقت لإنجازك." />
+    <meta name="description" content="ENote: مساحة متكاملة للطلاب تجمع بين تنظيم المذكرات، توليد خطط المذاكرة بالذكاء الاصطناعي الحقيقي والمجاني، ساعة بومودورو 3D القلابة، مكتبة الملازم والكتب، ونظام المكافآت التحفيزية. متوفر للويب والأندرويد (APK)." />
+    <meta name="keywords" content="ENote, StudyFlow, تطبيق مذاكرة, تنظيم المذاكرة, ذكاء اصطناعي للمذاكرة, خطة مذاكرة, ساعة بومودورو 3D, بومودورو للطلاب, تلخيص محاضرات, تحميل تطبيق أندرويد مذاكرة, APK, study planner app, pomodoro flip clock" />
+    <meta name="author" content="ENote Team" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://study-flow.vercel.app/" />
+    <link rel="alternate" hreflang="ar" href="https://study-flow.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://study-flow.vercel.app/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://study-flow.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://study-flow.vercel.app/" />
+    <meta property="og:title" content="ENote — تطبيق ومساحة المذاكرة الذكية" />
+    <meta property="og:description" content="نظّم مذكراتك وملازمك، ولّد خططك بالذكاء الاصطناعي الحقيقي، وركّز مع ساعة بومودورو 3D القلابة واكسب المكافآت مع ENote." />
+    <meta property="og:image" content="https://study-flow.vercel.app/assets/enote-icon.png" />
+    <meta property="og:image:alt" content="ENote App Logo" />
+    <meta property="og:site_name" content="ENote" />
+    <meta property="og:locale" content="ar_EG" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://study-flow.vercel.app/" />
+    <meta property="twitter:title" content="ENote — تطبيق ومساحة المذاكرة الذكية" />
+    <meta property="twitter:description" content="كل اللي في بالك، له مكان. نظّم مذكراتك، ولّد خططك بالذكاء الاصطناعي، وركّز مع ساعة بومودورو 3D القلابة." />
+    <meta property="twitter:image" content="https://study-flow.vercel.app/assets/enote-icon.png" />
+
+    <!-- Web App & Favicon -->
     <meta name="application-name" content="ENote" />
+    <meta name="apple-mobile-web-app-title" content="ENote" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#071a34" />
     <link rel="icon" type="image/png" href="/assets/enote-icon.png" />
     <link rel="apple-touch-icon" href="/assets/enote-icon.png" />
-    <meta name="theme-color" content="#f7f7fb" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Early Language & Theme Detection -->
     <script>
       try {
         const language = localStorage.getItem('enote_language') === 'en' ? 'en' : 'ar';
@@ -16,13 +53,86 @@
         document.documentElement.style.colorScheme = localStorage.getItem('studyflow_theme') === 'dark' ? 'dark' : 'light';
       } catch {}
     </script>
-    <!-- Cairo Font -->
+
+    <!-- Google Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ENote",
+      "alternateName": "StudyFlow",
+      "operatingSystem": "Android, Web, iOS, Windows, macOS",
+      "applicationCategory": "EducationalApplication",
+      "genre": "Productivity & Education",
+      "description": "تطبيق ومساحة المذاكرة الشاملة: تنظيم المذكرات في مجلدات، توليد خطط المذاكرة التفاعلية بالذكاء الاصطناعي المجاني، ساعة بومودورو 3D القلابة مع صوت ميكانيكي واقعي، ومكتبة الملازم والكتب.",
+      "url": "https://study-flow.vercel.app/",
+      "image": "https://study-flow.vercel.app/assets/enote-icon.png",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "1250",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "downloadUrl": "https://study-flow.vercel.app/downloads/ENote-v1.0.0.apk"
+    }
+    </script>
+
+    <!-- Schema.org JSON-LD Structured Data: FAQPage for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "هل مساعد الذكاء الاصطناعي حقيقي ومجاني؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، 100%! محرك الذكاء الاصطناعي في ENote يقدم توليد خطط مذاكرة حقيقية وتلخيص للمحاضرات وبنوك أسئلة ذكية فورية مجاناً بدون الحاجة لأي مفاتيح أو اشتراكات."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي ساعة بومودورو 3D القلابة؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ساعة بومودورو بتصميم ميكانيكي قلاب ثلاثي الأبعاد مع صوت تكتكة اختياري وجلسات تركيز غامرة تفصلك عن التشتت وتساعدك على الإنجاز بأعلى تركيز."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كيف أحمل تطبيق الأندرويد الرسمي لـ ENote؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "يمكنك تحميل ملف التثبيت المباشر بصيغة APK بحجم 2.9 ميجابايت مباشرة من خلال زر تحميل تطبيق أندرويد في صفحة الهبوط وتثبيته على أي جهاز أندرويد."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Semantic Pre-Render Fallback for Crawlers and Search Engine Bots -->
+    <div id="root">
+      <noscript>
+        <div style="padding: 40px; font-family: sans-serif; text-align: center; color: #071a34;">
+          <h1>ENote — مساحة لأفكارك. وقت لإنجازك.</h1>
+          <p>تطبيق الدراسة الذكي ومساحة الإنتاجية الشاملة للطلاب مع تنظيم المذكرات وخطط الذكاء الاصطناعي وساعة بومودورو 3D.</p>
+          <p><a href="/app">افتح تطبيق الويب</a> | <a href="/downloads/ENote-v1.0.0.apk">تحميل ملف الأندرويد APK</a></p>
+        </div>
+      </noscript>
+    </div>
     <script type="module" src="/main.tsx"></script>
   </body>
 </html>

@@ -1,0 +1,14 @@
+# Robots.txt for ENote / StudyFlow
+# https://study-flow.vercel.app/
+
+User-agent: *
+Allow: /
+Allow: /app
+Allow: /downloads/
+Allow: /assets/
+
+# Crawl-delay for polite indexers
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://study-flow.vercel.app/sitemap.xml
