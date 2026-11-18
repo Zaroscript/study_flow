@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node scripts/build-styles.mjs && vite --port 3000 --host",
     "styles": "node scripts/build-styles.mjs",
-    "build": "node scripts/build-styles.mjs && vite build"
+    "build": "node scripts/build-styles.mjs && vite build && node scripts/prerender-seo.cjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

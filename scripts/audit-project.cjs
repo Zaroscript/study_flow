@@ -20,7 +20,7 @@ const { chromium } = createRequire(path.join(os.homedir(), '.cache/codex-runtime
   const axe=require.resolve('axe-core/axe.min.js');
   const hasAxe=await fs.access(axe).then(()=>true).catch(()=>false);
   for(const lang of ['ar','en']){
-   if(await page.locator('html').getAttribute('lang')!==lang) await page.getByRole('button',{name:lang==='en'?'Switch to English':'التبديل للعربية',exact:true}).click();
+   if(await page.locator('html').getAttribute('lang')!==lang) await page.getByRole('button',{name:lang==='en'?'English · التبديل إلى الإنجليزية':'العربية · Switch to Arabic',exact:true}).click();
    for(const width of [1440,820,390,320]){
     await page.setViewportSize({width,height:1000});
     await page.evaluate(()=>window.scrollTo(0,0));
@@ -32,22 +32,6 @@ const { chromium } = createRequire(path.join(os.homedir(), '.cache/codex-runtime
   }
   await page.setViewportSize({width:1440,height:1000});
   await page.emulateMedia({reducedMotion:'reduce'});
-  await page.locator('#playground').scrollIntoViewIfNeeded();
-  await page.getByRole('tab',{name:'Your notes',exact:true}).click();
-  await page.locator('#preview-note').fill('Audit draft');
-  await page.getByRole('button',{name:'Save note',exact:true}).click();
-  report.flows.push({name:'save note',result:await page.getByRole('button',{name:'Saved in this preview',exact:true}).isVisible()});
-  await page.getByRole('tab',{name:'Your plan',exact:true}).click();
-  await page.getByRole('textbox',{name:'New task',exact:true}).fill('Audit task');
-  await page.getByRole('button',{name:'Add',exact:true}).click();
-  await page.getByRole('checkbox',{name:'Audit task',exact:true}).check();
-  report.flows.push({name:'add and complete task',result:await page.getByRole('checkbox',{name:'Audit task',exact:true}).isChecked()});
-  await page.getByRole('tab',{name:'3D Pomodoro',exact:true}).click();
-  await page.getByRole('button',{name:'Start timer',exact:true}).click();
-  await page.waitForTimeout(1200);
-  report.flows.push({name:'timer starts',result:await page.getByRole('button',{name:'Take a pause',exact:true}).isVisible()});
-  await page.getByRole('button',{name:'Reset timer',exact:true}).click();
-  report.flows.push({name:'timer resets',result:await page.getByRole('button',{name:'Start timer',exact:true}).isVisible()});
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.reload({waitUntil:'domcontentloaded'});
   report.flows.push({name:'reduced motion content',result:await page.locator('h1').isVisible()});

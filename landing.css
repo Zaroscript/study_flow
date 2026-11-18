@@ -773,7 +773,7 @@ html, body {
   position: relative;
 }
 
-.lp-story h2, .lp-demo-heading h2 {
+.lp-story h2 {
   font-size: 52px;
   line-height: 1.5;
   letter-spacing: -.03em;
@@ -865,20 +865,6 @@ html, body {
   max-width: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
-}
-
-.lp-feature-copy > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  color: #6caeff;
-  margin-top: 24px;
-  font-size: 14px;
-  padding: 8px 0;
-}
-
-.lp-feature-copy > a:hover {
-  color: #a7d1ff;
 }
 
 .lp-feature-art {
@@ -1166,281 +1152,6 @@ html, body {
   will-change: transform;
 }
 
-.lp-playground {
-  background: #edf3fb;
-  color: #122e50;
-  padding: 100px 0 110px;
-  position: relative;
-}
-
-.lp-demo-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 40px;
-  margin-bottom: 50px;
-}
-
-.lp-demo-heading h2 > span {
-  color: #2876dc;
-}
-
-.lp-demo-heading > p {
-  max-width: 360px;
-  color: #506680;
-  font-size: 16px;
-  line-height: 1.9;
-  padding-bottom: 10px;
-}
-
-.lp-demo {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 22px 65px #23446b12;
-  min-height: 455px;
-  perspective: 1000px;
-}
-
-.lp-demo-sidebar {
-  background: #e4ecf7;
-  padding: 30px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.lp-demo-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: Manrope, sans-serif;
-  font-size: 21px;
-  font-weight: 800;
-  direction: ltr;
-}
-
-.lp-demo-brand img {
-  border-radius: 8px;
-}
-
-.lp-demo-sidebar [role=tablist] {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.lp-demo-sidebar button {
-  border: 0;
-  background: transparent;
-  text-align: start;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #506580;
-  padding: 13px 15px;
-  border-radius: 9px;
-  font-size: 14px;
-  min-height: 48px;
-  transition: background 0.2s, color 0.2s;
-}
-
-.lp-demo-sidebar button[aria-selected=true] {
-  background: #216cd1;
-  color: white;
-}
-
-.lp-demo-sidebar button:hover:not([aria-selected=true]) {
-  background: #d5e2f4;
-}
-
-.lp-demo-sidebar > small {
-  margin-top: auto;
-  font-size: 11px;
-  line-height: 1.8;
-  color: #556d89;
-}
-
-.lp-demo-panel {
-  padding: 38px 42px;
-  min-width: 0;
-}
-
-.lp-demo-panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-
-.lp-demo-panel h3 {
-  font-size: 23px;
-  font-weight: 800;
-  line-height: 1.6;
-}
-
-.lp-demo-panel-head > svg {
-  color: #2c77dc;
-}
-
-.lp-demo-panel > label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 9px;
-  color: #476180;
-}
-
-.lp-demo-panel textarea {
-  resize: vertical;
-  width: 100%;
-  min-height: 198px;
-  max-height: 450px;
-  border: 1px solid #cedaeb;
-  border-radius: 9px;
-  background: #fafcfe;
-  color: #294563;
-  padding: 16px;
-  font-size: 14px;
-  line-height: 1.9;
-}
-
-.lp-button-blue {
-  background: #236bd1;
-  color: white;
-}
-
-.lp-button-blue:hover {
-  background: #1759b8;
-}
-
-.lp-button-blue:disabled {
-  background: #e0f1e9;
-  color: #216246;
-  transform: none;
-}
-
-.lp-note-save {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  margin-top: 17px;
-}
-
-.lp-note-save > span {
-  font-size: 11px;
-  color: #4d6b5e;
-}
-
-.lp-demo .lp-button {
-  min-height: 44px;
-  font-size: 13px;
-  padding: 10px 17px;
-}
-
-.lp-demo-panel-head > span {
-  font-size: 12px;
-  color: #57708f;
-}
-
-.lp-demo-tasks {
-  max-height: 245px;
-  overflow: auto;
-}
-
-.lp-demo-tasks > label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 60px;
-  border-bottom: 1px solid #e4ebf3;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 10px 0;
-}
-
-.lp-demo-tasks input {
-  width: 21px;
-  height: 21px;
-  accent-color: #226bd1;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.lp-demo-tasks .is-done > span {
-  text-decoration: line-through;
-  color: #6b7e95;
-}
-
-.lp-add-task {
-  display: flex;
-  gap: 10px;
-  margin-top: 26px;
-}
-
-.lp-add-task > input {
-  min-width: 0;
-  flex: 1;
-  border: 1px solid #cad7e8;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background: white;
-  color: #193b62;
-  font-size: 14px;
-}
-
-.lp-add-task input::placeholder {
-  color: #677b94;
-}
-
-.lp-timer-demo {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 5px;
-}
-
-.lp-timer-demo > span {
-  color: #526f90;
-  font-size: 13px;
-  margin-top: 18px;
-}
-
-.lp-timer-demo strong {
-  font-family: Manrope, sans-serif;
-  font-size: 80px;
-  font-weight: 500;
-  letter-spacing: -.04em;
-  line-height: 1.6;
-  font-variant-numeric: tabular-nums;
-}
-
-.lp-timer-demo strong > span {
-  color: #8ea9cd;
-}
-
-.lp-timer-demo > div {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.lp-reset {
-  border: 1px solid #c9d7e8;
-  background: white;
-  color: #476281;
-  border-radius: 8px;
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  will-change: transform;
-}
-
 .lp-extras {
   padding-top: 110px;
   padding-bottom: 100px;
@@ -1639,8 +1350,7 @@ html, body {
   line-height: 1.85;
 }
 
-.lp:lang(en) .lp-story h2,
-.lp:lang(en) .lp-demo-heading h2 {
+.lp:lang(en) .lp-story h2 {
   line-height: 1.25;
 }
 
@@ -1714,15 +1424,9 @@ html, body {
     gap: 30px;
     font-size: 16px;
   }
-  .lp-demo-sidebar {
-    padding-inline: 18px;
-  }
-  .lp-demo {
-    grid-template-columns: 205px 1fr;
-  }
-  .lp-demo-panel {
-    padding: 32px;
-  }
+  
+  
+  
   .lp-faq {
     gap: 50px;
   }
@@ -1850,7 +1554,7 @@ html, body {
     padding-top: 90px;
     padding-bottom: 55px;
   }
-  .lp-story h2, .lp-demo-heading h2 {
+  .lp-story h2 {
     font-size: clamp(28px, 6vw, 42px);
   }
   .lp-story-orb {
@@ -1927,88 +1631,19 @@ html, body {
     width: 100%;
     max-width: min(355px, 100%);
   }
-  .lp-demo-heading {
-    align-items: start;
-    gap: 20px;
-  }
-  .lp-demo-heading > p {
-    max-width: 100%;
-    font-size: 14px;
-  }
-  .lp-demo {
-    grid-template-columns: 1fr;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  .lp-demo-sidebar {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 16px 20px;
-    gap: 12px;
-    background: #e4ecf7;
-    border-bottom: 1px solid #cedcee;
-  }
-  .lp-demo-brand {
-    font-size: 18px;
-  }
-  .lp-demo-brand img {
-    width: 26px;
-    height: 26px;
-  }
-  .lp-demo-sidebar [role="tablist"] {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    gap: 8px;
-    padding: 4px 2px;
-    width: 100%;
-    box-sizing: border-box;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-  }
-  .lp-demo-sidebar [role="tablist"]::-webkit-scrollbar {
-    display: none;
-  }
-  .lp-demo-sidebar button {
-    flex: 0 0 auto;
-    white-space: nowrap;
-    scroll-snap-align: start;
-    padding: 10px 18px;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #476180;
-    border: 1px solid #cedaeb;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .lp-demo-sidebar button:hover:not([aria-selected="true"]) {
-    background: #dce7f5;
-  }
-  .lp-demo-sidebar button[aria-selected="true"] {
-    background: #216cd1;
-    color: #ffffff;
-    border-color: #216cd1;
-    box-shadow: 0 4px 14px rgba(33, 108, 209, 0.35);
-  }
-  .lp-demo-sidebar > small {
-    font-size: 10px;
-    color: #64748b;
-  }
-  .lp-demo-panel {
-    padding: 28px 22px;
-    min-width: 0;
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .lp-extras {
     padding-block: 75px;
   }
@@ -2082,26 +1717,11 @@ html, body {
     min-height: 50px;
     box-sizing: border-box;
   }
-  .lp-ai-prompt-box {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-  .lp-ai-prompt-box input,
-  .lp-ai-prompt-box button {
-    width: 100%;
-    min-height: 44px;
-  }
+  
+  
 }
 
 /* Form Inputs Prevent iOS Safari Auto-Zoom (< 16px causes forced zoom) */
-@media(max-width: 768px) {
-  .lp-demo-panel textarea,
-  .lp-add-task input,
-  .lp-ai-prompt-box input {
-    font-size: 16px !important;
-  }
-}
 
 @media(max-width: 540px) {
   .lp-section {
@@ -2278,7 +1898,7 @@ html, body {
     padding-top: 80px;
     padding-bottom: 40px;
   }
-  .lp-story h2, .lp-demo-heading h2 {
+  .lp-story h2 {
     font-size: clamp(26px, 7vw, 34px);
   }
   .lp-story > p {
@@ -2326,13 +1946,7 @@ html, body {
     overflow-wrap: break-word;
     word-break: break-word;
   }
-  .lp-feature-copy > a {
-    margin-top: 12px;
-    font-size: 13px;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
+  
   .lp-feature-art {
     height: auto;
     min-height: 240px;
@@ -2369,65 +1983,21 @@ html, body {
     transform: rotate(1.5deg);
     padding: 18px 14px;
   }
-  .lp-playground {
-    padding: 55px 0;
-  }
-  .lp-demo-heading {
-    display: block;
-    margin-bottom: 24px;
-  }
-  .lp-demo-heading > p {
-    max-width: 100%;
-    margin-top: 14px;
-    font-size: 14px;
-  }
-  .lp-demo {
-    border-radius: 14px;
-    min-height: 480px;
-  }
-  .lp-demo-sidebar {
-    padding: 14px 14px;
-    gap: 12px;
-  }
-  .lp-demo-sidebar button {
-    font-size: 12px;
-    padding: 9px 14px;
-    gap: 6px;
-    min-height: 44px;
-  }
-  .lp-demo-sidebar button svg {
-    width: 16px;
-    height: 16px;
-  }
-  .lp-demo-panel {
-    padding: 22px 16px;
-  }
-  .lp-demo-panel h3 {
-    font-size: 18px;
-  }
-  .lp-demo-panel-head {
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .lp-demo-panel textarea {
-    min-height: 170px;
-    padding: 12px;
-  }
-  .lp-note-save {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .lp-demo-tasks > label {
-    font-size: 12px;
-  }
-  .lp-add-task {
-    gap: 7px;
-  }
-  .lp-demo .lp-button {
-    font-size: 12px;
-    padding: 10px 16px;
-    min-height: 44px;
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .lp-extras {
     padding-block: 55px;
   }
@@ -2581,17 +2151,9 @@ html, body {
     font-size: 8px;
     gap: 4px;
   }
-  .lp-demo-sidebar {
-    padding: 12px 10px;
-  }
-  .lp-demo-sidebar button {
-    padding: 8px 12px;
-    font-size: 12px;
-    min-height: 42px;
-  }
-  .lp-demo-panel {
-    padding: 18px 12px;
-  }
+  
+  
+  
   .lp-ai-art-quiz-btns {
     flex-direction: column;
     gap: 5px;
@@ -2766,21 +2328,6 @@ html, body {
 }
 
 /* Larger Variant in Playground Focus Tab */
-.lp-flip-card-preview.lp-flip-large {
-  margin-block: clamp(14px, 3.5vw, 24px);
-  gap: clamp(10px, 2.5vw, 16px);
-}
-
-.lp-flip-card-preview.lp-flip-large .lp-flip-digit {
-  font-size: clamp(36px, 10vw, 64px);
-  min-width: clamp(64px, 18vw, 95px);
-  padding: clamp(10px, 2.5vw, 16px) clamp(12px, 3.5vw, 20px);
-  border-radius: 14px;
-}
-
-.lp-flip-card-preview.lp-flip-large .lp-flip-sep {
-  font-size: clamp(28px, 8vw, 48px);
-}
 
 @keyframes lpBlink {
   0%, 100% { opacity: 1; }
@@ -3235,150 +2782,8 @@ html, body {
    ========================================================================== */
 
 /* AI Assistant Playground Tab */
-.lp-ai-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.lp-ai-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.lp-ai-pill {
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: #f0f5fc;
-  border: 1px solid #d0e1f7;
-  color: #216cd1;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.lp-ai-pill:hover {
-  background: #216cd1;
-  color: #ffffff;
-}
-
-.lp-ai-prompt-box {
-  display: flex;
-  gap: 10px;
-}
-
-.lp-ai-prompt-box input {
-  flex: 1;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 1px solid #d5e2f4;
-  background: #f7faff;
-  font-size: 14px;
-  color: #1a2d42;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.lp-ai-prompt-box input:focus {
-  border-color: #216cd1;
-}
-
-.lp-ai-phases {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.lp-ai-phase-item {
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: #f0f5fc;
-  border: 1px solid #d8e5f7;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.lp-ai-phase-item strong {
-  font-size: 13px;
-  color: #1a2d42;
-}
-
-.lp-ai-phase-item span {
-  font-size: 11px;
-  font-weight: 700;
-  color: #216cd1;
-  background: #dceafb;
-  padding: 3px 8px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
-.lp-ai-quiz-preview {
-  margin-top: 10px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #f9fbfe;
-  border: 1px dashed #c9dcf4;
-}
-
-.lp-ai-quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-top: 10px;
-}
-
-.lp-ai-quiz-btn {
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid #d1e2f7;
-  background: white;
-  text-align: start;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2c4460;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.lp-ai-quiz-btn:hover {
-  border-color: #216cd1;
-  background: #edf5ff;
-}
-
-.lp-ai-quiz-btn.correct {
-  border-color: #10b981;
-  background: #ecfdf5;
-  color: #065f46;
-  font-weight: 700;
-}
-
-.lp-ai-quiz-btn.wrong {
-  border-color: #ef4444;
-  background: #fef2f2;
-  color: #991b1b;
-}
 
 /* Materials Hub Playground Tab */
-.lp-materials-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.lp-materials-card {
-  padding: 20px;
-  border-radius: 14px;
-  background: #f7faff;
-  border: 1px solid #dce8f8;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
 
 .lp-materials-badge {
   display: inline-flex;
@@ -3393,177 +2798,9 @@ html, body {
   width: fit-content;
 }
 
-.lp-materials-progress-track {
-  width: 100%;
-  height: 9px;
-  background: #e2ecf9;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.lp-materials-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #6366f1);
-  border-radius: 999px;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.lp-materials-progress-fill.completed {
-  background: linear-gradient(90deg, #10b981, #059669);
-}
-
-.lp-materials-btn-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.lp-mat-btn {
-  padding: 7px 13px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid #cbdff7;
-  background: white;
-  color: #1e3a5f;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.lp-mat-btn:hover {
-  background: #ebf4ff;
-  border-color: #216cd1;
-}
-
-.lp-mat-btn.primary {
-  background: #216cd1;
-  color: white;
-  border-color: #216cd1;
-}
-
-.lp-mat-btn.primary:hover {
-  background: #1754a6;
-}
-
-.lp-mat-celebrate {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: #ecfdf5;
-  color: #047857;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid #a7f3d0;
-}
-
 /* Rewards & Trophies Playground Tab */
-.lp-rewards-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.lp-rewards-demo-card {
-  padding: 24px;
-  border-radius: 16px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.lp-rewards-demo-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.lp-rewards-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 12px;
-}
-
-.lp-rewards-gallery-item {
-  padding: 14px 10px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
-
-.lp-rewards-gallery-item:hover {
-  border-color: #f59e0b;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.12);
-}
-
-.lp-rewards-gallery-item.unlocked {
-  border-color: #cbd5e1;
-}
-
-.lp-rewards-gallery-item.unlocked .badge-icon {
-  filter: drop-shadow(0 4px 6px rgba(245, 158, 11, 0.25));
-}
-
-.lp-rewards-gallery-item .badge-title {
-  font-size: 12px;
-  font-weight: 800;
-  color: #1e293b;
-}
-
-.lp-rewards-gallery-item .badge-desc {
-  font-size: 10px;
-  color: #64748b;
-  line-height: 1.4;
-}
-
-.lp-rewards-gallery-item .badge-status {
-  font-size: 10px;
-  font-weight: 800;
-  color: #10b981;
-  margin-top: 4px;
-}
 
 /* Timer Demo Mode Switcher */
-.lp-timer-modes {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.lp-timer-mode-btn {
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid #cedaeb;
-  background: white;
-  color: #476180;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.lp-timer-mode-btn.active {
-  background: #216cd1;
-  color: white;
-  border-color: #216cd1;
-}
-
-.lp-timer-mode-btn:hover:not(.active) {
-  background: #e4ecf7;
-}
 
 /* Sound tick pulse equalizer */
 .lp-tick-eq {
@@ -3651,3 +2888,240 @@ html, body {
 }
 .lp-button-outline:hover { background: #ffffff1a; border-color: #fff; }
 .lp-button-outline:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+/* ==========================================================================
+   v2 refinements: download section, hero chips, strip, rhythm, browser surfaces
+   ========================================================================== */
+
+.lp-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lp-nav-cta { gap: 8px; }
+@media (min-width: 801px) { .lp-nav-cta { display: inline-flex; align-items: center; } }
+
+/* Trust strip: one line per item, wraps between items instead of inside them */
+.lp-strip { flex-wrap: wrap; row-gap: 12px; column-gap: 24px; padding: 22px 32px; font-size: 16px; }
+.lp-strip > span { white-space: nowrap; }
+.lp-strip svg { width: 16px; height: 16px; }
+.lp-strip > svg:last-child { display: none; }
+
+/* Story intro: tighter rhythm, smaller ornament */
+.lp-story { padding-top: 88px; padding-bottom: 64px; }
+.lp-story-orb { width: 46px; height: 46px; border-width: 10px; top: 56px; left: 12%; }
+.lp-story-orb:after { inset: -7px; }
+
+/* AI chip: title over subtitle */
+.lp-floating-ai > div { display: flex; flex-direction: column; gap: 2px; }
+
+/* Hero chips sit on the phone's edge instead of covering its text (two-column hero only) */
+@media (min-width: 1101px) {
+  [dir="ltr"] .lp .lp-floating-wrap-ai { left: -84px; }
+  [dir="ltr"] .lp .lp-floating-wrap-task { left: -64px; }
+}
+
+/* Small phones: keep two chips; the rest would cover the phone content */
+@media (max-width: 560px) {
+  .lp-floating-wrap-note, .lp-floating-wrap-ai { display: none; }
+  .lp-strip { padding: 18px 20px; column-gap: 18px; font-size: 15px; }
+  .lp-story { padding-top: 64px; padding-bottom: 48px; }
+  .lp-story-orb { display: none; }
+}
+
+/* "Get ENote" section */
+.lp-get { padding-top: 48px; padding-bottom: 96px; }
+.lp-get-head { max-width: 640px; margin-bottom: 36px; }
+.lp-get-head h2 { font-size: clamp(32px, 4.4vw, 46px); line-height: 1.35; letter-spacing: -.03em; }
+.lp-get-head p { margin-top: 14px; color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 52ch; }
+.lp-get-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.lp-get-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #0c274a;
+  border: 1px solid #ffffff1a;
+  box-shadow: 0 18px 40px #00000030;
+}
+.lp-get-android { border-color: #ffb23f66; }
+.lp-get-card h3 { display: flex; align-items: center; gap: 10px; font-size: 22px; line-height: 1.4; }
+.lp-get-card h3 svg { color: var(--orange); }
+.lp-get-meta { color: var(--muted); font-size: 15px; line-height: 1.8; }
+.lp-get-card .lp-button { margin-top: 4px; }
+.lp-get-android h4 { font-size: 15px; font-weight: 800; margin-top: 8px; }
+.lp-get-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; width: 100%; counter-reset: step; }
+.lp-get-steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; align-items: start; font-size: 14.5px; line-height: 1.8; color: #d4e2f4; counter-increment: step; }
+.lp-get-steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #123a6e;
+  color: var(--orange);
+  font-weight: 800;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .lp-get-grid { grid-template-columns: minmax(0, 1fr); }
+  .lp-get-card { padding: 24px 20px; }
+  .lp-get-head p { font-size: 16px; }
+}
+
+/* Footer links */
+.lp-footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; }
+.lp-footer-links a { color: #d4e2f4; min-height: 44px; display: inline-flex; align-items: center; }
+.lp-footer-links a:hover { text-decoration: underline; text-underline-offset: 6px; }
+@media (max-width: 800px) {
+  .lp-footer { flex-wrap: wrap; padding: 28px 24px; row-gap: 14px; }
+}
+
+/* Hero actions: buttons keep their label on one line; the text link wraps below when the column is narrow */
+.lp-hero-actions { flex-wrap: wrap; row-gap: 14px; column-gap: 18px; }
+.lp-hero-actions .lp-button, .lp-final-actions .lp-button { white-space: nowrap; }
+.lp-hero-actions .lp-text-link { white-space: nowrap; }
+
+/* Small phones: the art box must contain the phone mockup so the strip below is never covered */
+@media (max-width: 560px) {
+  .lp-hero-art { min-height: 576px; }
+}
+
+/* Links inside running text must be distinguishable without relying on colour */
+.lp-release-status a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+/* "Get ENote": one wide Android card (download + fingerprint | install steps) */
+.lp-get-android { width: 100%; max-width: none; }
+.lp-get-cols { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; width: 100%; align-items: start; }
+.lp-get-main, .lp-get-guide { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
+.lp-get-guide { padding-inline-start: 40px; border-inline-start: 1px solid #ffffff1a; }
+.lp-get-guide h4 { margin-top: 0; }
+@media (max-width: 900px) {
+  .lp-get-cols { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .lp-get-guide { padding-inline-start: 0; border-inline-start: 0; padding-top: 24px; border-top: 1px solid #ffffff1a; width: 100%; }
+}
+
+/* Team: two notebook pages pinned on the board; one authored entrance (GSAP) */
+.lp-team {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 120px;
+}
+.lp-team-copy h2 { font-size: clamp(34px, 4.8vw, 56px); line-height: 1.3; letter-spacing: -.03em; font-weight: 700; }
+.lp-team-copy h2 > span { color: var(--orange); }
+.lp-team-copy p { margin-top: 22px; max-width: 42ch; color: var(--muted); font-size: 17px; line-height: 1.9; }
+.lp-team-notes { list-style: none; margin: 0; padding: 28px 0 8px; display: grid; gap: 0; }
+.lp-note-card {
+  position: relative;
+  width: min(100%, 440px);
+  padding: 34px 28px 26px 28px;
+  padding-inline-start: 84px;
+  border-radius: 6px 6px 14px 14px;
+  color: #0b2347;
+  background-color: #fbf3df;
+  background-image: linear-gradient(to bottom, transparent 43px, #cfdcf1 44px);
+  background-size: 100% 44px;
+  box-shadow: 14px 26px 46px #00000055;
+}
+.lp-note-card::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 58px;
+  width: 2px;
+  background: #ffb23f;
+}
+.lp-note-card-0 { justify-self: start; transform: rotate(-2.6deg); }
+.lp-note-card-1 { justify-self: end; margin-top: -14px; transform: rotate(2.4deg); }
+.lp-note-tape {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  background: #ffb23fd9;
+  box-shadow: 0 2px 6px #00000030;
+  transform: translateX(-50%) rotate(-3deg);
+}
+.lp-note-card h3 { position: relative; display: inline-block; margin: 0; font-size: clamp(28px, 3.3vw, 42px); font-weight: 800; line-height: 1.4; }
+.lp-note-underline { position: absolute; inset-inline: 0; bottom: -2px; width: 100%; height: 12px; overflow: visible; }
+.lp-note-underline path { fill: none; stroke: #ffb23f; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.lp-note-role { margin-top: 16px; font-size: 15px; line-height: 1.7; color: #2f4a70; }
+.lp-note-grade { display: inline-block; margin-top: 14px; padding: 4px 12px; border-radius: 999px; background: #e3ecfb; color: #14407e; font-size: 13px; font-weight: 700; }
+
+@media (max-width: 900px) {
+  .lp-team { grid-template-columns: minmax(0, 1fr); padding-bottom: 88px; }
+  .lp-note-card-0, .lp-note-card-1 { justify-self: center; }
+}
+@media (max-width: 560px) {
+  .lp-note-card { padding: 30px 20px 22px 20px; padding-inline-start: 62px; }
+  .lp-note-card::before { inset-inline-start: 42px; }
+  .lp-note-card-0 { transform: rotate(-1.6deg); }
+  .lp-note-card-1 { transform: rotate(1.4deg); }
+}
+
+/* Feature mockups are tilted and cast soft shadows: never crop them vertically.
+   Horizontal clipping stays (clip, unlike hidden, does not turn the other axis into a scroller). */
+@media (max-width: 800px) {
+  .lp-feature-art {
+    overflow: visible;
+    overflow-x: clip;
+    overflow-y: visible;
+    padding-block: 26px;
+  }
+}
+
+/* Scale tilted mockups to the available width (set by Landing.tsx); no effect when they already fit */
+.lp-feature-art > * { zoom: var(--art-scale, 1); }
+
+.lp-phone-heading .lp-phone-title { display: block; font-size: 15px; font-weight: 800; }
+
+/* Team on phones: bigger names, cards clearly separated (no tape/edge collisions), still slightly tilted */
+@media (max-width: 900px) {
+  .lp-team-notes { gap: 40px; padding-top: 34px; }
+  .lp-note-card, .lp-note-card-0, .lp-note-card-1 { margin-top: 0; width: min(100%, 420px); }
+  .lp-note-card-0 { justify-self: start; }
+  .lp-note-card-1 { justify-self: end; }
+}
+@media (max-width: 560px) {
+  .lp-team-notes { gap: 44px; }
+  .lp-note-card, .lp-note-card-0, .lp-note-card-1 { width: 94%; }
+  .lp-note-card h3 { font-size: 34px; line-height: 1.45; }
+  .lp-note-role { font-size: 15px; }
+  .lp-note-grade { font-size: 13px; }
+}
+
+/* Demo caption sat at ~3.9:1 on the pale sidebar; darker ink reaches > 6:1 */
+
+/* Team cards never touch each other: tape and edges stay clear on every screen size */
+.lp-team-notes { gap: 40px; }
+.lp-note-card-1 { margin-top: 0; }
+
+/* Hero phone: the bottom tab bar was clipped by the phone's rounded overflow.
+   Cause: the heading's <small> sat on an inherited 1.7 line-height strut and the title/timer also used it, so
+   the content (~558px) was taller than the fixed 548px frame (534px inside the border). Tighten those line boxes
+   and pin the tab bar to the bottom of a column layout, so it can never be pushed out of the frame. */
+.lp-phone { display: flex; flex-direction: column; padding-bottom: 10px; }
+.lp-phone > * { flex-shrink: 0; }
+.lp-phone-heading small { display: block; line-height: 1.4; }
+.lp-phone-heading .lp-phone-title { line-height: 1.35; }
+.lp-phone-date { margin-top: 10px; }
+.lp-phone-focus strong { line-height: 1.3; }
+.lp-phone-section { margin: 13px 0 5px; }
+.lp-phone-note { margin-bottom: 10px; }
+.lp-phone-nav { margin-top: auto; }

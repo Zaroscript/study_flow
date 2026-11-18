@@ -3,95 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Primary SEO Meta Tags -->
-    <title>ENote — تطبيق ومساحة المذاكرة الذكية | مساحة لأفكارك. وقت لإنجازك.</title>
-    <meta name="title" content="ENote — تطبيق ومساحة المذاكرة الذكية | مساحة لأفكارك. وقت لإنجازك." />
-    <meta name="description" content="ENote: مساحة متكاملة للطلاب تجمع بين تنظيم المذكرات، توليد خطط المذاكرة بأدوات مساعدة دراسية، ساعة بومودورو 3D القلابة، مكتبة الملازم والكتب، ونظام المكافآت التحفيزية. نسخة ويب متاحة للتجربة. إصدار Android قيد التحقق." />
-    <meta name="keywords" content="ENote, StudyFlow, تطبيق مذاكرة, تنظيم المذاكرة, ذكاء اصطناعي للمذاكرة, خطة مذاكرة, ساعة بومودورو 3D, بومودورو للطلاب, تلخيص محاضرات, تحميل تطبيق أندرويد مذاكرة, APK, study planner app, pomodoro flip clock" />
-    <meta name="author" content="ENote Team" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <link rel="canonical" href="https://study-flow.vercel.app/" />
-    <link rel="alternate" hreflang="ar" href="https://study-flow.vercel.app/" />
-    <link rel="alternate" hreflang="en" href="https://study-flow.vercel.app/?lang=en" />
-    <link rel="alternate" hreflang="x-default" href="https://study-flow.vercel.app/" />
+    <!--
+      SEO block: scripts/prerender-seo.cjs (run by `pnpm build` after vite) replaces everything between the
+      seo:head markers, and the seo:body marker inside #root, once per language, to emit dist/index.html (ar)
+      and dist/en/index.html. Text comes from landing-seo.json and the `copy` object in Landing.tsx.
+      The title below is only the fallback for `vite` dev.
+    -->
+    <!-- seo:head:start -->
+    <title>ENote</title>
+    <!-- seo:head:end -->
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://study-flow.vercel.app/" />
-    <meta property="og:title" content="ENote — تطبيق ومساحة المذاكرة الذكية" />
-    <meta property="og:description" content="نظّم مذكراتك وملازمك، ولّد خططك بمساعد دراسي، وركّز مع ساعة بومودورو 3D القلابة واكسب المكافآت مع ENote." />
-    <meta property="og:image" content="https://study-flow.vercel.app/assets/enote-icon.png" />
-    <meta property="og:image:alt" content="ENote App Logo" />
-    <meta property="og:site_name" content="ENote" />
-    <meta property="og:locale" content="ar_EG" />
-    <meta property="og:locale:alternate" content="en_US" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://study-flow.vercel.app/" />
-    <meta property="twitter:title" content="ENote — تطبيق ومساحة المذاكرة الذكية" />
-    <meta property="twitter:description" content="كل اللي في بالك، له مكان. نظّم مذكراتك، جهّز خططك الدراسية، وركّز مع ساعة بومودورو 3D القلابة." />
-    <meta property="twitter:image" content="https://study-flow.vercel.app/assets/enote-icon.png" />
-
-    <!-- Web App & Favicon -->
-    <meta name="application-name" content="ENote" />
-    <meta name="apple-mobile-web-app-title" content="ENote" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="theme-color" content="#071a34" />
-    <link rel="icon" type="image/png" href="/assets/enote-icon.png" />
-    <link rel="apple-touch-icon" href="/assets/enote-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
-
-    <!-- Early Language & Theme Detection -->
     <script>
-      try {
-        const requested = new URLSearchParams(location.search).get('lang');
-        const language = requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_language') === 'en' ? 'en' : 'ar';
-        document.documentElement.lang = language;
-        document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-        document.documentElement.style.colorScheme = localStorage.getItem('studyflow_theme') === 'dark' ? 'dark' : 'light';
-      } catch {}
+      (function () {
+        try {
+          var root = document.documentElement;
+          var path = location.pathname;
+          var landing = path === '/' || /^\/en\/?$/.test(path);
+          var requested = new URLSearchParams(location.search).get('lang');
+          if (landing) {
+            // The static HTML of "/" is Arabic and of "/en/" English. Only "/" can disagree with the visitor's
+            // choice (?lang=en or a saved English preference): hide the static copy until React renders the
+            // right language so nobody sees a flash of the wrong one. Crawlers/no-JS never reach this branch.
+            var wants = requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_landing_language') === 'en' ? 'en' : 'ar';
+            if (path === '/' && wants === 'en') {
+              root.lang = 'en';
+              root.dir = 'ltr';
+              root.setAttribute('data-lang-mismatch', '');
+            }
+          } else {
+            // Workspace (/app) keeps its own language preference.
+            var language = requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_language') === 'en' ? 'en' : 'ar';
+            root.lang = language;
+            root.dir = language === 'ar' ? 'rtl' : 'ltr';
+            root.style.colorScheme = localStorage.getItem('studyflow_theme') === 'dark' ? 'dark' : 'light';
+          }
+        } catch (e) {}
+      })();
     </script>
-
-    <link rel="stylesheet" href="/assets/fonts/fonts.css">
-
-    <!-- Schema.org JSON-LD Structured Data: SoftwareApplication -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "ENote",
-      "alternateName": "StudyFlow",
-      "operatingSystem": "Web",
-      "applicationCategory": "EducationalApplication",
-      "genre": "Productivity & Education",
-      "description": "تطبيق ومساحة المذاكرة الشاملة: تنظيم المذكرات والملفات في مجلدات، تخطيط المذاكرة ومؤقت بومودورو ومتابعة الأهداف والعادات.",
-      "url": "https://study-flow.vercel.app/",
-      "image": "https://study-flow.vercel.app/assets/enote-icon.png",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-
-    <!-- Schema.org JSON-LD Structured Data: FAQPage for Google Rich Snippets -->
-    
   </head>
   <body>
-    <!-- Semantic Pre-Render Fallback for Crawlers and Search Engine Bots -->
-    <div id="root">
-      <noscript>
-        <div style="padding: 40px; font-family: sans-serif; text-align: center; color: #071a34;">
-          <h1>ENote — مساحة لأفكارك. وقت لإنجازك.</h1>
-          <p>تطبيق الدراسة الذكي ومساحة الإنتاجية الشاملة للطلاب مع تنظيم المذكرات وخطط الذكاء الاصطناعي وساعة بومودورو 3D.</p>
-          <p><a href="/app">افتح تطبيق الويب</a> | إصدار Android قيد التحقق.</p>
-        </div>
-      </noscript>
-    </div>
+    <div id="root"><!-- seo:body --><!-- /seo:body --></div>
+    <script>
+      // The workspace route shares this shell; drop the landing's static copy there before React mounts.
+      if (/^\/app(\/|$)/.test(location.pathname)) document.getElementById('root').textContent = '';
+    </script>
     <script type="module" src="/main.tsx"></script>
   </body>
 </html>

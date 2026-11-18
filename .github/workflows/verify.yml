@@ -21,6 +21,7 @@ jobs:
       - run: node --experimental-strip-types --test test/ui-utils.test.mjs test/web-storage.test.mjs
       - run: node scripts/check-ai-gateway.cjs
       - run: pnpm build
+      - run: node scripts/check-seo.cjs
       - run: pnpm exec playwright install --with-deps chromium
       - run: node scripts/check-landing.cjs
       - run: node scripts/check-release.cjs

@@ -1,14 +1,8 @@
-# Robots.txt for ENote / StudyFlow
-# https://study-flow.vercel.app/
-
+# ENote landing: https://study-flow.vercel.app/
+# Everything public is crawlable. /app (the workspace shell) is kept out of the index with an
+# X-Robots-Tag: noindex header from vercel.json; it is NOT disallowed here, because a disallowed URL
+# can never show Google that noindex.
 User-agent: *
 Allow: /
-Allow: /app
-Allow: /downloads/
-Allow: /assets/
 
-# Crawl-delay for polite indexers
-Crawl-delay: 1
-
-# Sitemaps
 Sitemap: https://study-flow.vercel.app/sitemap.xml

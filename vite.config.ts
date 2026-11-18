@@ -7,6 +7,8 @@ const projectDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
+  // Hashed bundles live in /bundle (immutable cache); /assets keeps the unhashed public files (fonts, icons, images).
+  build: { assetsDir: 'bundle' },
   resolve: {
     alias: {
       'firebase/app': path.resolve(projectDirectory, 'firebase-mock.ts'),

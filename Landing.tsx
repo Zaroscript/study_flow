@@ -1,19 +1,19 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
-  ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Check, Plus, Play, Pause, RotateCcw,
+  ArrowUpRight, ArrowDown, Check, Plus, Play, Pause,
   Menu, X, ChevronDown, FileText, CheckCheck, Timer, Sparkles, CalendarDays, BookOpen,
-  Target, Moon, Globe2, Trophy, Flame, Crown, Folder, Zap, ShieldCheck, Award, Volume2, VolumeX,
-  GraduationCap, Lightbulb, Compass, Star, Download
+  Target, Globe2, Trophy, Flame, Crown, ShieldCheck, Volume2, VolumeX,
+  Download, Smartphone
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import './landing.css';
+import { applyLandingHead, landingPath, languageFromPath } from './landing-head';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Language = 'ar' | 'en';
-type Scene = 'notes' | 'plan' | 'focus' | 'ai' | 'materials' | 'rewards';
 
 /**
  * Authentic mechanical flip sound synthesized via Web Audio API.
@@ -51,37 +51,25 @@ function playMechanicalTick() {
 
 const copy = {
   ar: {
-    nav: ['الفكرة', 'المميزات', 'جرّب بنفسك', 'أسئلة شائعة'], open: 'جرّب نسخة الويب', lang: 'English',
-    headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، جهّز خططك بأدوات المذاكرة، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · ذكاء اصطناعي · ساعة 3D · مكافآت · إيقاعك أنت.',
+    nav: ['الفكرة', 'المميزات', 'أسئلة شائعة'], lang: 'English', navTeam: 'الفريق', getCta: 'احصل على ENote',
+    headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، جهّز خططك بأدوات المذاكرة، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · مساعد دراسي · ساعة 3D · مكافآت · إيقاعك أنت.',
     floatNote: 'الفكرة الحلوة؟ اكتبها.', floatTask: 'خطوة صغيرة. فرق كبير.', floatFocus: 'ساعة بومودورو 3D.', floatAi: 'مساعد دراسي ✦',
     strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'مساعد دراسي ومجاني', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
     storyTitle: ['من زحمة الأفكار،', 'لوضوح الخطوة الجاية.'], storyBody: 'بين المحاضرة، الفكرة المفاجئة، وتراكم الملازم… ENote يجمع كل أدوات دراستك وتفوقك في مساحة واحدة هادئة ومحفزة.',
     features: [
-      ['اكتب قبل ما الفكرة تطير.', 'ملاحظاتك كاملة، مرتبة في مجلدات، وتوصل لها بالبحث وقت ما تحتاجها.', 'مكان لكل فكرة'],
-      ['يومك، خطوة بخطوة.', 'رتّب المهام والمواعيد والواجبات. خلّي خطتك واضحة، وسيب مساحة لليوم نفسه.', 'خطة بطريقتك'],
-      ['ساعة بومودورو 3D القلابة.', 'حركة ميكانيكية واقعية مع صوت تكتكة اختياري وجلسات تركيز غامرة تفصلك عن أي تشتت.', 'وقت للتركيز'],
-      ['أدوات مساعدة دراسية.', 'جهّز خطة للمذاكرة، جرّب أسئلة تدريبية، واستخرج نقاطًا من ملاحظاتك باستخدام أدوات محلية واضحة المصدر.', 'المساعد الذكي'],
-      ['مكتبة الملازم والكتب.', 'نظّم مذكراتك وكتبك حسب المواد، وتابع صفحات قراءتك صفحة بصفحة مع احتفال عند الختم.', 'مكتبة الملازم'],
-      ['نظام المكافآت والأوسمة.', 'حوّل مذاكرتك إلى رحلة مشوقة؛ اكسب نقاط الخبرة (XP)، ارتقِ بالمستويات، واجمع أوسمة الإنجاز.', 'المكافآت والجوائز']
+      ['اكتب قبل ما الفكرة تطير.', 'ملاحظاتك كاملة، مرتبة في مجلدات، وتوصل لها بالبحث وقت ما تحتاجها.'],
+      ['يومك، خطوة بخطوة.', 'رتّب المهام والمواعيد والواجبات. خلّي خطتك واضحة، وسيب مساحة لليوم نفسه.'],
+      ['ساعة بومودورو 3D القلابة.', 'حركة ميكانيكية واقعية مع صوت تكتكة اختياري وجلسات تركيز غامرة تفصلك عن أي تشتت.'],
+      ['أدوات مساعدة دراسية.', 'جهّز خطة للمذاكرة، جرّب أسئلة تدريبية، واستخرج نقاطًا من ملاحظاتك باستخدام أدوات محلية واضحة المصدر.'],
+      ['مكتبة الملازم والكتب.', 'نظّم مذكراتك وكتبك حسب المواد، وتابع صفحات قراءتك صفحة بصفحة مع احتفال عند الختم.'],
+      ['نظام المكافآت والأوسمة.', 'حوّل مذاكرتك إلى رحلة مشوقة؛ اكسب نقاط الخبرة (XP)، ارتقِ بالمستويات، واجمع أوسمة الإنجاز.']
     ],
-    demoTitle: ['إحساسه أحلى', 'لما تجرّبه.'], demoBody: 'اضغط، بدّل، واكتشف. عاين كل ميزات ENote الجديدة مباشرة وتفاعل معها بتجربة حية.',
-    tabs: ['ملاحظاتك', 'خطتك', 'ساعة 3D', 'المساعد الذكي', 'مكتبة الملازم', 'المكافآت'], demoLabel: 'معاينة تفاعلية — بيانات توضيحية',
-    notesTitle: 'كل فكرة، بداية لحاجة.', noteTitle: 'أفكار للمشروع', noteText: 'الفكرة الكبيرة بتبدأ بملاحظة صغيرة.\n\n• أبسّط الفكرة الأساسية\n• أجهّز أول مسودة\n• أشاركها مع الفريق', save: 'احفظ الملاحظة', saved: 'اتحفظت في المعاينة',
-    planTitle: 'خلّي يومك أخف.', tasks: ['مراجعة محاضرة الفيزياء', 'قراءة فصل من كتاب الأحياء', 'حل واجب الرياضيات'], newTask: 'مهمة جديدة', add: 'أضف', completed: 'مكتملة',
-    focusTitle: 'ساعة بومودورو 3D القلابة.', focus: 'جلسة تركيز', start: 'ابدأ المؤقت', pause: 'وقفة صغيرة', reset: 'إعادة المؤقت',
-    studyMode: 'تركيز (25د)', breakMode: 'استراحة (5د)', longBreakMode: 'استراحة طويلة (15د)',
-    aiTitle: 'توليد خطة ذكية واختبار سريع.', aiDesc: 'اكتب المادة وساعات المذاكرة، ودع المساعد الذكي يقسم لك الوقت بمراحل دقيقة واختبارات تفاعلية.', aiGenerate: 'توليد خطة بالذكاء الاصطناعي ✦',
-    aiGenerating: 'جاري التفكير والتوليد بالذكاء الاصطناعي...',
-    aiPills: ['فيزياء: قوانين نيوتن', 'أحياء: الوراثة والجينات', 'كيمياء: الاتزان والسرعة'],
+    tasks: ['مراجعة محاضرة الفيزياء', 'قراءة فصل من كتاب الأحياء', 'حل واجب الرياضيات'],
+    start: 'ابدأ المؤقت', pause: 'وقفة صغيرة',
     aiQuizQ: 'س: ما هي وحدة قياس القوة في النظام الدولي (SI)؟',
     aiQuizOpts: ['نيوتن (Newton)', 'جول (Joule)', 'واط (Watt)'],
-    aiQuizCorrect: 'إجابة صحيحة! أحسنت 🎯 (100%)',
-    aiQuizWrong: 'إجابة غير صحيحة. الإجابة الصحيحة هي: نيوتن',
-    materialsTitle: 'تتبع صفحات القراءة والملازم.', materialsDesc: 'سجّل تقدمك في كتبك الدراسية صفحة بصفحة واحتفل بختم كل مرجع.',
     materialsBook: 'كتاب التفاضل والتكامل الرسمي 2026',
     materialsSubject: 'رياضيات بحتة 📐',
-    materialsDone: 'تم ختم المرجع بالكامل! 🌟 تهانينا',
-    rewardsTitle: 'المكافآت، الأوسمة، ونقاط الخبرة.', rewardsDesc: 'كل جلسة تركيز وكل صفحة تقرأها تقربك من المستوى التالي وفتح أوسمة نادرة.',
     rewardsLevel: 'المستوى 5 · متفوق منظم',
     rewardsStreak: '7 أيام متتالية!',
     rewardsClaim: 'احصل على مكافأة الالتزام (+50 XP)',
@@ -95,9 +83,18 @@ const copy = {
       ['شاشات ترحيب Google Play-grade', 'تجربة إعداد مبهرة وسلسة تنقلك مباشرة من أول فتحة للتطبيق لتحديد هدفك ومرحلتك.'],
       ['بيانات محلية وخيارات واضحة', 'المذكرات تُحفظ محليًا. عند استخدام خدمة AI خارجية مفعّلة، تُرسل المدخلات اللازمة للمعالجة كما توضح سياسة الخصوصية.']
     ],
+    getTitle: 'احصل على ENote.', getBody: 'ثبّته على موبايلك الأندرويد في 3 خطوات.',
+    androidTitle: 'ENote لأندرويد', androidSoon: 'نسخة أندرويد قيد التجهيز، وهتلاقي زر التنزيل هنا أول ما تجهز.', getApk: 'نزّل ملف الـ APK',
+    installTitle: 'التثبيت في 3 خطوات',
+    installSteps: ['نزّل ملف الـ APK من الزر أعلاه.', 'افتح الملف. لو طلب أندرويد السماح بالتثبيت من هذا المصدر فوافق، لأن التطبيق غير منشور على Google Play بعد.', 'افتح ENote واكتب أول فكرة.'],
+    footerGet: 'التنزيل', footerTeam: 'الفريق',
+    teamTitle: ['اتعمل بإيد طلبة،', 'علشان الطلبة.'],
+    teamBody: 'ENote من تطوير طلبة في الصف الثاني الثانوي. التطبيق وواجهته من شغلهم.',
+    teamRole: 'تطوير التطبيق وواجهته', teamGrade: 'الصف الثاني الثانوي',
     faqTitle: 'كل ما تحتاج معرفته.',
     faqs: [
-      ['كيف تعمل أدوات المساعد الدراسي؟', 'نسخة Flutter تستخدم قوالب محلية للمذاكرة. الويب يدعم خدمة AI خارجية عند إعدادها من مشغّل الموقع؛ إذا لم تتوفر، تُعرض الأدوات المحلية مع بيان مصدر النتيجة. لا نَعِد بخدمة AI مجانية بلا حدود.'],
+      ['كيف أثبّت تطبيق أندرويد؟', 'نزّل ملف الـ APK من هذه الصفحة وافتحه. التطبيق غير منشور على Google Play بعد، فقد يطلب أندرويد السماح بالتثبيت من هذا المصدر. ملف الـ APK في هذه الصفحة موقّع بمفتاح إصدار، وبصمته (SHA-256) مكتوبة في وصف الإصدار على GitHub لمن يحب يتحقق منه.'],
+      ['كيف تعمل أدوات المساعد الدراسي؟', 'التطبيق يستخدم قوالب محلية للمذاكرة، وتُعرض كل نتيجة مع بيان مصدرها. لا نَعِد بخدمة AI مجانية بلا حدود.'],
       ['أين ذهبت صفحة الإحصائيات؟', 'تم دمج جميع الرسوم البيانية وإحصائيات الأداء الأسبوعي وتوزيع الوقت مباشرة داخل صفحة «الرئيسية» في لوحة التحكم، واستُبدلت في شريط التنقل بصفحة «المكافآت والجوائز» لمتابعة أوسمتك ونقاط خبرتك.'],
       ['ما هي ساعة بومودورو 3D القلابة؟', 'تصميم skeuomorphic مبتكر لمؤقت التركيز يحاكي الساعات الميكانيكية الكلاسيكية بأرقام ثلاثية الأبعاد تقلب بسلاسة مع صوت تكتكة اختياري لتهيئة ذهنك لأعمق درجات التركيز.'],
       ['كيف تساعدني مكتبة الملازم في متابعة دراستي؟', 'تمكنك من تصنيف مذكراتك وكتبك حسب المواد في مجلدات ملونة، وتحديث عدد الصفحات المقروءة بأزرار سريعة (+5 و -5 وتحديد الصفحة)، مع شريط تقدم واحتفال عند ختم المرجع 100%.'],
@@ -106,37 +103,25 @@ const copy = {
     cta: ['أفكار أكتر.', 'دوشة أقل.'], ctaBody: 'اعمل مساحة للي يهمك. والبداية؟ خطوة واحدة.', footer: 'مساحة لأفكارك، على إيقاعك.', top: 'ارجع لأول الصفحة', menu: 'قائمة التنقل', previewStatus: 'الوقت في المعاينة توضيحي',
   },
   en: {
-    nav: ['The idea', 'Features', 'Try it out', 'Questions'], open: 'Try the web app', lang: 'العربية',
+    nav: ['The idea', 'Features', 'Questions'], lang: 'العربية', navTeam: 'Team', getCta: 'Get ENote',
     headline: ['Room for ideas.', 'Time for you.'], intro: 'Give everything on your mind a place. Capture your notes, organize study materials, generate study assistance plans, and earn rewards — with ENote.', explore: 'Meet ENote', note: 'Notes · Plans · Study assistant · 3D Clock · Rewards · Your rhythm.',
     floatNote: 'Good idea? Keep it.', floatTask: 'Small steps. Big difference.', floatFocus: '3D Flip Clock Pomodoro.', floatAi: 'Study assistant ✦',
     strip: ['Ideas worth keeping', 'Plans that fit your day', 'Local study tools', 'Mechanical 3D focus', 'Organized materials hub', 'Gamified reward badges'],
     storyTitle: ['From a busy mind,', 'to a clear next step.'], storyBody: 'The lecture, the sudden idea, the pile of handouts to finish… ENote brings all your study essentials together into one serene workspace.',
     features: [
-      ['Catch it before it goes.', 'Keep full notes in folders, and find the thought you need with instant search.', 'Room for every idea'],
-      ['Your day. Step by step.', 'Organize tasks, schedules, and homework. Make a clear plan with room for life.', 'A plan that fits'],
-      ['3D Mechanical Flip Clock.', 'Authentic mechanical card flips with optional clockwork ticking and immersive focus sessions.', 'Time to tune in'],
-      ['Study tools with clear sources.', 'Build a study plan, extract points from notes and practice recall using clearly labelled local tools.', 'Smart Assistant'],
-      ['Materials & Textbooks Hub.', 'Organize subject handouts in color-coded folders and track page-by-page reading progress.', 'Materials Hub'],
-      ['Gamified Rewards & Trophies.', 'Turn your study journey into an inspiring adventure with XP, levels, and collectible achievement badges.', 'Rewards & Badges']
+      ['Catch it before it goes.', 'Keep full notes in folders, and find the thought you need with instant search.'],
+      ['Your day. Step by step.', 'Organize tasks, schedules, and homework. Make a clear plan with room for life.'],
+      ['3D Mechanical Flip Clock.', 'Authentic mechanical card flips with optional clockwork ticking and immersive focus sessions.'],
+      ['Study tools with clear sources.', 'Build a study plan, extract points from notes and practice recall using clearly labelled local tools.'],
+      ['Materials & Textbooks Hub.', 'Organize subject handouts in color-coded folders and track page-by-page reading progress.'],
+      ['Gamified Rewards & Trophies.', 'Turn your study journey into an inspiring adventure with XP, levels, and collectible achievement badges.']
     ],
-    demoTitle: ['Better when', 'you try it.'], demoBody: 'Tap, switch, explore. Experience ENote’s latest features hands-on with real-time interactive previews.',
-    tabs: ['Your notes', 'Your plan', '3D Pomodoro', 'AI Assistant', 'Materials Hub', 'Rewards'], demoLabel: 'Interactive concept preview — sample data',
-    notesTitle: 'Every idea starts somewhere.', noteTitle: 'Project ideas', noteText: 'Big ideas start with a small note.\n\n• Simplify the main idea\n• Put together a first draft\n• Share it with the team', save: 'Save note', saved: 'Saved in this preview',
-    planTitle: 'Make room in your day.', tasks: ['Review Physics Unit 1', 'Read Biology Chapter 3', 'Complete Calculus problem set'], newTask: 'New task', add: 'Add', completed: 'completed',
-    focusTitle: '3D Mechanical Flip Clock.', focus: 'Focus session', start: 'Start timer', pause: 'Take a pause', reset: 'Reset timer',
-    studyMode: 'Focus (25m)', breakMode: 'Break (5m)', longBreakMode: 'Long Break (15m)',
-    aiTitle: 'Study Plan & Rapid Quiz.', aiDesc: 'Enter topic and study hours, and let the study assistance build structured phases with self-testing milestones.', aiGenerate: 'Generate AI Study Plan ✦',
-    aiGenerating: 'Thinking & generating your study plan...',
-    aiPills: ['Physics: Laws of Motion', 'Biology: Genetics', 'Chemistry: Reaction Rates'],
+    tasks: ['Review Physics Unit 1', 'Read Biology Chapter 3', 'Complete Calculus problem set'],
+    start: 'Start timer', pause: 'Take a pause',
     aiQuizQ: 'Q: What is the International System (SI) unit of force?',
     aiQuizOpts: ['Newton (N)', 'Joule (J)', 'Watt (W)'],
-    aiQuizCorrect: 'Correct answer! Great job 🎯 (100%)',
-    aiQuizWrong: 'Incorrect. The correct answer is Newton',
-    materialsTitle: 'Track Reading Progress & Handouts.', materialsDesc: 'Log your progress in coursebooks page by page and celebrate completion.',
     materialsBook: 'Official Calculus & Analysis Coursebook 2026',
     materialsSubject: 'Pure Mathematics 📐',
-    materialsDone: 'Handout 100% completed! 🌟 Congratulations',
-    rewardsTitle: 'Rewards, Trophies, and XP.', rewardsDesc: 'Every focus session and completed task earns XP and unlocks rare achievement medals.',
     rewardsLevel: 'Level 5 · Organized Achiever',
     rewardsStreak: '7-Day Study Streak!',
     rewardsClaim: 'Claim Daily Streak Bonus (+50 XP)',
@@ -150,9 +135,18 @@ const copy = {
       ['Google Play-grade Onboarding', 'Smooth multi-step onboarding that tailors your academic level and study targets in seconds.'],
       ['Local storage, clear choices', 'Notes are stored locally. If enabled, remote AI receives the input needed to process your request. See our privacy notice.']
     ],
+    getTitle: 'Get ENote.', getBody: 'Install it on your Android phone in three steps.',
+    androidTitle: 'ENote for Android', androidSoon: 'The Android release is in preparation. The download button will appear here when it is ready.', getApk: 'Download the APK',
+    installTitle: 'Install in 3 steps',
+    installSteps: ['Download the APK with the button above.', 'Open the file. If Android asks to allow installs from this source, allow it. The app is not on Google Play yet.', 'Open ENote and write your first note.'],
+    footerGet: 'Download', footerTeam: 'Team',
+    teamTitle: ['Built by students,', 'for students.'],
+    teamBody: 'ENote is built by second-year secondary school students: the app and its interface are their work.',
+    teamRole: 'App and interface development', teamGrade: 'Second-year secondary school',
     faqTitle: 'Frequently asked questions.',
     faqs: [
-      ['How do the study tools work?', 'Flutter uses local study templates. The web app supports remote AI when configured by the operator; otherwise it labels the local result. Unlimited free AI is not promised.'],
+      ['How do I install the Android app?', 'Download the APK from this page and open it. The app is not on Google Play yet, so Android may ask you to allow installs from this source. The APK on this page is signed with a release key, and its SHA-256 is listed in the release notes on GitHub if you want to verify it.'],
+      ['How do the study tools work?', 'The app uses local study templates and labels where each result comes from. Unlimited free AI is not promised.'],
       ['Where did the Statistics page go?', 'All weekly performance charts and time distribution analytics are now integrated directly into the Dashboard page, and replaced in navigation with the new Rewards & Trophies screen.'],
       ['What is the 3D Flip Clock Pomodoro?', 'It is a skeuomorphic focus timer inspired by vintage mechanical split-flap clocks, featuring physical depth, smooth flipping animation, and optional mechanical ticking sound.'],
       ['How does the Materials Hub track reading progress?', 'You can organize handouts and PDFs by subject folder and update read pages using quick -5 and +5 buttons or direct page entry, complete with celebratory 100% badges.'],
@@ -167,7 +161,7 @@ function Phone({ language }: { language: Language }) {
   return (
     <div className="lp-phone" dir={ar ? 'rtl' : 'ltr'} aria-label={ar ? 'تصوّر توضيحي لواجهة ENote' : 'Illustrative ENote interface'}>
       <div className="lp-phone-status"><span>9:41</span><span className="lp-island"/><span>••• ▰</span></div>
-      <div className="lp-phone-heading"><div><small>{ar ? 'مساحة جديدة ليومك' : 'A fresh space for your day'}</small><h3>{ar ? 'صباح الأفكار الحلوة' : 'Hello, fresh ideas'}</h3></div><span className="lp-avatar">A</span></div>
+      <div className="lp-phone-heading"><div><small>{ar ? 'مساحة جديدة ليومك' : 'A fresh space for your day'}</small><b className="lp-phone-title">{ar ? 'صباح الأفكار الحلوة' : 'Hello, fresh ideas'}</b></div><span className="lp-avatar">A</span></div>
       <div className="lp-phone-date"><CalendarDays size={15}/>{ar ? 'الأربعاء، يوم على مزاجك' : 'Wednesday, at your own pace'}</div>
       <div className="lp-phone-focus"><div><Timer size={21}/><span>{ar ? 'وقت للتركيز' : 'A moment to focus'}</span></div><strong>25:00</strong><span className="lp-phone-start"><Play size={12} fill="currentColor"/>{ar ? 'ابدأ جلستك' : 'Start a session'}</span></div>
       <div className="lp-phone-section"><b>{ar ? 'خطوتك الجاية' : 'Your next step'}</b><Plus size={17}/></div>
@@ -208,6 +202,9 @@ export default function Landing() {
   const root = useRef<HTMLDivElement>(null);
   const [language, setLanguage] = useState<Language>(() => {
     try {
+      // Language precedence: URL path (/en/ is English) -> ?lang= -> saved choice -> Arabic.
+      const fromPath = languageFromPath(location.pathname);
+      if (fromPath) return fromPath;
       const requested = new URLSearchParams(location.search).get('lang');
       return requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_landing_language') === 'en' ? 'en' : 'ar';
     } catch {
@@ -215,16 +212,11 @@ export default function Landing() {
     }
   });
   const [menu, setMenu] = useState(false);
-  const [scene, setScene] = useState<Scene>('notes');
-  const [note, setNote] = useState('');
-  const [saved, setSaved] = useState(false);
   const [tasks, setTasks] = useState<{ text: string; done: boolean }[]>([]);
-  const [newTask, setNewTask] = useState('');
 
   // 3D Flip Clock Pomodoro state
   const [seconds, setSeconds] = useState(25 * 60);
   const [running, setRunning] = useState(false);
-  const [timerMode, setTimerMode] = useState<'study' | 'break' | 'longBreak'>('study');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const deadline = useRef(0);
 
@@ -234,7 +226,6 @@ export default function Landing() {
 
   // Study assistant state
   const [aiTopicInput, setAiTopicInput] = useState('فيزياء: قوانين نيوتن والجاذبية');
-  const [aiIsGenerating, setAiIsGenerating] = useState(false);
   const [aiGeneratedPhases, setAiGeneratedPhases] = useState<{ title: string; time: string }[]>([
     { title: 'استيعاب المفاهيم والقوانين (F = m × a)', time: '40 دقيقة' },
     { title: 'حل مسائل تدريبية وتطبيقات عملية', time: '60 دقيقة' },
@@ -260,26 +251,34 @@ export default function Landing() {
   }, []);
 
   const releaseMb = release ? (release.sizeBytes / 1e6).toFixed(1) : '';
-  const downloadButton = release ? (
-    <a href={release.apkUrl} className="lp-button lp-button-outline" rel="noopener" download>
-      <Download size={19} aria-hidden="true" />
-      {ar ? `تنزيل لأندرويد (${releaseMb} MB)` : `Download for Android (${releaseMb} MB)`}
+  // With a verified release the Android download is the primary action; without one the page says so honestly.
+  const apkButton = (primary: boolean) =>
+    release ? (
+      <a href={release.apkUrl} className={`lp-button ${primary ? 'lp-button-orange' : 'lp-button-outline'}`} rel="noopener" download>
+        <Download size={19} aria-hidden="true" />
+        {ar ? 'تنزيل لأندرويد' : 'Download for Android'}
+      </a>
+    ) : null;
+  const primaryActions = release ? (
+    apkButton(true)
+  ) : (
+    <a href="#get" className="lp-button lp-button-orange">
+      {t.getCta}
+      <ArrowDown size={20} />
     </a>
-  ) : null;
+  );
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = ar ? 'rtl' : 'ltr';
     document.documentElement.style.colorScheme = 'dark';
-    document.title = ar ? 'ENote — مساحة لأفكارك. وقت لإنجازك.' : 'ENote — Room for ideas. Time for you.';
+    applyLandingHead(language);
     try { localStorage.setItem('enote_landing_language', language); } catch {}
     try {
-      const url = new URL(location.href); url.searchParams.set('lang', language); history.replaceState(null, '', url);
+      // Each language has its own URL: "/" (Arabic) and "/en/" (English). Drop the legacy ?lang= parameter.
+      const url = new URL(location.href); url.pathname = landingPath(language); url.searchParams.delete('lang'); history.replaceState(null, '', url);
     } catch {}
-    document.querySelector('meta[name="description"]')?.setAttribute('content', t.intro);
-    setNote(t.noteText);
     setTasks(t.tasks.map((text, i) => ({ text, done: i === 0 })));
-    setSaved(false);
     setMenu(false);
     if (language === 'en') {
       setAiTopicInput('Physics: Newton\'s Laws & Gravity');
@@ -498,7 +497,6 @@ export default function Landing() {
             const symbol = el.querySelector('.lp-feature-symbol');
             const h2 = el.querySelector('h2');
             const p = el.querySelector('p');
-            const a = el.querySelector('a');
             const art = el.querySelector('.lp-feature-art');
 
             const featTl = gsap.timeline({
@@ -506,7 +504,7 @@ export default function Landing() {
             });
 
             featTl
-              .from([symbol, h2, p, a].filter(Boolean), {
+              .from([symbol, h2, p].filter(Boolean), {
                 autoAlpha: 0,
                 y: 35,
                 stagger: 0.1,
@@ -526,31 +524,6 @@ export default function Landing() {
                 '-=0.5'
               );
           });
-
-          // Interactive Playground container entrance
-          const playTl = gsap.timeline({
-            scrollTrigger: { trigger: '.lp-playground', start: 'top 75%', once: true },
-          });
-          playTl
-            .from('.lp-demo-heading h2, .lp-demo-heading p', {
-              autoAlpha: 0,
-              y: 30,
-              stagger: 0.12,
-              duration: 0.8,
-              ease: 'power3.out',
-            })
-            .from('.lp-demo', { autoAlpha: 0, y: 55, scale: 0.96, duration: 1, ease: 'power3.out' }, '-=0.4')
-            .from(
-              '.lp-demo-sidebar button',
-              {
-                autoAlpha: 0,
-                x: language === 'ar' ? 20 : -20,
-                stagger: 0.06,
-                duration: 0.6,
-                ease: 'power2.out',
-              },
-              '-=0.5'
-            );
 
           // Extras cards stagger reveal
           gsap.from('.lp-extras article', {
@@ -607,7 +580,7 @@ export default function Landing() {
           // 6. Desktop-specific Enhanced Interactions: 3D Card Tilt & Magnetic Button Pull
           if (isDesktop) {
             const magneticButtons = gsap.utils.toArray<HTMLElement>(
-              '.lp-button, .lp-nav-cta, .lp-back-top, .lp-scroll, .lp-language, .lp-flip-btn, .lp-mat-btn, .lp-reward-claim-btn'
+              '.lp-button, .lp-nav-cta, .lp-back-top, .lp-scroll, .lp-language, .lp-flip-btn, .lp-reward-claim-btn'
             );
 
             magneticButtons.forEach((btn) => {
@@ -683,48 +656,41 @@ export default function Landing() {
     { scope: root, dependencies: [language], revertOnUpdate: true }
   );
 
-  // Playground scene switch smooth transition
+  // The tilted feature previews are decorative (aria-hidden).
+  // Keep their controls out of the keyboard tab order so focus never lands on content hidden from screen readers.
+  useEffect(() => {
+    document
+      .querySelectorAll<HTMLElement>('.lp-feature-art button, .lp-feature-art a[href], .lp-feature-art input, .lp-feature-art textarea, .lp-feature-art select, .lp-feature-art [tabindex]')
+      .forEach((el) => el.setAttribute('tabindex', '-1'));
+  });
+
+  // Feature mockups have a natural width of ~370px; on narrow phones scale them to fit instead of cropping them.
+  useEffect(() => {
+    const arts = Array.from(document.querySelectorAll<HTMLElement>('.lp-feature-art'));
+    if (!arts.length || typeof ResizeObserver === 'undefined') return;
+    const NATURAL_WIDTH = 372;
+    const fit = () =>
+      arts.forEach((art) => {
+        const scale = Math.min(1, Math.max(0.6, (art.clientWidth - 16) / NATURAL_WIDTH));
+        art.style.setProperty('--art-scale', scale.toFixed(3));
+      });
+    fit();
+    const observer = new ResizeObserver(fit);
+    arts.forEach((art) => observer.observe(art));
+    return () => observer.disconnect();
+  }, [language]);
+
+  // Team: cards drop onto the page, then the underline under each name is drawn once.
   useGSAP(
     () => {
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      gsap.fromTo(
-        '.lp-demo-panel',
-        { autoAlpha: 0, y: 12 },
-        { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out', clearProps: 'transform' }
-      );
+      const tl = gsap.timeline({ scrollTrigger: { trigger: '.lp-team', start: 'top 70%', once: true } });
+      tl.from('.lp-team-copy > *', { autoAlpha: 0, y: 26, stagger: 0.12, duration: 0.8, ease: 'power3.out' })
+        .from('.lp-note-card', { autoAlpha: 0, y: 70, rotation: (i: number) => (i === 0 ? -9 : 8), stagger: 0.22, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .from('.lp-note-underline path', { strokeDashoffset: 1, stagger: 0.25, duration: 0.9, ease: 'power2.inOut' }, '-=0.4');
     },
-    { scope: root, dependencies: [scene], revertOnUpdate: false }
+    { scope: root, dependencies: [language], revertOnUpdate: true }
   );
-
-  const changeScene = (next: Scene) => {
-    const activeTab = document.getElementById(`tab-${next}`);
-    if (activeTab?.parentElement) { const bar = activeTab.parentElement; const tabBox = activeTab.getBoundingClientRect(); const barBox = bar.getBoundingClientRect(); bar.scrollBy({ left: tabBox.left - barBox.left - (barBox.width - tabBox.width) / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); }
-    if (next === scene) return;
-    setScene(next);
-    setSaved(false);
-  };
-
-  const handleGenerateAiPlan = (topic?: string) => {
-    const selectedTopic = topic || aiTopicInput;
-    setAiTopicInput(selectedTopic);
-    setAiIsGenerating(true);
-    setTimeout(() => {
-      setAiIsGenerating(false);
-      if (ar) {
-        setAiGeneratedPhases([
-          { title: `استيعاب أسس ${selectedTopic}`, time: '35 دقيقة' },
-          { title: 'حل تطبيقات ونماذج متدرجة الصعوبة', time: '55 دقيقة' },
-          { title: 'تقييم فوري وتلخيص أهم القوانين', time: '30 دقيقة' }
-        ]);
-      } else {
-        setAiGeneratedPhases([
-          { title: `Master Core Concepts of ${selectedTopic}`, time: '35 mins' },
-          { title: 'Solve Graded Drills & Practice Problems', time: '55 mins' },
-          { title: 'Instant Knowledge Assessment & Review', time: '30 mins' }
-        ]);
-      }
-    }, 450);
-  };
 
   const handleAddMatPages = (delta: number) => {
     setMatPages((prev) => {
@@ -739,15 +705,6 @@ export default function Landing() {
   const mStr = String(minutes).padStart(2, '0');
   const sStr = String(remainingSecs).padStart(2, '0');
 
-  const playgroundScenes: { id: Scene; icon: React.ReactNode; label: string }[] = [
-    { id: 'notes', icon: <FileText size={18} />, label: t.tabs[0] },
-    { id: 'plan', icon: <CalendarDays size={18} />, label: t.tabs[1] },
-    { id: 'focus', icon: <Timer size={18} />, label: t.tabs[2] },
-    { id: 'ai', icon: <Sparkles size={18} />, label: t.tabs[3] },
-    { id: 'materials', icon: <BookOpen size={18} />, label: t.tabs[4] },
-    { id: 'rewards', icon: <Trophy size={18} />, label: t.tabs[5] },
-  ];
-
   return (
     <div className="lp" ref={root}>
       {/* 1. Top scroll progress bar */}
@@ -757,35 +714,46 @@ export default function Landing() {
       </a>
       <header className="lp-header">
         <a className="lp-brand" href="#" aria-label="ENote">
-          <img src="/assets/enote-icon.png" width="42" height="42" alt="" />
+          <img src="/assets/icons/icon-96.png" width="42" height="42" alt="" />
           <span>
             ENote<span className="lp-brand-dot">.</span>
           </span>
         </a>
         <nav className={menu ? 'lp-nav is-open' : 'lp-nav'} aria-label={t.menu}>
-          {['idea', 'playground', 'questions'].map((id, i) => (
+          {[
+            ['idea', t.nav[0]],
+            ['features', t.nav[1]],
+            ['team', t.navTeam],
+            ['questions', t.nav[2]],
+          ].map(([id, label]) => (
             <a href={`#${id}`} key={id} onClick={() => setMenu(false)}>
-              {t.nav[i]}
+              {label}
             </a>
           ))}
           <div className="lp-nav-mobile-actions">
-            <a href="/app" className="lp-button lp-button-orange" onClick={() => setMenu(false)}>
-              {t.open}
-              <ArrowUpRight size={17} />
+            <a href="#get" className="lp-button lp-button-orange" onClick={() => setMenu(false)}>
+              {t.getCta}
+              <ArrowDown size={17} />
             </a>
             
           </div>
         </nav>
         <div className="lp-header-actions">
-          <button className="lp-language" onClick={() => setLanguage(ar ? 'en' : 'ar')} aria-label={ar ? 'Switch to English' : 'التبديل للعربية'}>
+          <button className="lp-language" onClick={() => setLanguage(ar ? 'en' : 'ar')} aria-label={ar ? 'English · التبديل إلى الإنجليزية' : 'العربية · Switch to Arabic'}>
             <Globe2 size={16} />
             {t.lang}
           </button>
           
-          <a className="lp-nav-cta" href="/app">
-            {t.open}
-            <ArrowUpRight size={16} />
-          </a>
+          {release ? (
+            <a className="lp-nav-cta" href={release.apkUrl} rel="noopener" download>
+              <Download size={16} aria-hidden="true" />
+              {ar ? 'تنزيل' : 'Download'}
+            </a>
+          ) : (
+            <a className="lp-nav-cta" href="#get">
+              {t.getCta}
+            </a>
+          )}
           <button className="lp-menu" aria-label={t.menu} aria-expanded={menu} onClick={() => setMenu(!menu)}>
             {menu ? <X /> : <Menu />}
           </button>
@@ -801,24 +769,23 @@ export default function Landing() {
             </h1>
             <p>{t.intro}</p>
             <div className="lp-hero-actions">
-              <a href="/app" className="lp-button lp-button-orange">
-                {t.open}
-                <ArrowUpRight size={20} />
-              </a>
-              {downloadButton}
-              <a href="#playground" className="lp-text-link">
+              {primaryActions}
+              <a href="#features" className="lp-text-link">
                 {t.explore}
                 <ArrowDown size={17} />
               </a>
             </div>
             <p className="lp-release-status">
-              {release
-                ? ar
-                  ? `الإصدار ${release.version} · أندرويد 7.0 فأعلى · SHA-256: ${release.sha256.slice(0, 12)}… · قد يطلب أندرويد السماح بالتثبيت من هذا المصدر.`
-                  : `Version ${release.version} · Android 7.0+ · SHA-256: ${release.sha256.slice(0, 12)}… · Android may ask you to allow installs from this source.`
-                : ar
-                  ? 'نسخة Android قيد التجهيز؛ جرّب نسخة الويب الآن.'
-                  : 'Android release in preparation. Try the web app today.'}
+              {release ? (
+                <>
+                  {ar ? (<>الإصدار <bdi dir="ltr">{release.version}</bdi> · <bdi dir="ltr">{releaseMb} MB</bdi> · أندرويد 7.0 فأعلى · </>) : `Version ${release.version} · ${releaseMb} MB · Android 7.0+ · `}
+                  <a href="#get">{ar ? 'طريقة التثبيت' : 'How to install'}</a>
+                </>
+              ) : ar ? (
+                'نسخة Android قيد التجهيز.'
+              ) : (
+                'Android release in preparation.'
+              )}
             </p>
             <div className="lp-hero-foot">
               <span className="lp-live-dot" />
@@ -911,10 +878,8 @@ export default function Landing() {
         </section>
 
         {/* 6 Features Showcase: Distinct, Dynamic & Non-Duplicated Live Previews */}
-        <div className="lp-features lp-section">
+        <div className="lp-features lp-section" id="features">
           {t.features.map((f, i) => {
-            const scenesList: Scene[] = ['notes', 'plan', 'focus', 'ai', 'materials', 'rewards'];
-            const targetScene = scenesList[i];
             const featureSymbols = [
               <FileText key="0" />,
               <CheckCheck key="1" />,
@@ -932,10 +897,6 @@ export default function Landing() {
                   </div>
                   <h2>{f[0]}</h2>
                   <p>{f[1]}</p>
-                  <a href="#playground" onClick={() => changeScene(targetScene)}>
-                    {f[2]}
-                    {ar ? <ArrowLeft size={19} /> : <ArrowRight size={19} />}
-                  </a>
                 </div>
 
                 <div className="lp-feature-art" aria-hidden="true">
@@ -1204,460 +1165,6 @@ export default function Landing() {
           })}
         </div>
 
-        {/* Interactive Playground: Full 6 Scenes Supported */}
-        <section className="lp-playground" id="playground">
-          <div className="lp-section lp-playground-inner">
-            <div className="lp-demo-heading">
-              <h2>
-                {t.demoTitle[0]}
-                <br />
-                <span>{t.demoTitle[1]}</span>
-              </h2>
-              <p>{t.demoBody}</p>
-            </div>
-            <div className="lp-demo">
-              <div className="lp-demo-sidebar">
-                <span className="lp-demo-brand">
-                  <img src="/assets/enote-icon.png" width="30" height="30" alt="" />
-                  ENote
-                </span>
-                <div role="tablist" aria-label={ar ? 'اختار المعاينة' : 'Choose a preview'}>
-                  {playgroundScenes.map((s, i) => (
-                    <button
-                      key={s.id}
-                      id={`tab-${s.id}`}
-                      role="tab"
-                      aria-selected={scene === s.id}
-                      aria-controls={`panel-${s.id}`}
-                      onClick={() => changeScene(s.id)}
-                      onKeyDown={(e) => {
-                        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
-                          e.preventDefault();
-                          const total = playgroundScenes.length;
-                          const nextIdx =
-                            e.key === 'Home'
-                              ? 0
-                              : e.key === 'End'
-                              ? total - 1
-                              : ['ArrowRight', 'ArrowDown'].includes(e.key)
-                              ? (i + 1) % total
-                              : (i - 1 + total) % total;
-                          changeScene(playgroundScenes[nextIdx].id);
-                          document.getElementById(`tab-${playgroundScenes[nextIdx].id}`)?.focus();
-                        }
-                      }}
-                      tabIndex={scene === s.id ? 0 : -1}
-                    >
-                      {s.icon}
-                      <span>{s.label}</span>
-                    </button>
-                  ))}
-                </div>
-                <small>{t.demoLabel}</small>
-              </div>
-
-              <div className="lp-demo-panel" role="tabpanel" id={`panel-${scene}`} aria-labelledby={`tab-${scene}`} tabIndex={0}>
-                {scene === 'notes' ? (
-                  /* 1. Notes Tab */
-                  <>
-                    <div className="lp-demo-panel-head">
-                      <h3>{t.notesTitle}</h3>
-                      <FileText size={25} />
-                    </div>
-                    <label htmlFor="preview-note">{t.noteTitle}</label>
-                    <textarea
-                      id="preview-note"
-                      value={note}
-                      onChange={(e) => {
-                        setNote(e.target.value);
-                        setSaved(false);
-                      }}
-                    />
-                    <div className="lp-note-save">
-                      <button className="lp-button lp-button-blue" onClick={() => setSaved(true)} disabled={saved}>
-                        {saved ? <Check size={18} /> : <Plus size={18} />} {saved ? t.saved : t.save}
-                      </button>
-                      <span role="status">{saved ? (ar ? 'الملاحظة محفوظة طول ما الصفحة مفتوحة.' : 'Kept while this page is open.') : ''}</span>
-                    </div>
-                  </>
-                ) : scene === 'plan' ? (
-                  /* 2. Plan Tab */
-                  <>
-                    <div className="lp-demo-panel-head">
-                      <h3>{t.planTitle}</h3>
-                      <span>
-                        {tasks.filter((x) => x.done).length}/{tasks.length} {t.completed}
-                      </span>
-                    </div>
-                    <div className="lp-demo-tasks">
-                      {tasks.map((task, i) => (
-                        <label key={i} className={task.done ? 'is-done' : ''}>
-                          <input
-                            type="checkbox"
-                            checked={task.done}
-                            onChange={() =>
-                              setTasks((prev) =>
-                                prev.map((v, j) => (j === i ? { ...v, done: !v.done } : v))
-                              )
-                            }
-                          />
-                          <span>{task.text}</span>
-                        </label>
-                      ))}
-                    </div>
-                    <form
-                      className="lp-add-task"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (newTask.trim()) {
-                          setTasks([...tasks, { text: newTask.trim(), done: false }]);
-                          setNewTask('');
-                        }
-                      }}
-                    >
-                      <input
-                        aria-label={t.newTask}
-                        placeholder={t.newTask}
-                        value={newTask}
-                        maxLength={140}
-                        onChange={(e) => setNewTask(e.target.value)}
-                        required
-                      />
-                      <button type="submit" className="lp-button lp-button-blue">
-                        <Plus size={18} />
-                        {t.add}
-                      </button>
-                    </form>
-                  </>
-                ) : scene === 'focus' ? (
-                  /* 3. 3D Pomodoro Flip Clock Tab */
-                  <div className="lp-timer-demo">
-                    <div className="lp-timer-modes">
-                      <button
-                        type="button"
-                        className={`lp-timer-mode-btn ${timerMode === 'study' ? 'active' : ''}`}
-                        onClick={() => {
-                          setTimerMode('study');
-                          setRunning(false);
-                          setSeconds(25 * 60);
-                        }}
-                      >
-                        {t.studyMode}
-                      </button>
-                      <button
-                        type="button"
-                        className={`lp-timer-mode-btn ${timerMode === 'break' ? 'active' : ''}`}
-                        onClick={() => {
-                          setTimerMode('break');
-                          setRunning(false);
-                          setSeconds(5 * 60);
-                        }}
-                      >
-                        {t.breakMode}
-                      </button>
-                      <button
-                        type="button"
-                        className={`lp-timer-mode-btn ${timerMode === 'longBreak' ? 'active' : ''}`}
-                        onClick={() => {
-                          setTimerMode('longBreak');
-                          setRunning(false);
-                          setSeconds(15 * 60);
-                        }}
-                      >
-                        {t.longBreakMode}
-                      </button>
-                    </div>
-
-                    <div className="lp-flip-card-preview lp-flip-large" dir="ltr">
-                      <div className="lp-flip-digit">
-                        {mStr}
-                      </div>
-                      <div className="lp-flip-sep">:</div>
-                      <div className="lp-flip-digit">
-                        {sStr}
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '10px' }}>
-                      <button
-                        className="lp-button lp-button-blue"
-                        onClick={() => {
-                          if (!running) {
-                            deadline.current = Date.now() + (seconds || 1500) * 1000;
-                            if (!seconds) setSeconds(1500);
-                          }
-                          setRunning(!running);
-                          if (soundEnabled) playMechanicalTick();
-                        }}
-                      >
-                        {running ? <Pause size={18} /> : <Play size={18} fill="currentColor" />} {running ? t.pause : t.start}
-                      </button>
-                      <button
-                        className="lp-reset"
-                        aria-label={t.reset}
-                        onClick={() => {
-                          setRunning(false);
-                          const resetSecs = timerMode === 'study' ? 25 * 60 : timerMode === 'break' ? 5 * 60 : 15 * 60;
-                          setSeconds(resetSecs);
-                          if (soundEnabled) playMechanicalTick();
-                        }}
-                      >
-                        <RotateCcw size={20} />
-                      </button>
-                      <button
-                        className="lp-reset"
-                        title={soundEnabled ? (ar ? 'كتم التكتكة' : 'Mute Ticking') : (ar ? 'تشغيل التكتكة' : 'Enable Ticking')}
-                        aria-label={soundEnabled ? (ar ? 'كتم التكتكة' : 'Mute Ticking') : (ar ? 'تشغيل التكتكة' : 'Enable Ticking')}
-                        onClick={() => {
-                          const next = !soundEnabled;
-                          setSoundEnabled(next);
-                          if (next) playMechanicalTick();
-                        }}
-                      >
-                        {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-                      </button>
-                    </div>
-                  </div>
-                ) : scene === 'ai' ? (
-                  /* 4. Study assistant tab */
-                  <div className="lp-ai-demo">
-                    <div className="lp-demo-panel-head">
-                      <div>
-                        <h3>{t.aiTitle}</h3>
-                        <p style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>{t.aiDesc}</p>
-                      </div>
-                      <Sparkles size={25} color="#6366f1" />
-                    </div>
-
-                    <div className="lp-ai-pills">
-                      {t.aiPills.map((pill) => (
-                        <button
-                          key={pill}
-                          type="button"
-                          className="lp-ai-pill"
-                          onClick={() => handleGenerateAiPlan(pill)}
-                        >
-                          {pill}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="lp-ai-prompt-box">
-                      <input
-                        value={aiTopicInput}
-                        onChange={(e) => setAiTopicInput(e.target.value)}
-                        placeholder={ar ? 'اكتب المادة أو الدرس...' : 'Enter subject or lecture topic...'}
-                      />
-                      <button
-                        type="button"
-                        className="lp-button lp-button-blue"
-                        onClick={() => handleGenerateAiPlan()}
-                        disabled={aiIsGenerating}
-                      >
-                        <Sparkles size={16} />
-                        {aiIsGenerating ? t.aiGenerating : t.aiGenerate}
-                      </button>
-                    </div>
-
-                    <div className="lp-ai-phases">
-                      {aiGeneratedPhases.map((phase) => (
-                        <div className="lp-ai-phase-item" key={phase.title}>
-                          <strong>{phase.title}</strong>
-                          <span>{phase.time}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="lp-ai-quiz-preview">
-                      <div style={{ fontWeight: '800', color: '#1e293b', marginBottom: '8px', fontSize: '14px' }}>
-                        {t.aiQuizQ}
-                      </div>
-                      <div className="lp-ai-quiz-options">
-                        {t.aiQuizOpts.map((opt, optIdx) => (
-                          <button
-                            key={opt}
-                            type="button"
-                            className={`lp-ai-quiz-btn ${
-                              aiQuizSelection === optIdx
-                                ? optIdx === 0
-                                  ? 'correct'
-                                  : 'wrong'
-                                : ''
-                            }`}
-                            onClick={() => {
-                              setAiQuizSelection(optIdx);
-                              if (soundEnabled) playMechanicalTick();
-                            }}
-                          >
-                            <span>{['أ', 'ب', 'ج'][optIdx] || optIdx + 1}. {opt}</span>
-                            {aiQuizSelection === optIdx && (
-                              <strong style={{ marginInlineStart: 'auto', fontSize: '12px' }}>
-                                {optIdx === 0 ? t.aiQuizCorrect : t.aiQuizWrong}
-                              </strong>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : scene === 'materials' ? (
-                  /* 5. Materials Hub Tab */
-                  <div className="lp-materials-demo">
-                    <div className="lp-demo-panel-head">
-                      <div>
-                        <h3>{t.materialsTitle}</h3>
-                        <p style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>{t.materialsDesc}</p>
-                      </div>
-                      <BookOpen size={25} color="#2563eb" />
-                    </div>
-
-                    <div className="lp-materials-card">
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span className="lp-materials-badge">
-                          <Folder size={13} />
-                          {t.materialsSubject}
-                        </span>
-                        <span style={{ fontSize: '12px', fontWeight: '700', color: '#64748b' }}>PDF · 220 {ar ? 'صفحة' : 'pages'}</span>
-                      </div>
-
-                      <div style={{ fontSize: '17px', fontWeight: '800', color: '#0f172a' }}>
-                        {t.materialsBook}
-                      </div>
-
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#475569' }}>
-                        <span>{ar ? 'معدل الإنجاز:' : 'Completion Rate:'}</span>
-                        <strong style={{ color: '#2563eb' }}>
-                          {matPages} / 220 {ar ? 'صفحة' : 'pages'} ({Math.round((matPages / 220) * 100)}%)
-                        </strong>
-                      </div>
-
-                      <div className="lp-materials-progress-track">
-                        <div
-                          className={`lp-materials-progress-fill ${matFinished ? 'completed' : ''}`}
-                          style={{ width: `${(matPages / 220) * 100}%` }}
-                        />
-                      </div>
-
-                      <div className="lp-materials-btn-group">
-                        <button type="button" className="lp-mat-btn" onClick={() => handleAddMatPages(-5)}>
-                          -5 {ar ? 'صفحات' : 'pg'}
-                        </button>
-                        <button type="button" className="lp-mat-btn" onClick={() => handleAddMatPages(5)}>
-                          +5 {ar ? 'صفحات' : 'pg'}
-                        </button>
-                        <button type="button" className="lp-mat-btn" onClick={() => handleAddMatPages(10)}>
-                          +10 {ar ? 'صفحات' : 'pg'}
-                        </button>
-                        <button
-                          type="button"
-                          className="lp-mat-btn primary"
-                          onClick={() => {
-                            setMatPages(220);
-                            setMatFinished(true);
-                            if (soundEnabled) playMechanicalTick();
-                          }}
-                        >
-                          {ar ? '✓ ختم المرجع' : '✓ Mark Done'}
-                        </button>
-                        {matFinished && (
-                          <button
-                            type="button"
-                            className="lp-mat-btn"
-                            onClick={() => {
-                              setMatPages(0);
-                              setMatFinished(false);
-                            }}
-                          >
-                            {ar ? 'إعادة القراءة' : 'Reset'}
-                          </button>
-                        )}
-                      </div>
-
-                      {matFinished && (
-                        <div className="lp-mat-celebrate">
-                          <Sparkles size={16} />
-                          <span>{t.materialsDone}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  /* 6. Rewards & Badges Tab */
-                  <div className="lp-rewards-demo">
-                    <div className="lp-demo-panel-head">
-                      <div>
-                        <h3>{t.rewardsTitle}</h3>
-                        <p style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>{t.rewardsDesc}</p>
-                      </div>
-                      <Trophy size={25} color="#f59e0b" />
-                    </div>
-
-                    <div className="lp-rewards-demo-card">
-                      <div className="lp-rewards-demo-head">
-                        <span className="lp-rewards-level-pill" style={{ fontSize: '13px', padding: '7px 16px' }}>
-                          <Crown size={17} />
-                          {t.rewardsLevel}
-                        </span>
-                        <span className="lp-rewards-streak-pill" style={{ fontSize: '13px', padding: '7px 16px' }}>
-                          <Flame size={17} />
-                          {t.rewardsStreak}
-                        </span>
-                      </div>
-
-                      <div className="lp-rewards-xp-row">
-                        <div className="lp-rewards-xp-labels" style={{ fontSize: '13px' }}>
-                          <span>{ar ? 'التقدم نحو المستوى 6:' : 'Progress to Level 6:'}</span>
-                          <strong style={{ color: '#d97706', fontWeight: '800' }}>{xp.toLocaleString()} / 2,000 XP</strong>
-                        </div>
-                        <div className="lp-rewards-xp-track" style={{ height: '12px' }}>
-                          <div
-                            className="lp-rewards-xp-fill"
-                            style={{ width: `${(xp / 2000) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        className="lp-reward-claim-btn"
-                        style={{ padding: '12px 18px', fontSize: '13px' }}
-                        onClick={() => {
-                          if (!claimedBonus) {
-                            setXp((prev) => Math.min(2000, prev + 50));
-                            setClaimedBonus(true);
-                            if (soundEnabled) playMechanicalTick();
-                          }
-                        }}
-                      >
-                        <Sparkles size={16} />
-                        {claimedBonus ? t.rewardsClaimed : t.rewardsClaim}
-                      </button>
-
-                      <div className="lp-rewards-gallery">
-                        {[
-                          { title: ar ? 'سيد التركيز' : 'Focus Master', icon: '🏆', desc: ar ? 'سجّل 150د في بومودورو' : 'Log 150m focus' },
-                          { title: ar ? 'قارئ شغوف' : 'Avid Reader', icon: '📚', desc: ar ? 'اقرأ 50 صفحة ملازم' : 'Read 50 pages' },
-                          { title: ar ? 'عقل مفكر' : 'AI Mind', icon: '⚡', desc: ar ? 'ولّد خطة بالذكاء الاصطناعي' : 'Use AI Planner' },
-                          { title: ar ? 'روح الالتزام' : 'Habit Streak', icon: '🔥', desc: ar ? 'التزام 3 أيام متتالية' : '3-Day study streak' },
-                          { title: ar ? 'صائد الأهداف' : 'Goal Hunter', icon: '🎯', desc: ar ? 'حقق هدفاً دراسياً 100%' : '100% goal achieved' },
-                          { title: ar ? 'عبقري إينوت' : 'ENote Prodigy', icon: '👑', desc: ar ? 'المستوى 10 الدراسي' : 'Reach Level 10' }
-                        ].map((badge) => (
-                          <div className="lp-rewards-gallery-item unlocked" key={badge.title}>
-                            <span className="badge-icon" style={{ fontSize: '24px' }}>{badge.icon}</span>
-                            <span className="badge-title">{badge.title}</span>
-                            <span className="badge-desc">{badge.desc}</span>
-                            <span className="badge-status">{ar ? 'مكتمل ✦' : 'Unlocked ✦'}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Extras: 6 Distinct Icons for 6 Items */}
         <section className="lp-extras lp-section">
           <h2>{t.extrasTitle}</h2>
@@ -1682,6 +1189,68 @@ export default function Landing() {
           </div>
         </section>
 
+        <section className="lp-get lp-section" id="get" aria-labelledby="get-title">
+          <div className="lp-get-head">
+            <h2 id="get-title">{t.getTitle}</h2>
+            <p>{t.getBody}</p>
+          </div>
+          <article className="lp-get-card lp-get-android">
+            <h3>
+              <Smartphone size={22} aria-hidden="true" />
+              {t.androidTitle}
+            </h3>
+            {release ? (
+              <div className="lp-get-cols">
+                <div className="lp-get-main">
+                  <p className="lp-get-meta">
+                    {ar ? (<>الإصدار <bdi dir="ltr">{release.version}</bdi> · <bdi dir="ltr">{releaseMb} MB</bdi> · أندرويد 7.0 فأعلى</>) : `Version ${release.version} · ${releaseMb} MB · Android 7.0+`}
+                  </p>
+                  <a href={release.apkUrl} className="lp-button lp-button-orange" rel="noopener" download>
+                    <Download size={19} aria-hidden="true" />
+                    {t.getApk}
+                  </a>
+                </div>
+                <div className="lp-get-guide">
+                  <h4>{t.installTitle}</h4>
+                  <ol className="lp-get-steps" role="list">
+                    {t.installSteps.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            ) : (
+              <p className="lp-get-meta">{t.androidSoon}</p>
+            )}
+          </article>
+        </section>
+
+        <section className="lp-team lp-section" id="team" aria-labelledby="team-title">
+          <div className="lp-team-copy">
+            <h2 id="team-title">
+              {t.teamTitle[0]}
+              <br />
+              <span>{t.teamTitle[1]}</span>
+            </h2>
+            <p>{t.teamBody}</p>
+          </div>
+          <ul className="lp-team-notes">
+            {(ar ? ['أماني روماني', 'إيريني عاطف'] : ['Amany Romany', 'Ereeny Atef']).map((name, i) => (
+              <li className={`lp-note-card lp-note-card-${i}`} key={name}>
+                <span className="lp-note-tape" aria-hidden="true" />
+                <h3 lang={ar ? 'ar' : 'en'} dir={ar ? 'rtl' : 'ltr'}>
+                  <span>{name}</span>
+                  <svg className="lp-note-underline" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
+                    <path pathLength="1" d="M2 7 C 30 1, 52 11, 82 6 S 142 2, 170 7 S 192 8, 198 5" />
+                  </svg>
+                </h3>
+                <p className="lp-note-role">{t.teamRole}</p>
+                <small className="lp-note-grade">{t.teamGrade}</small>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section className="lp-faq lp-section" id="questions">
           <h2>{t.faqTitle}</h2>
           <div>
@@ -1699,7 +1268,7 @@ export default function Landing() {
 
         <section className="lp-final">
           <div className="lp-final-orbit" aria-hidden="true" />
-          <img src="/assets/enote-icon.png" width="94" height="94" alt="" loading="lazy" />
+          <img src="/assets/icons/icon-192.png" width="94" height="94" alt="" loading="lazy" />
           <h2>
             {t.cta[0]}
             <br />
@@ -1707,17 +1276,18 @@ export default function Landing() {
           </h2>
           <p>{t.ctaBody}</p>
           <div className="lp-final-actions">
-            <a href="/app" className="lp-button lp-button-orange">
-              {t.open}
-              <ArrowUpRight size={20} />
-            </a>
-            {downloadButton}
+            {primaryActions}
           </div>
         </section>
       </main>
-      <footer className="lp-footer"><a href="/privacy.html">{ar ? 'الخصوصية' : 'Privacy'}</a>
+      <footer className="lp-footer">
+        <nav className="lp-footer-links" aria-label={ar ? 'روابط' : 'Links'}>
+          <a href="#get">{t.footerGet}</a>
+          <a href="#team">{t.footerTeam}</a>
+          <a href="/privacy">{ar ? 'الخصوصية' : 'Privacy'}</a>
+        </nav>
         <a className="lp-brand" href="#">
-          <img src="/assets/enote-icon.png" width="34" height="34" alt="" />
+          <img src="/assets/icons/icon-96.png" width="34" height="34" alt="" />
           <span>ENote.</span>
         </a>
         <p>{t.footer}</p>

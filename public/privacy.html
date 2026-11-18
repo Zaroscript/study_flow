@@ -1,1 +1,285 @@
-<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ENote — الخصوصية / Privacy</title><body style="font:18px/1.8 system-ui;max-width:760px;margin:50px auto;padding:24px"><h1>الخصوصية في ENote</h1><p>محتوى مساحة الويب محفوظ على جهازك في تخزين المتصفح. مسح بيانات المتصفح قد يحذفه؛ احتفظ بنسخة احتياطية.</p><p>أدوات المساعدة المحلية لا ترسل محتواك إلى نموذج خارجي. عند اختيار التوليد عن بعد وتفعيله على الخادم، يُرسل النص الذي تقدمه وسياق المحادثة عبر POST إلى مزود التوليد الذي يضبطه مشغّل الخدمة. لا تدخل أسرارًا أو بيانات شخصية في الطلبات. الخادم يستخدم مفتاحًا مشتقًا من عنوان الشبكة لفرض حدود الطلبات، ولا يضع الملاحظات في URL.</p><p>حاليًا لا يتوفر إصدار Android موثَّق للتحميل من هذه الصفحة. راجع حالة الإصدار قبل تثبيت أي ملف.</p><hr><section lang="en" dir="ltr"><h2>ENote privacy</h2><p>Your web workspace is stored in your browser. Clearing browser data can remove it; keep backups.</p><p>Local study tools do not send your content to an external model. When you choose remote generation and it is configured, the text you submit and conversation context are sent by POST to the operator-configured provider. Do not enter secrets or personal information. The server uses a derived network-address key for request quotas; it does not put notes in URLs.</p><p>No verified Android download is currently offered here.</p></section><a href="/">ENote</a></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الخصوصية — ENote</title>
+<meta name="description" content="ماذا يفعل ENote ببياناتك اليوم: ما يبقى على جهازك، والأذونات، والتنزيل، والذكاء الاصطناعي الاختياري في تطبيق الويب.">
+<meta name="theme-color" content="#071a34">
+<link rel="icon" type="image/png" href="/assets/enote-icon.png">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+:root{--navy:#071a34;--navy2:#0b2b52;--ink:#0b2347;--cream:#fbf3df;--text:#f7f9ff;--muted:#b2c2d7;--orange:#ffb23f;--blue:#2f85f6;--line:#1c3a63}
+*{box-sizing:border-box}
+html{color-scheme:dark;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--navy);color:var(--text);font-family:Cairo,Manrope,system-ui,sans-serif;font-size:17px;line-height:1.85;overflow-wrap:break-word}
+[lang=en]{font-family:Manrope,Cairo,system-ui,sans-serif;line-height:1.7}
+[hidden]{display:none!important}
+a{color:var(--orange);text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+main:focus{outline:none}
+.skip{position:absolute;inset-inline-start:16px;top:-80px;background:var(--orange);color:var(--ink);padding:10px 18px;min-height:44px;font-weight:700;border-radius:8px;z-index:20;text-decoration:none}
+.skip:focus{top:12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.top{border-bottom:1px solid var(--line);background:var(--navy)}
+.top-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--text);font-weight:800;font-size:20px;text-decoration:none}
+.brand img{border-radius:9px;display:block}
+.top-nav{display:flex;align-items:center;gap:8px}
+.home{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;color:var(--text);text-decoration:none;font-weight:600;border-radius:999px}
+.home:hover{background:var(--navy2)}
+.lang{min-height:44px;min-width:44px;padding:0 18px;border-radius:999px;border:2px solid var(--orange);background:transparent;color:var(--orange);font:inherit;font-weight:700;cursor:pointer}
+.lang:hover{background:var(--orange);color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px;display:block}
+main{max-width:70ch;min-width:0}
+h1{font-size:clamp(34px,6vw,52px);line-height:1.3;margin:40px 0 12px;font-weight:800;letter-spacing:-.01em}
+.lead{font-size:19px;color:var(--muted);margin:0 0 8px;max-width:60ch}
+.eff{margin:0 0 28px;color:var(--muted);font-size:15px}
+.eff time{color:var(--text);font-weight:700}
+h2{font-size:clamp(24px,3.4vw,30px);line-height:1.4;margin:0 0 12px;font-weight:800}
+h3{font-size:19px;line-height:1.5;margin:22px 0 4px;color:var(--orange);font-weight:700}
+.sec{padding:34px 0 6px;border-top:1px solid var(--line);margin-top:30px;scroll-margin-top:16px}
+.sec>h2:first-child{margin-top:0}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-inline-start:1.3em}
+li{margin-bottom:8px}
+li::marker{color:var(--orange)}
+code{font-family:Consolas,Menlo,monospace;font-size:.9em;background:var(--navy2);padding:1px 7px;border-radius:5px;direction:ltr;unicode-bidi:isolate;color:var(--text)}
+dl{margin:0 0 14px}
+dt{font-weight:800;margin-top:16px}
+dd{margin:2px 0 0;padding-inline-start:14px;border-inline-start:3px solid var(--orange);color:var(--muted)}
+dd+dt{margin-top:18px}
+.note{position:relative;margin:8px 0 14px;padding:34px 26px 18px;padding-inline-start:64px;background:var(--cream);color:var(--ink);border-radius:6px 6px 14px 14px;box-shadow:12px 22px 40px #00000055;scroll-margin-top:16px}
+.note::before{content:"";position:absolute;inset-block:0;inset-inline-start:42px;width:2px;background:var(--orange)}
+.note h2{color:var(--ink);font-size:clamp(28px,4vw,38px)}
+.note li::marker{color:#a85f00}
+.note li{margin-bottom:10px}
+.note ul{padding-inline-start:1.2em}
+.note strong{font-weight:800}
+.tape{position:absolute;top:-13px;inset-inline-start:50%;width:92px;height:26px;background:#ffb23fd9;box-shadow:0 2px 6px #00000030;transform:translateX(-50%)}
+[dir=rtl] .tape{transform:translateX(50%)}
+.toc-wide{display:none}
+.toc-narrow{margin:0 0 30px;border:1px solid var(--line);border-radius:12px;background:var(--navy2)}
+.toc-narrow summary{min-height:44px;display:flex;align-items:center;padding:0 16px;font-weight:700;cursor:pointer}
+.toc-narrow ol{list-style:none;margin:0;padding:0 8px 8px}
+.toc-narrow a,.toc-wide a{display:flex;align-items:center;min-height:44px;padding:0 10px;color:var(--text);text-decoration:none;border-radius:8px}
+.toc-narrow a:hover,.toc-wide a:hover{background:var(--navy2);color:var(--orange)}
+.toc-narrow li,.toc-wide li{margin:0}
+.foot{border-top:1px solid var(--line);background:var(--navy)}
+.foot-in{max-width:1120px;margin:0 auto;padding:18px 16px;display:flex;flex-wrap:wrap;gap:4px 24px;align-items:center;color:var(--muted);font-size:15px}
+.foot-in a{display:inline-flex;align-items:center;min-height:44px}
+@media (min-width:720px){
+.note{transform:rotate(-1deg);margin-inline:-6px}
+}
+@media (min-width:980px){
+.wrap{display:grid;grid-template-columns:230px minmax(0,70ch);gap:56px;justify-content:center}
+.toc-wide{display:block;position:sticky;top:20px;align-self:start;margin-top:48px;max-height:calc(100vh - 40px);overflow:auto}
+.toc-h{margin:0 0 8px;padding:0 10px;font-weight:800;color:var(--muted);font-size:15px}
+.toc-wide ol{list-style:none;margin:0;padding:0}
+.toc-narrow{display:none}
+.toc-wide a{font-size:15px}
+}
+@media (max-width:520px){
+body{font-size:16px}
+.note{padding:30px 16px 14px;padding-inline-start:44px}
+.note::before{inset-inline-start:28px}
+}
+@media (forced-colors:active){.note{border:2px solid CanvasText}}
+</style>
+</head>
+<body>
+<a class="skip" id="skip" href="#ar-main">تخطي إلى المحتوى</a>
+<div class="page" id="page-ar" data-live="تم تغيير اللغة إلى العربية" lang="ar" dir="rtl">
+<header class="top">
+<div class="top-in">
+<a class="brand" href="/"><img src="/assets/enote-icon.png" width="36" height="36" alt=""><span>ENote</span></a>
+<nav class="top-nav" aria-label="التنقل"><a class="home" href="/">الرئيسية</a>
+<button type="button" class="lang" data-switch="en" lang="en" aria-label="Switch to English">English</button></nav>
+</div>
+</header>
+<div class="wrap">
+<aside class="toc-wide"><nav aria-label="في هذه الصفحة"><p class="toc-h" id="ar-toc-h">في هذه الصفحة</p><ol><li><a href="#ar-short">باختصار</a></li><li><a href="#ar-device">ما يبقى على جهازك</a></li><li><a href="#ar-none">ما لا يجمعه ENote</a></li><li><a href="#ar-perms">الأذونات ولماذا</a></li><li><a href="#ar-hosting">التنزيل والاستضافة</a></li><li><a href="#ar-web">تطبيق الويب والذكاء الاصطناعي الاختياري</a></li><li><a href="#ar-kids">الطلاب والقاصرون</a></li><li><a href="#ar-choices">خياراتك</a></li><li><a href="#ar-changes">تغييرات هذه السياسة</a></li><li><a href="#ar-contact">التواصل</a></li></ol></nav></aside>
+<main id="ar-main" tabindex="-1">
+<h1>الخصوصية في ENote</h1>
+<p class="lead">وصف بسيط لما يفعله ENote ببياناتك اليوم. هو شرح بلغة واضحة وليس عقدًا قانونيًا.</p>
+<p class="eff">ساري من <time datetime="2026-11-19">19 نوفمبر 2026</time></p>
+<details class="toc-narrow"><summary>في هذه الصفحة</summary><nav aria-label="في هذه الصفحة"><ol><li><a href="#ar-short">باختصار</a></li><li><a href="#ar-device">ما يبقى على جهازك</a></li><li><a href="#ar-none">ما لا يجمعه ENote</a></li><li><a href="#ar-perms">الأذونات ولماذا</a></li><li><a href="#ar-hosting">التنزيل والاستضافة</a></li><li><a href="#ar-web">تطبيق الويب والذكاء الاصطناعي الاختياري</a></li><li><a href="#ar-kids">الطلاب والقاصرون</a></li><li><a href="#ar-choices">خياراتك</a></li><li><a href="#ar-changes">تغييرات هذه السياسة</a></li><li><a href="#ar-contact">التواصل</a></li></ol></nav></details>
+<section class="note" id="ar-short" aria-labelledby="ar-short-h"><span class="tape" aria-hidden="true"></span><h2 id="ar-short-h">باختصار</h2>
+<ul>
+<li>ملاحظاتك ومهامك وأهدافك وعاداتك تبقى على جهازك. تطبيق أندرويد بلا حساب ولا تسجيل، وكوده لا يرسل بياناتك إلى أي مكان.</li>
+<li>لا إعلانات ولا أدوات تحليلات أو تتبّع ولا خدمة تقارير أعطال، لا في التطبيق ولا في هذا الموقع.</li>
+<li>الاستثناء الوحيد: أدوات الذكاء الاصطناعي في تطبيق الويب. النص الذي تكتبه فيها يصل إلى خادم الموقع، ولا يُرسل إلى مزوّد خارجي إلا إذا فعّل مالك الموقع ذلك.</li>
+<li>تستطيع حذف كل شيء في أي وقت. التفاصيل في قسم «خياراتك».</li>
+</ul></section>
+<section class="sec" id="ar-device" aria-labelledby="ar-device-h"><h2 id="ar-device-h">ما يبقى على جهازك</h2>
+<h3>تطبيق أندرويد</h3>
+<p>يحفظ التطبيق ما تكتبه في قاعدة بيانات محلية اسمها <bdi lang="en" dir="ltr">enote</bdi> داخل مساحة التطبيق الخاصة على هاتفك. يشمل ذلك المهام والواجبات والامتحانات والأهداف والعادات والملاحظات وجلسات المذاكرة والجدول الأسبوعي وقائمة المواد وبيانات الملف الشخصي (الاسم والصف). يحفظ أيضًا إعدادات صغيرة: المظهر واللغة وهل انتهت شاشة البداية، وسجل التنبيهات وجدولتها.</p>
+<p>يكتب التطبيق كذلك ملف أخطاء محليًا صغيرًا (<bdi lang="en" dir="ltr">enote-errors.log</bdi>) فيه وقت الخطأ ونوعه وبضعة أسطر تقنية، دون نص الأخطاء ودون ما كتبته. حجمه محدود، ويبقى على الجهاز ولا يُرسل إلى أي جهة.</p>
+<p>النسخ الاحتياطي التلقائي في أندرويد غير معطَّل في إعدادات التطبيق، فإذا فعّلته في هاتفك فقد تُضمَّن بيانات التطبيق في نسخة جهازك الاحتياطية. هذا يُدار من إعدادات هاتفك وليس من ENote.</p>
+<h3>تطبيق الويب</h3>
+<p>يحفظ تطبيق الويب (<bdi lang="en" dir="ltr">/app</bdi>) مساحة عملك في تخزين المتصفح على جهازك، مع تفضيلات اللغة والمظهر. مسح بيانات المتصفح قد يحذفها نهائيًا.</p>
+<h3>الصفحة الرئيسية</h3>
+<p>تحفظ الصفحة الرئيسية اللغة التي اخترتها في تخزين المتصفح فقط. وليس فيها حقول إدخال، فلا يُحفظ ولا يُرسل أي شيء تكتبه.</p></section>
+<section class="sec" id="ar-none" aria-labelledby="ar-none-h"><h2 id="ar-none-h">ما لا يجمعه ENote</h2>
+<ul>
+<li>لا حسابات ولا بريد إلكتروني ولا كلمات مرور.</li>
+<li>لا موقع جغرافي، ولا جهات اتصال، ولا كاميرا، ولا ميكروفون، ولا وصول إلى ملفاتك. هذه الأذونات غير مطلوبة أصلًا.</li>
+<li>لا إعلانات، ولا أدوات تحليلات، ولا تتبّع، ولا خدمة تقارير أعطال خارجية، ولا ملفات تعريف ارتباط يضعها ENote.</li>
+<li>لا خطوط ولا سكربتات من مواقع أخرى: خطوط الصفحة الرئيسية وهذه الصفحة تُحمَّل من الموقع نفسه.</li>
+</ul></section>
+<section class="sec" id="ar-perms" aria-labelledby="ar-perms-h"><h2 id="ar-perms-h">الأذونات ولماذا</h2>
+<p>يطلب تطبيق أندرويد هذه الأذونات فقط:</p>
+<dl>
+<dt>الإشعارات</dt>
+<dd>لعرض تذكيرات المهام والواجبات والأهداف وجلسات التركيز التي تضبطها. الجدولة تتم على جهازك. قد يظهر عنوان المهمة التي كتبتها داخل نص التذكير، وقد يظهر على شاشة القفل حسب إعدادات هاتفك. تستطيع رفض الإذن أو سحبه من إعدادات أندرويد.</dd>
+<dt>التشغيل عند بدء الجهاز</dt>
+<dd>لإعادة جدولة التذكيرات بعد إعادة تشغيل الهاتف أو تحديث التطبيق.</dd>
+<dt>الاهتزاز</dt>
+<dd>لاهتزاز خفيف عند اللمس أو عند حدوث خطأ في إدخال.</dd>
+<dt>الإنترنت</dt>
+<dd>الإذن مُعلَن في التطبيق، لكن كود التطبيق الحالي لا يُجري أي طلبات شبكة ولا يرسل بياناتك. أي تغيير في هذا سيُذكر هنا.</dd>
+</dl></section>
+<section class="sec" id="ar-hosting" aria-labelledby="ar-hosting-h"><h2 id="ar-hosting-h">التنزيل والاستضافة</h2>
+<p>ملف التثبيت لأندرويد (APK) يُنزَّل من صفحات الإصدارات في <bdi lang="en" dir="ltr">GitHub</bdi> (المستودع <bdi lang="en" dir="ltr">Zaroscript/study_flow</bdi>). عند التنزيل يستقبل <bdi lang="en" dir="ltr">GitHub</bdi> طلبك، ويخضع ذلك لسياسة خصوصية <bdi lang="en" dir="ltr">GitHub</bdi>.</p>
+<p>الموقع مُستضاف على <bdi lang="en" dir="ltr">Vercel</bdi>. مثل أغلب خدمات الاستضافة، قد تعالج <bdi lang="en" dir="ltr">Vercel</bdi> بيانات الطلب المعتادة مثل عنوان الشبكة والصفحة المطلوبة ونوع المتصفح. لا يضيف ENote إلى الموقع أي تحليلات أو تتبّع.</p>
+<p>تطلب الصفحة الرئيسية ملفًا صغيرًا اسمه <bdi lang="en" dir="ltr">release.json</bdi> من الموقع نفسه لمعرفة هل يوجد إصدار متاح للتنزيل.</p></section>
+<section class="sec" id="ar-web" aria-labelledby="ar-web-h"><h2 id="ar-web-h">تطبيق الويب والذكاء الاصطناعي الاختياري</h2>
+<p>أدوات التخطيط والتلخيص والاختبارات والمحادثة في تطبيق الويب تحاول أولًا استخدام خدمة ذكاء اصطناعي عبر عنوان <bdi lang="en" dir="ltr">/api/ai</bdi> في الموقع نفسه. عند الضغط على زر الأداة:</p>
+<ul>
+<li>يُرسَل إلى خادم الموقع النص الذي كتبته (الموضوع أو نص الملخص أو اسم المادة أو آخر رسائل المحادثة) مع تعليمات الأداة. الحد الأقصى للطلب صغير، ولا تُوضَع الملاحظات في الرابط.</li>
+<li>الخدمة الخارجية <strong>معطّلة افتراضيًا</strong> ولا تعمل إلا إذا ضبط مالك الموقع مزوّدًا موثوقًا وتخزين حدود الطلبات. إذا لم تكن مفعّلة يرفض الخادم الطلب ولا يمرّره لأي جهة، ويعرض التطبيق قالبًا محليًا ويوضّح أن النتيجة ليست من نموذج ذكاء اصطناعي.</li>
+<li>إذا كانت مفعّلة، يُمرَّر النص إلى المزوّد الذي ضبطه المالك، وتصلك استجابته. تعمل أدوات الذكاء الاصطناعي بسياسة ذلك المزوّد أيضًا، ولا يعرف هذا الوصف اسمه.</li>
+<li>لفرض حدود عدد الطلبات، يحسب الخادم رمزًا مُشفَّرًا من عنوان الشبكة ويخزّن عدّادًا فقط في خدمة <bdi lang="en" dir="ltr">Upstash Redis</bdi> لمدة دقيقتين تقريبًا. لا يُخزَّن فيه نص ما كتبته.</li>
+</ul>
+<p>لا تكتب أسرارًا ولا معلومات شخصية (اسمك الكامل أو عنوانك أو رقم هاتفك أو كلمات مرور) في أدوات الذكاء الاصطناعي. تطبيق أندرويد لا يستخدم هذه الخدمة: مساعده الدراسي قوالب محلية على الجهاز.</p></section>
+<section class="sec" id="ar-kids" aria-labelledby="ar-kids-h"><h2 id="ar-kids-h">الطلاب والقاصرون</h2>
+<p>ENote مصمَّم للطلاب، وبعضهم قد يكون دون الثامنة عشرة. لا يطلب التطبيق حسابًا ولا بريدًا ولا بيانات اتصال، ولا يرسل بيانات الدراسة إلى أي جهة. إذا كنت وليّ أمر، فالمهم أن تعرف أن أدوات الذكاء الاصطناعي في تطبيق الويب قد ترسل ما يُكتب فيها إلى خادم الموقع (انظر القسم السابق)، ولذلك من الأفضل عدم كتابة معلومات شخصية فيها.</p></section>
+<section class="sec" id="ar-choices" aria-labelledby="ar-choices-h"><h2 id="ar-choices-h">خياراتك</h2>
+<ul>
+<li><strong>في تطبيق أندرويد:</strong> من الإعدادات اضغط «مسح جميع البيانات». يحذف ذلك بيانات الدراسة والإعدادات والتنبيهات المجدولة ويعيد التطبيق إلى شاشة البداية. ملف الأخطاء المحلي يبقى حتى حذف التطبيق أو مسح مساحته من إعدادات أندرويد.</li>
+<li><strong>حذف التطبيق:</strong> إلغاء تثبيت ENote من أندرويد يزيل بياناته من الجهاز.</li>
+<li><strong>في تطبيق الويب:</strong> زر «إعادة ضبط البيانات» في الإعدادات يعيد المساحة إلى بياناتها التجريبية. لحذف كل ما حُفظ فعليًا، امسح بيانات الموقع من إعدادات متصفحك.</li>
+<li><strong>التذكيرات:</strong> تستطيع إيقاف الإشعارات في أي وقت من إعدادات أندرويد.</li>
+</ul></section>
+<section class="sec" id="ar-changes" aria-labelledby="ar-changes-h"><h2 id="ar-changes-h">تغييرات هذه السياسة</h2>
+<p>إذا تغيّر ما يفعله ENote ببياناتك، تُحدَّث هذه الصفحة ويتغيّر تاريخ «ساري من» في أعلاها.</p></section>
+<section class="sec" id="ar-contact" aria-labelledby="ar-contact-h"><h2 id="ar-contact-h">التواصل</h2>
+<p>لا يوجد بريد إلكتروني للتواصل حاليًا. للأسئلة عن الخصوصية أو للإبلاغ عن مشكلة، افتح موضوعًا جديدًا في صفحة المشكلات على <bdi lang="en" dir="ltr">GitHub</bdi>: <a href="https://github.com/Zaroscript/study_flow/issues" rel="noopener"><bdi lang="en" dir="ltr">github.com/Zaroscript/study_flow/issues</bdi></a>. هذه الصفحة عامة، فلا تكتب فيها معلومات شخصية.</p></section>
+</main>
+</div>
+<footer class="foot"><div class="foot-in">
+<a href="/">الرئيسية</a>
+<a href="https://github.com/Zaroscript/study_flow/issues" rel="noopener">صفحة المشكلات على GitHub</a>
+<span>ENote</span>
+</div></footer>
+</div>
+<div class="page" id="page-en" data-live="Language changed to English" lang="en" dir="ltr" hidden>
+<header class="top">
+<div class="top-in">
+<a class="brand" href="/"><img src="/assets/enote-icon.png" width="36" height="36" alt=""><span>ENote</span></a>
+<nav class="top-nav" aria-label="Navigation"><a class="home" href="/">Home</a>
+<button type="button" class="lang" data-switch="ar" lang="ar" aria-label="التبديل إلى العربية">العربية</button></nav>
+</div>
+</header>
+<div class="wrap">
+<aside class="toc-wide"><nav aria-label="On this page"><p class="toc-h" id="en-toc-h">On this page</p><ol><li><a href="#en-short">The short version</a></li><li><a href="#en-device">What stays on your device</a></li><li><a href="#en-none">What ENote does not collect</a></li><li><a href="#en-perms">Permissions and why</a></li><li><a href="#en-hosting">Downloads and hosting</a></li><li><a href="#en-web">The web app and the optional AI</a></li><li><a href="#en-kids">Students and minors</a></li><li><a href="#en-choices">Your choices</a></li><li><a href="#en-changes">Changes to this policy</a></li><li><a href="#en-contact">Contact</a></li></ol></nav></aside>
+<main id="en-main" tabindex="-1">
+<h1>ENote privacy</h1>
+<p class="lead">A plain description of what ENote does with your data today. It is an explanation in everyday language, not a legal contract.</p>
+<p class="eff">Effective <time datetime="2026-11-19">19 November 2026</time></p>
+<details class="toc-narrow"><summary>On this page</summary><nav aria-label="On this page"><ol><li><a href="#en-short">The short version</a></li><li><a href="#en-device">What stays on your device</a></li><li><a href="#en-none">What ENote does not collect</a></li><li><a href="#en-perms">Permissions and why</a></li><li><a href="#en-hosting">Downloads and hosting</a></li><li><a href="#en-web">The web app and the optional AI</a></li><li><a href="#en-kids">Students and minors</a></li><li><a href="#en-choices">Your choices</a></li><li><a href="#en-changes">Changes to this policy</a></li><li><a href="#en-contact">Contact</a></li></ol></nav></details>
+<section class="note" id="en-short" aria-labelledby="en-short-h"><span class="tape" aria-hidden="true"></span><h2 id="en-short-h">The short version</h2>
+<ul>
+<li>Your notes, tasks, goals and habits stay on your device. The Android app has no account or sign-up, and its code does not send your data anywhere.</li>
+<li>No ads, no analytics, no tracking and no crash-reporting service, in the app or on this site.</li>
+<li>The one exception: the AI tools in the web app. Text typed there reaches the site's server, and goes on to an outside provider only if the site owner has switched that on.</li>
+<li>You can delete everything at any time. See &ldquo;Your choices&rdquo; below.</li>
+</ul></section>
+<section class="sec" id="en-device" aria-labelledby="en-device-h"><h2 id="en-device-h">What stays on your device</h2>
+<h3>Android app</h3>
+<p>The app saves what you write in a local database named <code>enote</code> inside the app's private storage on your phone. That covers tasks, homework, exams, goals, habits, notes, study sessions, the weekly schedule, the materials list and profile details (name and grade). It also keeps a few small settings (theme, language, whether the welcome screen is done) and the notification history and schedule.</p>
+<p>The app also writes a small local error log (<code>enote-errors.log</code>) with the time and type of an error and a few technical lines, without error messages and without anything you wrote. Its size is capped, it stays on the device and it is not sent anywhere.</p>
+<p>The app does not switch off Android's automatic backup in its settings. If you have device backup turned on in your phone, app data may be included in your device backup. That is controlled by your phone, not by ENote.</p>
+<h3>Web app</h3>
+<p>The web app (<code>/app</code>) keeps your workspace in your browser's storage on your device, together with language and theme preferences. Clearing browser data can delete it for good.</p>
+<h3>Home page</h3>
+<p>The home page stores only the language you picked, in browser storage. It has no input fields, so nothing you type there is saved or sent.</p></section>
+<section class="sec" id="en-none" aria-labelledby="en-none-h"><h2 id="en-none-h">What ENote does not collect</h2>
+<ul>
+<li>No accounts, email addresses or passwords.</li>
+<li>No location, contacts, camera, microphone or access to your files. Those permissions are not requested at all.</li>
+<li>No ads, analytics, tracking, outside crash reporting, and no cookies set by ENote.</li>
+<li>No fonts or scripts from other sites: fonts on the home page and on this page load from the site itself.</li>
+</ul></section>
+<section class="sec" id="en-perms" aria-labelledby="en-perms-h"><h2 id="en-perms-h">Permissions and why</h2>
+<p>The Android app asks for these permissions only:</p>
+<dl>
+<dt>Notifications</dt>
+<dd>To show the reminders for tasks, homework, goals and focus sessions that you set. Scheduling happens on your device. The title of a task you wrote can appear inside a reminder, and it may show on the lock screen depending on your phone settings. You can refuse or withdraw this permission in Android settings.</dd>
+<dt>Run at device start-up</dt>
+<dd>To schedule reminders again after the phone restarts or the app is updated.</dd>
+<dt>Vibration</dt>
+<dd>For a light vibration on touch, or when an input is wrong.</dd>
+<dt>Internet</dt>
+<dd>The permission is declared in the app, but the app's current code makes no network requests and does not send your data. Any change to this will be stated here.</dd>
+</dl></section>
+<section class="sec" id="en-hosting" aria-labelledby="en-hosting-h"><h2 id="en-hosting-h">Downloads and hosting</h2>
+<p>The Android installer (APK) is downloaded from the releases page on GitHub (repository <code>Zaroscript/study_flow</code>). When you download it, GitHub receives your request, under GitHub's own privacy policy.</p>
+<p>The site is hosted on Vercel. Like most hosting services, Vercel may process standard request data such as network address, requested page and browser type. ENote adds no analytics or tracking to the site.</p>
+<p>The home page requests a small file called <code>release.json</code> from the site itself to find out whether a download is available.</p></section>
+<section class="sec" id="en-web" aria-labelledby="en-web-h"><h2 id="en-web-h">The web app and the optional AI</h2>
+<p>The planning, summary, quiz and chat tools in the web app first try an AI service through <code>/api/ai</code> on the same site. When you press a tool's button:</p>
+<ul>
+<li>The text you typed (the topic, the summary text, the subject name or the last few chat messages) is sent to the site's server together with the tool's instructions. Requests are size-limited and notes are never put in the address.</li>
+<li>The outside AI service is <strong>off by default</strong>. It only works if the site owner has set up a trusted provider and storage for request limits. When it is off, the server rejects the request without passing it to anyone, and the app shows a local template and says the result is not from an AI model.</li>
+<li>When it is on, the text is passed to the provider the owner chose, and its reply comes back to you. That provider's own policy then applies as well. This page does not name it.</li>
+<li>To enforce request limits, the server computes a hashed key from the network address and stores only a counter in Upstash Redis for about two minutes. The text you wrote is not stored there.</li>
+</ul>
+<p>Do not type secrets or personal details (full name, address, phone number, passwords) into the AI tools. The Android app does not use this service: its study assistant is made of local templates on the device.</p></section>
+<section class="sec" id="en-kids" aria-labelledby="en-kids-h"><h2 id="en-kids-h">Students and minors</h2>
+<p>ENote is made for students, and some may be under 18. The app asks for no account, email or contact details, and does not send study data anywhere. Parents and guardians should know that the AI tools in the web app may send what is typed into them to the site's server (see the previous section), so it is best not to type personal details there.</p></section>
+<section class="sec" id="en-choices" aria-labelledby="en-choices-h"><h2 id="en-choices-h">Your choices</h2>
+<ul>
+<li><strong>In the Android app:</strong> open Settings and tap &ldquo;Reset all data&rdquo;. It deletes study data, settings and scheduled reminders and returns the app to the welcome screen. The local error log stays until the app is uninstalled or its storage is cleared in Android settings.</li>
+<li><strong>Uninstall:</strong> removing ENote from Android removes its data from the device.</li>
+<li><strong>In the web app:</strong> the &ldquo;Reset data&rdquo; button in Settings returns the workspace to its sample data. To delete everything actually saved, clear this site's data in your browser settings.</li>
+<li><strong>Reminders:</strong> you can switch notifications off at any time in Android settings.</li>
+</ul></section>
+<section class="sec" id="en-changes" aria-labelledby="en-changes-h"><h2 id="en-changes-h">Changes to this policy</h2>
+<p>If what ENote does with data changes, this page is updated and the &ldquo;Effective&rdquo; date at the top changes.</p></section>
+<section class="sec" id="en-contact" aria-labelledby="en-contact-h"><h2 id="en-contact-h">Contact</h2>
+<p>There is no email address for contact at the moment. For privacy questions or to report a problem, open a new issue on the GitHub issues page: <a href="https://github.com/Zaroscript/study_flow/issues" rel="noopener">github.com/Zaroscript/study_flow/issues</a>. That page is public, so do not post personal information there.</p></section>
+</main>
+</div>
+<footer class="foot"><div class="foot-in">
+<a href="/">Home</a>
+<a href="https://github.com/Zaroscript/study_flow/issues" rel="noopener">GitHub issues page</a>
+<span>ENote</span>
+</div></footer>
+</div>
+<p class="sr" id="live" role="status" aria-live="polite"></p>
+<noscript><style>#page-en[hidden]{display:block!important}.lang{display:none}</style></noscript>
+<script>
+(function(){
+var T={ar:{t:"الخصوصية — ENote",d:"ماذا يفعل ENote ببياناتك اليوم: ما يبقى على جهازك، والأذونات، والتنزيل، والذكاء الاصطناعي الاختياري في تطبيق الويب.",s:"تخطي إلى المحتوى"},en:{t:"Privacy \u2014 ENote",d:"What ENote does with your data today: what stays on your device, permissions, downloads, and the optional AI in the web app.",s:"Skip to content"}};
+function pick(){try{var q=new URLSearchParams(location.search).get('lang');if(q==='ar'||q==='en')return q}catch(e){}
+try{var s=localStorage.getItem('enote_landing_language');if(s==='ar'||s==='en')return s}catch(e){}return'ar'}
+function apply(l,user){
+var o=l==='ar'?'en':'ar',on=document.getElementById('page-'+l),off=document.getElementById('page-'+o);
+on.hidden=false;off.hidden=true;
+var h=document.documentElement;h.lang=l;h.dir=l==='ar'?'rtl':'ltr';
+document.title=T[l].t;var sk=document.getElementById('skip');sk.textContent=T[l].s;sk.lang=l;sk.setAttribute('href','#'+l+'-main');
+var m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',T[l].d);
+try{localStorage.setItem('enote_landing_language',l)}catch(e){}
+try{var u=new URL(location.href);u.searchParams.set('lang',l);history.replaceState(null,'',u)}catch(e){}
+if(user){var live=document.getElementById('live');live.lang=l;live.textContent=on.getAttribute('data-live');
+var b=on.querySelector('.lang');if(b)b.focus()}
+}
+var cur=pick();apply(cur,false);
+document.addEventListener('click',function(e){var b=e.target.closest('[data-switch]');if(!b)return;apply(b.getAttribute('data-switch'),true)});
+})();
+</script>
+</body>
+</html>

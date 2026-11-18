@@ -1,22 +1,19 @@
 {
-  "name": "ENote — مساحة لأفكارك. وقت لإنجازك.",
+  "id": "/",
+  "name": "ENote",
   "short_name": "ENote",
-  "description": "تطبيق الدراسة الذكي: تنظيم المذكرات، خطط المذاكرة بالذكاء الاصطناعي، ساعة بومودورو 3D القلابة ومكتبة الملازم.",
+  "description": "تطبيق أندرويد للطلاب: ملاحظات، خطط مذاكرة، ساعة بومودورو 3D قلابة ومكتبة ملازم.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#071a34",
   "theme_color": "#071a34",
-  "orientation": "portrait-primary",
   "lang": "ar",
   "dir": "rtl",
   "categories": ["education", "productivity"],
   "icons": [
-    {
-      "src": "/assets/enote-icon.png",
-      "sizes": "192x192 512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

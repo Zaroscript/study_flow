@@ -1,2 +1,2 @@
-@font-face{font-family:Cairo;src:url(/assets/fonts/Cairo.ttf) format("truetype");font-weight:200 1000;font-display:swap}
-@font-face{font-family:Manrope;src:url(/assets/fonts/Manrope.ttf) format("truetype");font-weight:200 800;font-display:swap}
+@font-face{font-family:Cairo;src:url(/assets/fonts/Cairo.woff2) format("woff2"),url(/assets/fonts/Cairo.ttf) format("truetype");font-weight:200 1000;font-display:swap}
+@font-face{font-family:Manrope;src:url(/assets/fonts/Manrope.woff2) format("woff2"),url(/assets/fonts/Manrope.ttf) format("truetype");font-weight:200 800;font-display:swap}

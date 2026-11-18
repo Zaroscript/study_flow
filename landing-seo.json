@@ -1,0 +1,25 @@
+{
+  "origin": "https://study-flow.vercel.app",
+  "ar": {
+    "path": "/",
+    "htmlLang": "ar",
+    "hreflang": "ar",
+    "ogLocale": "ar_EG",
+    "title": "ENote — تطبيق ملاحظات وخطط مذاكرة وبومودورو للطلاب",
+    "description": "ENote تطبيق أندرويد للطلاب: دوّن ملاحظاتك ونظّم ملازمك، رتّب خطة مذاكرتك، وركّز مع ساعة بومودورو 3D. حمّل ملف APK.",
+    "ogTitle": "ENote — مساحة لأفكارك. وقت لإنجازك.",
+    "ogImage": "/assets/og-enote-ar.png",
+    "ogImageAlt": "ENote — مساحة لأفكارك. وقت لإنجازك. تطبيق أندرويد للملاحظات وخطط المذاكرة وساعة بومودورو 3D"
+  },
+  "en": {
+    "path": "/en/",
+    "htmlLang": "en",
+    "hreflang": "en",
+    "ogLocale": "en_US",
+    "title": "ENote — Study Notes, Planner & Pomodoro App for Android",
+    "description": "ENote is an Android app for students: keep notes, organize study materials, plan your days and focus with a 3D flip-clock Pomodoro timer. APK download.",
+    "ogTitle": "ENote — Room for ideas. Time for you.",
+    "ogImage": "/assets/og-enote-en.png",
+    "ogImageAlt": "ENote — Room for ideas. Time for you. An Android app for notes, study plans and a 3D flip-clock Pomodoro timer"
+  }
+}
