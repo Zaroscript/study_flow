@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -9,7 +10,7 @@ import '../../../core/widgets/page_header.dart';
 import '../providers/rewards_provider.dart';
 
 class RewardsScreen extends ConsumerWidget {
-  const RewardsScreen({Key? key}) : super(key: key);
+  const RewardsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +41,7 @@ class RewardsScreen extends ConsumerWidget {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF4F46E5).withOpacity(0.35),
+                  color: const Color(0xFF4F46E5).withValues(alpha: 0.35),
                   blurRadius: 16,
                   offset: const Offset(0, 6),
                 ),
@@ -58,11 +59,13 @@ class RewardsScreen extends ConsumerWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        'المستوى ${rewards.level}',
+                        context.l10n.message70cec35d5a(
+                          context.display(rewards.level),
+                        ),
                         style: AppTextStyles.cairo(
                           color: Colors.white,
                           fontSize: 13,
@@ -82,7 +85,7 @@ class RewardsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  rewards.levelTitle,
+                  context.tr(rewards.levelTitle),
                   style: AppTextStyles.cairo(
                     color: Colors.white,
                     fontSize: 24,
@@ -91,9 +94,14 @@ class RewardsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'متبقي ${rewards.nextLevelTargetXP - rewards.currentXP} XP للوصول إلى المستوى ${rewards.level + 1}',
+                  context.l10n.messagee98e93f406(
+                    context.display(
+                      rewards.nextLevelTargetXP - rewards.currentXP,
+                    ),
+                    context.display(rewards.level + 1),
+                  ),
                   style: AppTextStyles.cairo(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     fontSize: 13,
                   ),
                 ),
@@ -103,7 +111,7 @@ class RewardsScreen extends ConsumerWidget {
                 AppProgressBar(
                   progress: rewards.levelProgress,
                   color: const Color(0xFFFDE047), // Yellow gold
-                  backgroundColor: Colors.white.withOpacity(0.2),
+                  backgroundColor: Colors.white.withValues(alpha: 0.2),
                   height: 10,
                 ),
               ],
@@ -122,32 +130,35 @@ class RewardsScreen extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEF4444).withOpacity(0.12),
+                          color: const Color(0xFFEF4444)
+                              .withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: const Text('🔥', style: TextStyle(fontSize: 24)),
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'السلسلة الحالية',
-                            style: AppTextStyles.cairo(
-                              fontSize: 12,
-                              color: isDark
-                                  ? AppColors.textMutedDark
-                                  : AppColors.textMutedLight,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr('السلسلة الحالية'),
+                              style: AppTextStyles.cairo(
+                                fontSize: 12,
+                                color: isDark
+                                    ? AppColors.textMutedDark
+                                    : AppColors.textMutedLight,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${rewards.streakDays} أيام',
-                            style: AppTextStyles.cairo(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              context.l10n.days(rewards.streakDays),
+                              style: AppTextStyles.cairo(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -162,32 +173,35 @@ class RewardsScreen extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF59E0B).withOpacity(0.12),
+                          color: const Color(0xFFF59E0B)
+                              .withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: const Text('⭐', style: TextStyle(fontSize: 24)),
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'أفضل إنجاز',
-                            style: AppTextStyles.cairo(
-                              fontSize: 12,
-                              color: isDark
-                                  ? AppColors.textMutedDark
-                                  : AppColors.textMutedLight,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr('أفضل إنجاز'),
+                              style: AppTextStyles.cairo(
+                                fontSize: 12,
+                                color: isDark
+                                    ? AppColors.textMutedDark
+                                    : AppColors.textMutedLight,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${rewards.bestStreak} أيام',
-                            style: AppTextStyles.cairo(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              context.l10n.days(rewards.bestStreak),
+                              style: AppTextStyles.cairo(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -198,18 +212,26 @@ class RewardsScreen extends ConsumerWidget {
           const SizedBox(height: 24),
 
           // 3. Badges Grid
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 4,
             children: [
               Text(
-                'أوسمة وشارات الإنجاز',
+                context.tr('أوسمة وشارات الإنجاز'),
                 style: AppTextStyles.cairo(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '${rewards.badges.where((b) => b.isUnlocked).length}/${rewards.badges.length} مفتوح',
+                context.l10n.message7ae08743a2(
+                  context.display(
+                    rewards.badges.where((b) => b.isUnlocked).length,
+                  ),
+                  context.display(rewards.badges.length),
+                ),
                 style: AppTextStyles.cairo(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -242,7 +264,7 @@ class RewardsScreen extends ConsumerWidget {
                           : const Color(0xFFF1F5F9)),
                 border: Border.all(
                   color: badge.isUnlocked
-                      ? const Color(0xFFF59E0B).withOpacity(0.4)
+                      ? const Color(0xFFF59E0B).withValues(alpha: 0.4)
                       : (isDark
                             ? const Color(0xFF334155)
                             : const Color(0xFFE2E8F0)),
@@ -292,7 +314,7 @@ class RewardsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      badge.title,
+                      context.tr(badge.title),
                       style: AppTextStyles.cairo(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -302,7 +324,7 @@ class RewardsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      badge.description,
+                      context.tr(badge.description),
                       style: AppTextStyles.cairo(
                         fontSize: 11,
                         color: isDark
@@ -322,7 +344,7 @@ class RewardsScreen extends ConsumerWidget {
                       ),
                       decoration: BoxDecoration(
                         color: badge.isUnlocked
-                            ? AppColors.primary.withOpacity(0.12)
+                            ? AppColors.primary.withValues(alpha: 0.12)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -358,11 +380,13 @@ class RewardsScreen extends ConsumerWidget {
                       size: 20,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      'كيف تكسب نقاط الخبرة (XP)؟',
-                      style: AppTextStyles.cairo(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        context.tr('كيف تكسب نقاط الخبرة (XP)؟'),
+                        style: AppTextStyles.cairo(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -410,7 +434,10 @@ class _XPRuleTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.cairo(fontSize: 13)),
+          Expanded(
+            child: Text(label, style: AppTextStyles.cairo(fontSize: 13)),
+          ),
+          const SizedBox(width: 12),
           Text(
             points,
             style: AppTextStyles.cairo(

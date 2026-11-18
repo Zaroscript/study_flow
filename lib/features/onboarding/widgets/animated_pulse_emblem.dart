@@ -1,5 +1,5 @@
-import 'dart:math' as math;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../../../core/constants/app_colors.dart';
 
 /// A polished, GPU-accelerated pulsing emblem with radial glows and floating particles,
@@ -11,12 +11,12 @@ class AnimatedPulseEmblem extends StatefulWidget {
   final Color accentColor;
 
   const AnimatedPulseEmblem({
-    Key? key,
+    super.key,
     required this.icon,
     this.size = 110,
     this.primaryColor = AppColors.primary,
     this.accentColor = AppColors.secondary,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedPulseEmblem> createState() => _AnimatedPulseEmblemState();
@@ -25,7 +25,6 @@ class AnimatedPulseEmblem extends StatefulWidget {
 class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation<double> _pulseAnimation;
   late final Animation<double> _glowAnimation;
 
   @override
@@ -34,19 +33,22 @@ class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2400),
-    )..repeat(reverse: true);
-
-    _pulseAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOutSine,
     );
 
     _glowAnimation = Tween<double>(begin: 0.85, end: 1.15).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOutCubic,
-      ),
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context) ||
+        MediaQuery.accessibleNavigationOf(context)) {
+      _controller.stop();
+    } else {
+      _controller.repeat(reverse: true);
+    }
   }
 
   @override
@@ -57,7 +59,9 @@ class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.of(context).disableAnimations;
+    final reduceMotion =
+        MediaQuery.disableAnimationsOf(context) ||
+        MediaQuery.accessibleNavigationOf(context);
 
     if (reduceMotion) {
       return _buildEmblemContent(1.0);
@@ -88,8 +92,8 @@ class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    widget.primaryColor.withOpacity(0.35),
-                    widget.accentColor.withOpacity(0.12),
+                    widget.primaryColor.withValues(alpha: 0.35),
+                    widget.accentColor.withValues(alpha: 0.12),
                     Colors.transparent,
                   ],
                   stops: const [0.2, 0.65, 1.0],
@@ -104,9 +108,9 @@ class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
             height: widget.size * 1.08,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: widget.primaryColor.withOpacity(0.08),
+              color: widget.primaryColor.withValues(alpha: 0.08),
               border: Border.all(
-                color: widget.primaryColor.withOpacity(0.2),
+                color: widget.primaryColor.withValues(alpha: 0.2),
                 width: 1.5,
               ),
             ),
@@ -122,14 +126,14 @@ class _AnimatedPulseEmblemState extends State<AnimatedPulseEmblem>
                 end: Alignment.bottomRight,
                 colors: [
                   widget.primaryColor,
-                  widget.primaryColor.withOpacity(0.85),
+                  widget.primaryColor.withValues(alpha: 0.85),
                   widget.accentColor,
                 ],
               ),
               borderRadius: BorderRadius.circular(widget.size * 0.32),
               boxShadow: [
                 BoxShadow(
-                  color: widget.primaryColor.withOpacity(0.4),
+                  color: widget.primaryColor.withValues(alpha: 0.4),
                   blurRadius: 28,
                   offset: const Offset(0, 12),
                 ),

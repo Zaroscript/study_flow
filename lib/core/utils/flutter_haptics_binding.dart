@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+
 import 'app_haptics.dart';
 
 /// Binds Flutter platform HapticFeedback to the decoupled [AppHaptics] service.

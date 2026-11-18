@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'test_app.dart';
+
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:study_flow/core/utils/app_validators.dart';
@@ -44,8 +46,12 @@ void main() {
   testWidgets('header and action fit a narrow screen at 200% text scale', (
     tester,
   ) async {
+    tester.view.physicalSize = const Size(320, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(
-      MaterialApp(
+      testApp(
         home: Scaffold(
           body: MediaQuery(
             data: const MediaQueryData(
@@ -73,7 +79,7 @@ void main() {
     (tester) async {
       var count = 0;
       await tester.pumpWidget(
-        MaterialApp(
+        testApp(
           home: Scaffold(
             body: AppButton(
               text: 'حفظ',
@@ -97,8 +103,9 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(home: Scaffold(body: AppProgressBar(progress: .01))),
+      testApp(home: const Scaffold(body: AppProgressBar(progress: .01))),
     );
+    await tester.pumpAndSettle();
     final bar = tester.widget<FractionallySizedBox>(
       find.byType(FractionallySizedBox),
     );
@@ -112,7 +119,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [studyFlowRepositoryProvider.overrideWithValue(repo)],
-          child: const MaterialApp(home: Scaffold(body: NotesScreen())),
+          child: testApp(home: const Scaffold(body: NotesScreen())),
         ),
       );
       await tester.pumpAndSettle();

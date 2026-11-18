@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/utils/app_validators.dart';
 import '../../../core/utils/app_haptics.dart';
@@ -23,7 +24,7 @@ import '../../notifications/providers/notifications_provider.dart';
 import '../services/smart_task_service.dart';
 
 class PlannerScreen extends ConsumerStatefulWidget {
-  const PlannerScreen({Key? key}) : super(key: key);
+  const PlannerScreen({super.key});
 
   @override
   ConsumerState<PlannerScreen> createState() => _PlannerScreenState();
@@ -65,7 +66,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'إضافة مهمة ذكية جديدة',
+                        context.tr('إضافة مهمة ذكية جديدة'),
                         style: AppTextStyles.cairo(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -74,13 +75,14 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       IconButton(
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.close),
-                        tooltip: 'إغلاق',
+                        tooltip: context.tr('إغلاق'),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
                   AppTextField(
                     label: 'عنوان المهمة',
+                    validation: FieldValidation.required,
                     hint: 'مثال: مراجعة الفصل الثالث فيزياء',
                     controller: titleController,
                   ),
@@ -100,8 +102,9 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                               })
                               .toList(),
                           onChanged: (val) {
-                            if (val != null)
+                            if (val != null) {
                               setSheetState(() => selectedCategory = val);
+                            }
                           },
                         ),
                       ),
@@ -125,8 +128,9 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                             ),
                           ],
                           onChanged: (val) {
-                            if (val != null)
+                            if (val != null) {
                               setSheetState(() => selectedPriority = val);
+                            }
                           },
                         ),
                       ),
@@ -138,6 +142,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       Expanded(
                         child: AppTextField(
                           label: 'وقت البدء',
+                          validation: FieldValidation.time,
                           hint: '09:00',
                           controller: startCtrl,
                           onChanged: (val) => startTime = val,
@@ -147,6 +152,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       Expanded(
                         child: AppTextField(
                           label: 'وقت الانتهاء',
+                          validation: FieldValidation.time,
                           hint: '10:00',
                           controller: endCtrl,
                           onChanged: (val) => endTime = val,
@@ -170,9 +176,11 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       final title = titleController.text.trim();
                       if (!AppValidators.validTimeRange(startTime, endTime)) {
                         ScaffoldMessenger.of(ctx).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
-                              'وقت الانتهاء يجب أن يكون بعد وقت البدء.',
+                              context.tr(
+                                'وقت الانتهاء يجب أن يكون بعد وقت البدء.',
+                              ),
                             ),
                           ),
                         );
@@ -189,7 +197,9 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                           date: DateTime.now().toIso8601String().split('T')[0],
                         );
                         ref.read(tasksProvider.notifier).addTask(newTask);
-                        ref.read(notificationServiceProvider).scheduleTaskReminder(newTask);
+                        ref
+                            .read(notificationServiceProvider)
+                            .scheduleTaskReminder(newTask);
                         Navigator.pop(context);
                       }
                     },
@@ -214,7 +224,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'تم ترحيل ${rolloverTasks.length} مهام إلى جدول اليوم بنجاح! ⚡',
+          context.l10n.message32dc4a31fd(context.display(rolloverTasks.length)),
           style: AppTextStyles.cairo(fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primary,
@@ -269,7 +279,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                     : const Color(0xFFFFFBEB),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: const Color(0xFFF59E0B).withOpacity(0.4),
+                  color: const Color(0xFFF59E0B).withValues(alpha: 0.4),
                 ),
               ),
               child: Row(
@@ -281,7 +291,9 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'ترحيل ذكي للمهام (${rolloverTasks.length} مهام)',
+                          context.l10n.message1c7f213a95(
+                            context.display(rolloverTasks.length),
+                          ),
                           style: AppTextStyles.cairo(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -289,7 +301,9 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                           ),
                         ),
                         Text(
-                          'لديك مهام غير مكتملة من أيام سابقة، رحّلها لجدول اليوم بضغطة زر واحدة.',
+                          context.tr(
+                            'لديك مهام غير مكتملة من أيام سابقة، رحّلها لجدول اليوم بضغطة زر واحدة.',
+                          ),
                           style: AppTextStyles.cairo(
                             fontSize: 12,
                             color: isDark
@@ -314,7 +328,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                     ),
                     onPressed: () => _handleRollover(rolloverTasks),
                     child: Text(
-                      'ترحيل الآن',
+                      context.tr('ترحيل الآن'),
                       style: AppTextStyles.cairo(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -384,7 +398,8 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
             else
               AppEmptyState.filtered(
                 title: 'لا توجد مهام مطابقة للفلتر',
-                description: 'لا توجد مهام مطابقة لتصنيف التصفية المحدد حالياً.',
+                description:
+                    'لا توجد مهام مطابقة لتصنيف التصفية المحدد حالياً.',
                 actionLabel: 'عرض جميع المهام',
                 onClearFilter: () {
                   AppHaptics.selection();
@@ -427,16 +442,17 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                         checked: task.completed,
                         child: Checkbox(
                           value: task.completed,
-                          onChanged: (_) {
+                          onChanged: (_) async {
                             final wasCompleted = task.completed;
                             if (!wasCompleted) {
                               AppHaptics.medium();
                             } else {
                               AppHaptics.light();
                             }
-                            ref
+                            await ref
                                 .read(tasksProvider.notifier)
                                 .toggleTaskCompletion(task.id);
+                            if (!context.mounted) return;
                             if (!wasCompleted) {
                               ref
                                   .read(rewardsProvider.notifier)
@@ -482,11 +498,13 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                                       vertical: 2,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.danger.withOpacity(0.12),
+                                      color: AppColors.danger.withValues(
+                                        alpha: 0.12,
+                                      ),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
-                                      'عاجل',
+                                      context.tr('عاجل'),
                                       style: AppTextStyles.cairo(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -497,7 +515,10 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                               ],
                             ),
                             const SizedBox(height: 6),
-                            Row(
+                            Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
+                              runSpacing: 4,
                               children: [
                                 Icon(
                                   Icons.access_time_rounded,
@@ -506,7 +527,6 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                                       ? AppColors.textMutedDark
                                       : AppColors.textMutedLight,
                                 ),
-                                const SizedBox(width: 4),
                                 Text(
                                   '${task.startTime} - ${task.endTime}',
                                   style: AppTextStyles.cairo(
@@ -516,7 +536,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                                         : AppColors.textMutedLight,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                const SizedBox(width: 4),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8,
@@ -553,7 +573,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
 
                       // Delete action
                       IconButton(
-                        tooltip: 'حذف المهمة',
+                        tooltip: context.tr('حذف المهمة'),
                         onPressed: () {
                           deleteWithUndo(
                             context,

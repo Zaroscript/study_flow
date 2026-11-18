@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +8,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_empty_state.dart';
 import '../../../core/widgets/app_sheet.dart';
 import '../../common/providers/study_flow_state_provider.dart';
@@ -15,7 +15,7 @@ import '../models/ai_assistant_models.dart';
 import '../providers/ai_assistant_provider.dart';
 
 class AiAssistantScreen extends ConsumerStatefulWidget {
-  const AiAssistantScreen({Key? key}) : super(key: key);
+  const AiAssistantScreen({super.key});
 
   @override
   ConsumerState<AiAssistantScreen> createState() => _AiAssistantScreenState();
@@ -81,7 +81,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.12),
+                          color: AppColors.primary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(
@@ -91,7 +91,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'توليد خطة دراسية ذكية',
+                        context.tr('توليد خطة دراسية ذكية'),
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -99,12 +99,17 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text('اسم المادة أو الموضوع:', style: theme.textTheme.bodyMedium),
+                  Text(
+                    context.tr('اسم المادة أو الموضوع:'),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   const SizedBox(height: 8),
                   TextField(
                     controller: subjectController,
                     decoration: InputDecoration(
-                      hintText: 'مثال: فيزياء الحركة الموجية، كيمياء عضوية...',
+                      hintText: context.tr(
+                        'مثال: فيزياء الحركة الموجية، كيمياء عضوية...',
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -115,8 +120,10 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text('عدد الساعات المتاحة للمذاكرة: $hours ساعات',
-                      style: theme.textTheme.bodyMedium),
+                  Text(
+                    context.l10n.messagea5a66bd9f3(context.display(hours)),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   Slider(
                     value: hours.toDouble(),
                     min: 1,
@@ -186,7 +193,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: AppColors.secondary.withOpacity(0.12),
+                          color: AppColors.secondary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(
@@ -196,7 +203,7 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        'إنشاء كويز تدريبي تفاعلي',
+                        context.tr('إنشاء كويز تدريبي تفاعلي'),
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -204,12 +211,17 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text('المادة الدراسية:', style: theme.textTheme.bodyMedium),
+                  Text(
+                    context.tr('المادة الدراسية:'),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   const SizedBox(height: 8),
                   TextField(
                     controller: subjectController,
                     decoration: InputDecoration(
-                      hintText: 'مثال: رياضيات، أحياء، نحو، لغة إنجليزية...',
+                      hintText: context.tr(
+                        'مثال: رياضيات، أحياء، نحو، لغة إنجليزية...',
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -220,13 +232,25 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text('مستوى الصعوبة:', style: theme.textTheme.bodyMedium),
+                  Text(
+                    context.tr('مستوى الصعوبة:'),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   const SizedBox(height: 8),
                   SegmentedButton<String>(
-                    segments: const [
-                      ButtonSegment(value: 'سهل', label: Text('سهل')),
-                      ButtonSegment(value: 'متوسط', label: Text('متوسط')),
-                      ButtonSegment(value: 'صعب', label: Text('صعب')),
+                    segments: [
+                      ButtonSegment(
+                        value: 'سهل',
+                        label: Text(context.tr('سهل')),
+                      ),
+                      ButtonSegment(
+                        value: 'متوسط',
+                        label: Text(context.tr('متوسط')),
+                      ),
+                      ButtonSegment(
+                        value: 'صعب',
+                        label: Text(context.tr('صعب')),
+                      ),
                     ],
                     selected: {difficulty},
                     onSelectionChanged: (set) {
@@ -234,8 +258,12 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  Text('عدد الأسئلة: $questionsCount',
-                      style: theme.textTheme.bodyMedium),
+                  Text(
+                    context.l10n.message6731cf5a72(
+                      context.display(questionsCount),
+                    ),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                   Slider(
                     value: questionsCount.toDouble(),
                     min: 1,
@@ -255,7 +283,9 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                           icon: Icons.psychology_rounded,
                           onPressed: () {
                             Navigator.pop(ctx);
-                            ref.read(aiAssistantProvider.notifier).requestQuiz(
+                            ref
+                                .read(aiAssistantProvider.notifier)
+                                .requestQuiz(
                                   subject: subjectController.text.trim().isEmpty
                                       ? 'عام'
                                       : subjectController.text.trim(),
@@ -295,14 +325,17 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.info.withOpacity(0.12),
+                      color: AppColors.info.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(Icons.note_alt_rounded, color: AppColors.info),
+                    child: const Icon(
+                      Icons.note_alt_rounded,
+                      color: AppColors.info,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'اختر ملاحظة لتلخيصها بالذكاء الاصطناعي',
+                    context.tr('اختر ملاحظة لتلخيصها بالذكاء الاصطناعي'),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -322,9 +355,9 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                           color: Colors.grey,
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          'لا توجد ملاحظات محفوظة بعد في دفترك.',
-                          style: TextStyle(color: Colors.grey),
+                        Text(
+                          context.tr('لا توجد ملاحظات محفوظة بعد في دفترك.'),
+                          style: const TextStyle(color: Colors.grey),
                         ),
                         const SizedBox(height: 16),
                         AppButton(
@@ -413,7 +446,8 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
     final filteredMessages = aiState.messages.where((msg) {
       if (aiState.selectedCategory == 'all') return true;
       if (aiState.selectedCategory == 'studyPlan') {
-        return msg.type == AiMessageType.studyPlan || msg.sender == AiSender.user;
+        return msg.type == AiMessageType.studyPlan ||
+            msg.sender == AiSender.user;
       }
       if (aiState.selectedCategory == 'quiz') {
         return msg.type == AiMessageType.quiz || msg.sender == AiSender.user;
@@ -443,40 +477,48 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
               ),
             ),
             const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'المساعد الدراسي الذكي',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.tr('المساعد الدراسي الذكي'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  'StudyFlow AI Assistant',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                    fontSize: 11,
+                  Text(
+                    Localizations.localeOf(context).languageCode == 'ar'
+                        ? 'قوالب دراسية محلية • بدون اتصال بنموذج AI'
+                        : 'Local study templates • no AI model connection',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontSize: 11,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
         actions: [
           IconButton(
-            tooltip: 'خطة جديدة',
+            tooltip: context.tr('خطة جديدة'),
             icon: const Icon(Icons.add_chart_rounded),
             onPressed: () => _showCustomPlanDialog(context),
           ),
           IconButton(
-            tooltip: 'كويز تفاعلي',
+            tooltip: context.tr('كويز تفاعلي'),
             icon: const Icon(Icons.quiz_outlined),
             onPressed: () => _showCustomQuizDialog(context),
           ),
           IconButton(
-            tooltip: 'بدء محادثة جديدة',
+            tooltip: context.tr('بدء محادثة جديدة'),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: () {
               ref.read(aiAssistantProvider.notifier).clearChat();
@@ -495,7 +537,9 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                 color: isDark ? AppColors.cardDark : Colors.white,
                 border: Border(
                   bottom: BorderSide(
-                    color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                    color: isDark
+                        ? AppColors.borderDark
+                        : AppColors.borderLight,
                   ),
                 ),
               ),
@@ -569,27 +613,34 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       },
                     )
                   : ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                itemCount: filteredMessages.length + (aiState.isTyping ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index == filteredMessages.length && aiState.isTyping) {
-                    return const _TypingBubble();
-                  }
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                      itemCount:
+                          filteredMessages.length + (aiState.isTyping ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == filteredMessages.length &&
+                            aiState.isTyping) {
+                          return const _TypingBubble();
+                        }
 
-                  final message = filteredMessages[index];
-                  return _ChatMessageTile(
-                    message: message,
-                    onAnswerQuiz: (msgId, qIndex, optIndex) {
-                      ref.read(aiAssistantProvider.notifier).answerQuizQuestion(
-                            messageId: msgId,
-                            questionIndex: qIndex,
-                            selectedOptionIndex: optIndex,
-                          );
-                    },
-                  );
-                },
-              ),
+                        final message = filteredMessages[index];
+                        return _ChatMessageTile(
+                          message: message,
+                          onAnswerQuiz: (msgId, qIndex, optIndex) {
+                            ref
+                                .read(aiAssistantProvider.notifier)
+                                .answerQuizQuestion(
+                                  messageId: msgId,
+                                  questionIndex: qIndex,
+                                  selectedOptionIndex: optIndex,
+                                );
+                          },
+                        );
+                      },
+                    ),
             ),
 
             // Quick Prompt Suggestions (Horizonally scrollable)
@@ -636,14 +687,16 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                 color: isDark ? AppColors.cardDark : Colors.white,
                 border: Border(
                   top: BorderSide(
-                    color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                    color: isDark
+                        ? AppColors.borderDark
+                        : AppColors.borderLight,
                   ),
                 ),
               ),
               child: Row(
                 children: [
                   IconButton(
-                    tooltip: 'تلخيص ملاحظة محفوظة',
+                    tooltip: context.tr('تلخيص ملاحظة محفوظة'),
                     icon: const Icon(Icons.note_alt_outlined),
                     color: AppColors.primary,
                     onPressed: () => _showNotePickerSheet(context),
@@ -656,7 +709,9 @@ class _AiAssistantScreenState extends ConsumerState<AiAssistantScreen> {
                       textInputAction: TextInputAction.send,
                       onSubmitted: (_) => _handleSubmit(),
                       decoration: InputDecoration(
-                        hintText: 'اسأل المساعد الذكي عن أي مادة أو خطة أو كويز...',
+                        hintText: context.tr(
+                          'اسأل المساعد الذكي عن أي مادة أو خطة أو كويز...',
+                        ),
                         hintStyle: AppTextStyles.cairo(
                           fontSize: 13,
                           color: theme.colorScheme.onSurfaceVariant,
@@ -761,12 +816,9 @@ class _FilterChip extends StatelessWidget {
 class _ChatMessageTile extends StatelessWidget {
   final AiChatMessage message;
   final void Function(String messageId, int questionIndex, int optionIndex)
-      onAnswerQuiz;
+  onAnswerQuiz;
 
-  const _ChatMessageTile({
-    required this.message,
-    required this.onAnswerQuiz,
-  });
+  const _ChatMessageTile({required this.message, required this.onAnswerQuiz});
 
   @override
   Widget build(BuildContext context) {
@@ -777,8 +829,9 @@ class _ChatMessageTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
-        crossAxisAlignment:
-            isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -802,7 +855,7 @@ class _ChatMessageTile extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'المساعد الدراسي',
+                  context.tr('المساعد الدراسي'),
                   style: theme.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
@@ -810,7 +863,7 @@ class _ChatMessageTile extends StatelessWidget {
                 ),
               ] else ...[
                 Text(
-                  'أنت',
+                  context.tr('أنت'),
                   style: theme.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.onSurfaceVariant,
@@ -819,7 +872,7 @@ class _ChatMessageTile extends StatelessWidget {
                 const SizedBox(width: 8),
                 CircleAvatar(
                   radius: 14,
-                  backgroundColor: AppColors.primary.withOpacity(0.15),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.15),
                   child: const Icon(
                     Icons.person_rounded,
                     color: AppColors.primary,
@@ -837,7 +890,7 @@ class _ChatMessageTile extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isUser
-                  ? AppColors.primary.withOpacity(isDark ? 0.25 : 0.10)
+                  ? AppColors.primary.withValues(alpha: isDark ? 0.25 : 0.10)
                   : (isDark ? AppColors.cardDark : Colors.white),
               borderRadius: BorderRadius.only(
                 topRight: const Radius.circular(16),
@@ -847,12 +900,12 @@ class _ChatMessageTile extends StatelessWidget {
               ),
               border: Border.all(
                 color: isUser
-                    ? AppColors.primary.withOpacity(0.3)
+                    ? AppColors.primary.withValues(alpha: 0.3)
                     : (isDark ? AppColors.borderDark : AppColors.borderLight),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+                  color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
                   blurRadius: 6,
                   offset: const Offset(0, 2),
                 ),
@@ -930,12 +983,14 @@ class _TypingBubble extends StatelessWidget {
                   height: 16,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'المساعد يفكر ويعد الإجابة...',
+                  context.tr('المساعد يفكر ويعد الإجابة...'),
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                   ),
@@ -965,10 +1020,10 @@ class _StudyPlanView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isDark
-            ? AppColors.backgroundDark.withOpacity(0.6)
+            ? AppColors.backgroundDark.withValues(alpha: 0.6)
             : AppColors.backgroundLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.primary.withOpacity(0.25)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -979,7 +1034,7 @@ class _StudyPlanView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
@@ -1000,7 +1055,9 @@ class _StudyPlanView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'خطة مذاكرة مكثفة (${plan.availableHours} ساعات إجمالياً)',
+                      context.l10n.message44326941d7(
+                        context.display(plan.availableHours),
+                      ),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -1009,13 +1066,16 @@ class _StudyPlanView extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  '${plan.totalMinutes} دقيقة',
+                  context.l10n.minutes(plan.totalMinutes),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -1034,7 +1094,7 @@ class _StudyPlanView extends StatelessWidget {
 
           // Phases
           Text(
-            'مراحل وجلسات المذاكرة المقترحة:',
+            context.tr('مراحل وجلسات المذاكرة المقترحة:'),
             style: theme.textTheme.labelLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -1060,7 +1120,9 @@ class _StudyPlanView extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 12,
-                        backgroundColor: AppColors.primary.withOpacity(0.15),
+                        backgroundColor: AppColors.primary.withValues(
+                          alpha: 0.15,
+                        ),
                         child: Text(
                           '${idx + 1}',
                           style: const TextStyle(
@@ -1080,7 +1142,7 @@ class _StudyPlanView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${phase.durationMinutes} دقيقة',
+                        context.l10n.minutes(phase.durationMinutes),
                         style: TextStyle(
                           color: theme.colorScheme.primary,
                           fontSize: 12,
@@ -1090,18 +1152,17 @@ class _StudyPlanView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  Text(
-                    phase.description,
-                    style: theme.textTheme.bodySmall,
-                  ),
+                  Text(phase.description, style: theme.textTheme.bodySmall),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
-                          color: AppColors.warning.withOpacity(0.12),
+                          color: AppColors.warning.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -1115,9 +1176,11 @@ class _StudyPlanView extends StatelessWidget {
                       const SizedBox(width: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
-                          color: AppColors.info.withOpacity(0.12),
+                          color: AppColors.info.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -1132,28 +1195,30 @@ class _StudyPlanView extends StatelessWidget {
                   ),
                   if (phase.subtasks.isNotEmpty) ...[
                     const SizedBox(height: 8),
-                    ...phase.subtasks.map((task) => Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.check_circle_outline,
-                                size: 14,
-                                color: AppColors.success,
-                              ),
-                              const SizedBox(width: 6),
-                              Expanded(
-                                child: Text(
-                                  task,
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    fontSize: 12,
-                                  ),
+                    ...phase.subtasks.map(
+                      (task) => Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.check_circle_outline,
+                              size: 14,
+                              color: AppColors.success,
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                task,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontSize: 12,
                                 ),
                               ),
-                            ],
-                          ),
-                        )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -1164,29 +1229,29 @@ class _StudyPlanView extends StatelessWidget {
           if (plan.smartTips.isNotEmpty) ...[
             const SizedBox(height: 10),
             Text(
-              'نصائح تفوق لهذه المادة:',
+              context.tr('نصائح تفوق لهذه المادة:'),
               style: theme.textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 6),
-            ...plan.smartTips.map((tip) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('💡 ', style: TextStyle(fontSize: 13)),
-                      Expanded(
-                        child: Text(
-                          tip,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            height: 1.4,
-                          ),
-                        ),
+            ...plan.smartTips.map(
+              (tip) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('💡 ', style: TextStyle(fontSize: 13)),
+                    Expanded(
+                      child: Text(
+                        tip,
+                        style: theme.textTheme.bodySmall?.copyWith(height: 1.4),
                       ),
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
 
           const SizedBox(height: 14),
@@ -1232,10 +1297,10 @@ class _QuizView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isDark
-            ? AppColors.backgroundDark.withOpacity(0.6)
+            ? AppColors.backgroundDark.withValues(alpha: 0.6)
             : AppColors.backgroundLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.secondary.withOpacity(0.3)),
+        border: Border.all(color: AppColors.secondary.withValues(alpha: 0.3)),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -1246,7 +1311,7 @@ class _QuizView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.15),
+                  color: AppColors.secondary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
@@ -1261,13 +1326,18 @@ class _QuizView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'كويز: ${quiz.subject}',
+                      context.l10n.message16e923f5ae(
+                        context.display(quiz.subject),
+                      ),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'المستوى: ${quiz.difficulty} · ${quiz.questions.length} أسئلة',
+                      context.l10n.message4178437921(
+                        context.display(quiz.difficulty),
+                        context.display(quiz.questions.length),
+                      ),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -1277,8 +1347,10 @@ class _QuizView extends StatelessWidget {
               ),
               if (quiz.isCompleted)
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: quiz.score == quiz.questions.length
                         ? AppColors.success
@@ -1286,7 +1358,10 @@ class _QuizView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'النتيجة: ${quiz.score}/${quiz.questions.length}',
+                    context.l10n.messageed951c324b(
+                      context.display(quiz.score),
+                      context.display(quiz.questions.length),
+                    ),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -1323,13 +1398,17 @@ class _QuizView extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 3),
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.15),
+                          color: AppColors.primary.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          'سؤال ${qIndex + 1}',
+                          context.l10n.messageb8d204704d(
+                            context.display(qIndex + 1),
+                          ),
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -1356,21 +1435,23 @@ class _QuizView extends StatelessWidget {
                     final optIndex = optEntry.key;
                     final optionText = optEntry.value;
 
-                    Color tileColor =
-                        isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
-                    Color borderColor =
-                        isDark ? AppColors.borderDark : AppColors.borderLight;
+                    Color tileColor = isDark
+                        ? AppColors.backgroundDark
+                        : AppColors.backgroundLight;
+                    Color borderColor = isDark
+                        ? AppColors.borderDark
+                        : AppColors.borderLight;
                     IconData? statusIcon;
                     Color? textColor;
 
                     if (hasAnswered) {
                       if (optIndex == question.correctIndex) {
-                        tileColor = AppColors.success.withOpacity(0.15);
+                        tileColor = AppColors.success.withValues(alpha: 0.15);
                         borderColor = AppColors.success;
                         statusIcon = Icons.check_circle_rounded;
                         textColor = AppColors.success;
                       } else if (optIndex == userAnswer) {
-                        tileColor = AppColors.danger.withOpacity(0.15);
+                        tileColor = AppColors.danger.withValues(alpha: 0.15);
                         borderColor = AppColors.danger;
                         statusIcon = Icons.cancel_rounded;
                         textColor = AppColors.danger;
@@ -1393,7 +1474,9 @@ class _QuizView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 10),
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
                           decoration: BoxDecoration(
                             color: tileColor,
                             borderRadius: BorderRadius.circular(8),
@@ -1405,7 +1488,8 @@ class _QuizView extends StatelessWidget {
                                 '${['أ', 'ب', 'ج', 'د'][optIndex.clamp(0, 3)]}) ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: textColor ??
+                                  color:
+                                      textColor ??
                                       theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
@@ -1414,7 +1498,8 @@ class _QuizView extends StatelessWidget {
                                   optionText,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: textColor ??
+                                    color:
+                                        textColor ??
                                         theme.colorScheme.onSurface,
                                     fontWeight: optIndex == userAnswer
                                         ? FontWeight.bold
@@ -1437,22 +1522,26 @@ class _QuizView extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: AppColors.info.withOpacity(0.08),
+                        color: AppColors.info.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                            color: AppColors.info.withOpacity(0.25)),
+                          color: AppColors.info.withValues(alpha: 0.25),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.info_outline,
-                                  size: 16, color: AppColors.info),
-                              SizedBox(width: 6),
+                              const Icon(
+                                Icons.info_outline,
+                                size: 16,
+                                color: AppColors.info,
+                              ),
+                              const SizedBox(width: 6),
                               Text(
-                                'التفسير والشرح العلمي:',
-                                style: TextStyle(
+                                context.tr('التفسير والشرح العلمي:'),
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.info,
@@ -1483,12 +1572,14 @@ class _QuizView extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    AppColors.primary.withOpacity(0.15),
-                    AppColors.secondary.withOpacity(0.15),
+                    AppColors.primary.withValues(alpha: 0.15),
+                    AppColors.secondary.withValues(alpha: 0.15),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.primary.withOpacity(0.4)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.4),
+                ),
               ),
               child: Row(
                 children: [
@@ -1499,7 +1590,9 @@ class _QuizView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'أنهيت الاختبار بنسبة ${quiz.percentage}%!',
+                          context.l10n.message2c49b1d2f5(
+                            context.display(quiz.percentage),
+                          ),
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -1539,10 +1632,10 @@ class _NoteInsightView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isDark
-            ? AppColors.backgroundDark.withOpacity(0.6)
+            ? AppColors.backgroundDark.withValues(alpha: 0.6)
             : AppColors.backgroundLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.info.withOpacity(0.3)),
+        border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -1553,7 +1646,7 @@ class _NoteInsightView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.info.withOpacity(0.15),
+                  color: AppColors.info.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
@@ -1574,7 +1667,9 @@ class _NoteInsightView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'ملخص دراسي مركز · قراءة سريعة (${insight.estimatedReadMinutes} دقائق)',
+                      context.l10n.message5c10ff4a67(
+                        context.display(insight.estimatedReadMinutes),
+                      ),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -1583,17 +1678,16 @@ class _NoteInsightView extends StatelessWidget {
                 ),
               ),
               IconButton(
-                tooltip: 'نسخ الملخص',
+                tooltip: context.tr('نسخ الملخص'),
                 icon: const Icon(Icons.copy_rounded, size: 18),
                 onPressed: () {
                   final textToCopy =
-                      '${insight.title}\n\n${insight.summary}\n\nأهم النقاط:\n' +
-                          insight.keyTakeaways.map((t) => '• $t').join('\n');
+                      '${insight.title}\n\n${insight.summary}\n\nأهم النقاط:\n${insight.keyTakeaways.map((t) => '• $t').join('\n')}';
                   Clipboard.setData(ClipboardData(text: textToCopy));
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('تم نسخ الملخص إلى الحافظة!'),
-                      duration: Duration(seconds: 2),
+                    SnackBar(
+                      content: Text(context.tr('تم نسخ الملخص إلى الحافظة!')),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                 },
@@ -1609,60 +1703,64 @@ class _NoteInsightView extends StatelessWidget {
 
           // Key takeaways
           Text(
-            'نقاط المراجعة السريعة (High-Yield):',
+            context.tr('نقاط المراجعة السريعة (High-Yield):'),
             style: theme.textTheme.labelMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
-          ...insight.keyTakeaways.map((point) => Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('⭐ ', style: TextStyle(fontSize: 13)),
-                    Expanded(
-                      child: Text(
-                        point,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          height: 1.4,
-                        ),
+          ...insight.keyTakeaways.map(
+            (point) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('⭐ ', style: TextStyle(fontSize: 13)),
+                  Expanded(
+                    child: Text(
+                      point,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
                       ),
                     ),
-                  ],
-                ),
-              )),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
           if (insight.actionItems.isNotEmpty) ...[
             const SizedBox(height: 10),
             Text(
-              'مهام للمتابعة وتطبيق الفهم:',
+              context.tr('مهام للمتابعة وتطبيق الفهم:'),
               style: theme.textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 6),
-            ...insight.actionItems.map((act) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.check_box_outlined,
-                        size: 15,
-                        color: AppColors.primary,
+            ...insight.actionItems.map(
+              (act) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.check_box_outlined,
+                      size: 15,
+                      color: AppColors.primary,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        act,
+                        style: theme.textTheme.bodySmall?.copyWith(height: 1.4),
                       ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          act,
-                          style: theme.textTheme.bodySmall?.copyWith(height: 1.4),
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
 
           if (insight.keywords.isNotEmpty) ...[

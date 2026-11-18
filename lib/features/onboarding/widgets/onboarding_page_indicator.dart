@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../../../core/constants/app_colors.dart';
 
 /// An animated dot indicator where the active dot stretches into a sleek gradient pill.
@@ -8,11 +9,11 @@ class OnboardingPageIndicator extends StatelessWidget {
   final ValueChanged<int>? onDotTapped;
 
   const OnboardingPageIndicator({
-    Key? key,
+    super.key,
     required this.count,
     required this.currentIndex,
     this.onDotTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,9 @@ class OnboardingPageIndicator extends StatelessWidget {
                       colors: [AppColors.primary, AppColors.secondary],
                     )
                   : null,
-              color: isActive ? null : AppColors.primary.withOpacity(0.18),
+              color: isActive
+                  ? null
+                  : AppColors.primary.withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(4),
             ),
           ),

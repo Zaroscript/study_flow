@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../models/notification_item_model.dart';
 import '../services/notification_service.dart';
 
@@ -9,11 +10,13 @@ final notificationServiceProvider = Provider<NotificationService>((ref) {
 });
 
 /// Delivered Notifications List Notifier
-final notificationsListProvider = StateNotifierProvider<
-    NotificationsListNotifier, List<NotificationItem>>((ref) {
-  final service = ref.watch(notificationServiceProvider);
-  return NotificationsListNotifier(service);
-});
+final notificationsListProvider =
+    StateNotifierProvider<NotificationsListNotifier, List<NotificationItem>>((
+      ref,
+    ) {
+      final service = ref.watch(notificationServiceProvider);
+      return NotificationsListNotifier(service);
+    });
 
 class NotificationsListNotifier extends StateNotifier<List<NotificationItem>> {
   final NotificationService _service;
@@ -33,21 +36,25 @@ class NotificationsListNotifier extends StateNotifier<List<NotificationItem>> {
 
   Future<void> markAsRead(String id) async {
     await _service.markAsRead(id);
+    if (!mounted) return;
     state = _service.deliveredNotifications;
   }
 
   Future<void> markAllAsRead() async {
     await _service.markAllAsRead();
+    if (!mounted) return;
     state = _service.deliveredNotifications;
   }
 
   Future<void> deleteNotification(String id) async {
     await _service.deleteNotification(id);
+    if (!mounted) return;
     state = _service.deliveredNotifications;
   }
 
   Future<void> clearAll() async {
     await _service.clearAllDelivered();
+    if (!mounted) return;
     state = _service.deliveredNotifications;
   }
 
@@ -65,18 +72,20 @@ final unreadNotificationsCountProvider = Provider<int>((ref) {
 });
 
 /// User Notification Preferences Notifier
-final notificationPreferencesProvider = StateNotifierProvider<
-    NotificationPreferencesNotifier, NotificationPreferences>((ref) {
-  final service = ref.watch(notificationServiceProvider);
-  return NotificationPreferencesNotifier(service);
-});
+final notificationPreferencesProvider =
+    StateNotifierProvider<
+      NotificationPreferencesNotifier,
+      NotificationPreferences
+    >((ref) {
+      final service = ref.watch(notificationServiceProvider);
+      return NotificationPreferencesNotifier(service);
+    });
 
 class NotificationPreferencesNotifier
     extends StateNotifier<NotificationPreferences> {
   final NotificationService _service;
 
-  NotificationPreferencesNotifier(this._service)
-      : super(_service.preferences) {
+  NotificationPreferencesNotifier(this._service) : super(_service.preferences) {
     _service.addListener(_onServiceChanged);
   }
 
@@ -86,6 +95,7 @@ class NotificationPreferencesNotifier
 
   Future<void> updatePreferences(NotificationPreferences newPrefs) async {
     await _service.updatePreferences(newPrefs);
+    if (!mounted) return;
     state = newPrefs;
   }
 

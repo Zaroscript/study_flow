@@ -10,6 +10,15 @@ import '../models/pomodoro_settings.dart';
 import '../models/initial_data.dart';
 
 class InMemoryStudyFlowRepository implements IStudyFlowRepository {
+  final Map<String, Map<String, dynamic>> _featureState = {};
+  @override
+  Future<Map<String, dynamic>?> getFeatureState(String key) async =>
+      _featureState[key];
+  @override
+  Future<void> saveFeatureState(String key, Map<String, dynamic> value) async {
+    _featureState[key] = value;
+  }
+
   UserProfile? _profile = InitialData.initialProfile;
   List<TaskModel> _tasks = List.from(InitialData.tasks);
   List<HomeworkModel> _homework = List.from(InitialData.homework);
@@ -149,6 +158,7 @@ class InMemoryStudyFlowRepository implements IStudyFlowRepository {
 
   @override
   Future<void> clearAllData() async {
+    _featureState.clear();
     _profile = null;
     _tasks = List.from(InitialData.tasks);
     _homework = List.from(InitialData.homework);

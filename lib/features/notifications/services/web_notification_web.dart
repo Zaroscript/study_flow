@@ -1,14 +1,17 @@
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'dart:js_interop';
+import 'dart:js_interop_unsafe';
+
+import 'package:web/web.dart' as web;
 
 /// Web implementation of the Web Notifications API.
 class WebNotificationBridge {
-  static bool get isSupported => html.Notification.supported;
+  static bool get isSupported =>
+      globalContext.hasProperty('Notification'.toJS).toDart;
 
   static Future<String> requestPermission() async {
     if (!isSupported) return 'denied';
     try {
-      final status = await html.Notification.requestPermission();
+      final status = (await web.Notification.requestPermission().toDart).toDart;
       return status;
     } catch (_) {
       return 'denied';
@@ -17,7 +20,7 @@ class WebNotificationBridge {
 
   static String get permission {
     if (!isSupported) return 'denied';
-    return html.Notification.permission ?? 'default';
+    return web.Notification.permission;
   }
 
   static bool showNotification({
@@ -27,14 +30,16 @@ class WebNotificationBridge {
     String? tag,
   }) {
     if (!isSupported) return false;
-    if (html.Notification.permission != 'granted') return false;
+    if (web.Notification.permission != 'granted') return false;
 
     try {
-      html.Notification(
+      web.Notification(
         title,
-        body: body,
-        icon: icon ?? 'assets/public/assets/enote-icon.png',
-        tag: tag,
+        web.NotificationOptions(
+          body: body,
+          icon: icon ?? 'assets/public/assets/enote-icon.png',
+          tag: tag ?? 'enote',
+        ),
       );
       return true;
     } catch (_) {

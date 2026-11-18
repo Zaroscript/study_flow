@@ -15,6 +15,7 @@ pnpm-debug.log*
 build/
 .flutter-plugins
 .flutter-plugins-dependencies
+*.g.dart
 *.iml
 .idea/
 
@@ -38,4 +39,12 @@ gh_bin/
 _
 
 # Explicitly track production downloads (e.g. Android APK releases)
-!public/downloads/*.apk
+# APKs are published only by the verified release workflow.
+public/downloads/*.apk
+.tooling/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+android/.gradle/
+android/app/src/main/java/io/flutter/

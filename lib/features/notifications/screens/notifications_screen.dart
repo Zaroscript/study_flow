@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_empty_state.dart';
-import '../../../core/widgets/page_header.dart';
 import '../models/notification_item_model.dart';
 import '../providers/notifications_provider.dart';
 
@@ -42,13 +41,14 @@ class NotificationsScreen extends ConsumerStatefulWidget {
   final bool isModal;
 
   const NotificationsScreen({
-    Key? key,
+    super.key,
     this.scrollController,
     this.isModal = false,
-  }) : super(key: key);
+  });
 
   @override
-  ConsumerState<NotificationsScreen> createState() => _NotificationsScreenState();
+  ConsumerState<NotificationsScreen> createState() =>
+      _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
@@ -56,19 +56,19 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
 
   Color _getIconBgColor(NotificationType type, NotificationPriority priority) {
     if (priority == NotificationPriority.urgent) {
-      return AppColors.danger.withOpacity(0.14);
+      return AppColors.danger.withValues(alpha: 0.14);
     }
     switch (type) {
       case NotificationType.taskReminder:
-        return AppColors.primary.withOpacity(0.14);
+        return AppColors.primary.withValues(alpha: 0.14);
       case NotificationType.pomodoro:
-        return AppColors.success.withOpacity(0.14);
+        return AppColors.success.withValues(alpha: 0.14);
       case NotificationType.goalDeadline:
-        return AppColors.warning.withOpacity(0.16);
+        return AppColors.warning.withValues(alpha: 0.16);
       case NotificationType.dailyBriefing:
-        return AppColors.info.withOpacity(0.14);
+        return AppColors.info.withValues(alpha: 0.14);
       case NotificationType.general:
-        return AppColors.secondary.withOpacity(0.14);
+        return AppColors.secondary.withValues(alpha: 0.14);
     }
   }
 
@@ -126,17 +126,17 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'مسح سجل الإشعارات',
+          context.tr('مسح سجل الإشعارات'),
           style: AppTextStyles.cairo(fontWeight: FontWeight.bold),
         ),
         content: Text(
-          'هل تريد مسح جميع الإشعارات السابقة من السجل؟',
+          context.tr('هل تريد مسح جميع الإشعارات السابقة من السجل؟'),
           style: AppTextStyles.cairo(),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('إلغاء', style: AppTextStyles.cairo()),
+            child: Text(context.tr('إلغاء'), style: AppTextStyles.cairo()),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
@@ -146,7 +146,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
               AppHaptics.light();
             },
             child: Text(
-              'مسح الكل',
+              context.tr('مسح الكل'),
               style: AppTextStyles.cairo(color: Colors.white),
             ),
           ),
@@ -222,7 +222,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                     Row(
                       children: [
                         Text(
-                          'مركز الإشعارات',
+                          context.tr('مركز الإشعارات'),
                           style: AppTextStyles.cairo(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -240,7 +240,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              '$unreadCount جديد',
+                              context.l10n.messagea8ccbc2d66(
+                                context.display(unreadCount),
+                              ),
                               style: AppTextStyles.cairo(
                                 color: Colors.white,
                                 fontSize: 11,
@@ -253,7 +255,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'سجل التنبيهات، تذكيرات المهام والمواعيد الهامة',
+                      context.tr(
+                        'سجل التنبيهات، تذكيرات المهام والمواعيد الهامة',
+                      ),
                       style: AppTextStyles.cairo(
                         fontSize: 12,
                         color: isDark
@@ -266,7 +270,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
               ),
               if (widget.isModal)
                 IconButton(
-                  tooltip: 'إغلاق',
+                  tooltip: context.tr('إغلاق'),
                   icon: const Icon(Icons.close_rounded),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -283,10 +287,15 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                 TextButton.icon(
                   onPressed: () {
                     AppHaptics.light();
-                    ref.read(notificationsListProvider.notifier).markAllAsRead();
+                    ref
+                        .read(notificationsListProvider.notifier)
+                        .markAllAsRead();
                   },
                   icon: const Icon(Icons.done_all_rounded, size: 18),
-                  label: Text('قراءة الكل', style: AppTextStyles.cairo(fontSize: 12)),
+                  label: Text(
+                    context.tr('قراءة الكل'),
+                    style: AppTextStyles.cairo(fontSize: 12),
+                  ),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -298,7 +307,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                 TextButton.icon(
                   onPressed: () => _confirmClearAll(context),
                   icon: const Icon(Icons.delete_sweep_outlined, size: 18),
-                  label: Text('مسح السجل', style: AppTextStyles.cairo(fontSize: 12)),
+                  label: Text(
+                    context.tr('مسح السجل'),
+                    style: AppTextStyles.cairo(fontSize: 12),
+                  ),
                   style: TextButton.styleFrom(
                     foregroundColor: isDark
                         ? AppColors.textMutedDark
@@ -393,7 +405,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.only(left: 20),
                         decoration: BoxDecoration(
-                          color: AppColors.danger.withOpacity(0.9),
+                          color: AppColors.danger.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Icon(
@@ -421,11 +433,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                                 color: iconBg,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Icon(
-                                iconData,
-                                color: iconColor,
-                                size: 22,
-                              ),
+                              child: Icon(iconData, color: iconColor, size: 22),
                             ),
                             const SizedBox(width: 12),
 
@@ -454,7 +462,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                                         Container(
                                           width: 8,
                                           height: 8,
-                                          margin: const EdgeInsets.only(left: 6),
+                                          margin: const EdgeInsets.only(
+                                            left: 6,
+                                          ),
                                           decoration: const BoxDecoration(
                                             color: AppColors.primary,
                                             shape: BoxShape.circle,
@@ -481,14 +491,16 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                                         style: AppTextStyles.cairo(
                                           fontSize: 11,
                                           color: isDark
-                                              ? AppColors.textMutedDark.withOpacity(0.8)
-                                              : AppColors.textMutedLight.withOpacity(0.8),
+                                              ? AppColors.textMutedDark
+                                                    .withValues(alpha: 0.8)
+                                              : AppColors.textMutedLight
+                                                    .withValues(alpha: 0.8),
                                         ),
                                       ),
                                       const Spacer(),
                                       if (item.payload?['route'] != null)
                                         Text(
-                                          'عرض التفاصيل ←',
+                                          context.tr('عرض التفاصيل ←'),
                                           style: AppTextStyles.cairo(
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold,

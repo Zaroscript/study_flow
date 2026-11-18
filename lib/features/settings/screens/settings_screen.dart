@@ -1,4 +1,9 @@
-import 'package:flutter/material.dart';
+import '../../common/providers/persistent_notifier.dart';
+
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:study_flow/l10n/language_button.dart';
+import 'package:study_flow/l10n/locale_provider.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,9 +16,12 @@ import '../../common/providers/theme_provider.dart';
 import '../../common/providers/study_flow_state_provider.dart';
 import '../../notifications/models/notification_item_model.dart';
 import '../../notifications/providers/notifications_provider.dart';
+import '../../materials/providers/materials_provider.dart';
+import '../../rewards/providers/rewards_provider.dart';
+import '../../ai_assistant/providers/ai_assistant_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   void _confirmClearData(BuildContext context, WidgetRef ref) {
     showDialog(
@@ -21,20 +29,22 @@ class SettingsScreen extends ConsumerWidget {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'تأكيد مسح البيانات',
+          context.tr('تأكيد مسح البيانات'),
           style: AppTextStyles.cairo(
             fontWeight: FontWeight.bold,
             color: AppColors.danger,
           ),
         ),
         content: Text(
-          'هل أنت متأكد من رغبتك في حذف جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء وسيتم إعادة ضبط التطبيق من البداية.',
+          context.tr(
+            'هل أنت متأكد من رغبتك في حذف جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء وسيتم إعادة ضبط التطبيق من البداية.',
+          ),
           style: AppTextStyles.cairo(),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('إلغاء', style: AppTextStyles.cairo()),
+            child: Text(context.tr('إلغاء'), style: AppTextStyles.cairo()),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
@@ -44,22 +54,63 @@ class SettingsScreen extends ConsumerWidget {
               final preferences = ref.read(preferencesServiceProvider);
               final profile = ref.read(profileProvider.notifier);
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              await repository.clearAllData();
-              await preferences.clearPreferences();
-              ref.invalidate(tasksProvider);
-              ref.invalidate(homeworkProvider);
-              ref.invalidate(goalsProvider);
-              ref.invalidate(habitsProvider);
-              ref.invalidate(notesProvider);
-              ref.invalidate(statsProvider);
-              ref.invalidate(pomodoroSettingsProvider);
-              await profile.clearProfile();
+              final notifications = ref.read(notificationServiceProvider);
+              final notifiers = <PersistentNotifier<dynamic>>[
+                ref.read(profileProvider.notifier),
+                ref.read(tasksProvider.notifier),
+                ref.read(homeworkProvider.notifier),
+                ref.read(goalsProvider.notifier),
+                ref.read(habitsProvider.notifier),
+                ref.read(notesProvider.notifier),
+                ref.read(statsProvider.notifier),
+                ref.read(pomodoroSettingsProvider.notifier),
+              ];
+              final library = ref.read(materialsProvider.notifier);
+              final rewards = ref.read(rewardsProvider.notifier);
+              final container = ProviderScope.containerOf(context);
+              showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const PopScope(
+                  canPop: false,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              );
+              try {
+                for (final notifier in notifiers) {
+                  await notifier.flush();
+                }
+                await library.flush();
+                await rewards.flush();
+                await notifications.clearAllData();
+                await repository.clearAllData();
+                await preferences.clearPreferences();
+                container.invalidate(materialsProvider);
+                container.invalidate(rewardsProvider);
+                container.invalidate(aiAssistantProvider);
+                container.invalidate(notificationsListProvider);
+                container.invalidate(notificationPreferencesProvider);
+                container.invalidate(themeModeProvider);
+                container.invalidate(tasksProvider);
+                container.invalidate(homeworkProvider);
+                container.invalidate(goalsProvider);
+                container.invalidate(habitsProvider);
+                container.invalidate(notesProvider);
+                container.invalidate(statsProvider);
+                container.invalidate(pomodoroSettingsProvider);
+                container.invalidate(localeProvider);
+                await profile.clearProfile();
+              } finally {
+                if (context.mounted) {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
+              }
               if (context.mounted) {
                 context.go('/onboarding');
               }
             },
             child: Text(
-              'مسح نهائي',
+              context.tr('مسح نهائي'),
               style: AppTextStyles.cairo(color: Colors.white),
             ),
           ),
@@ -82,6 +133,10 @@ class SettingsScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: LanguageButton(),
+          ),
           const PageHeader(
             title: 'الإعدادات',
             description: 'تخصيص تجربة التطبيق، إدارة ملف الطالب والمظهر',
@@ -96,7 +151,7 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundColor: AppColors.primary.withOpacity(0.12),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.12),
                   child: Text(
                     profile?.name.isNotEmpty == true
                         ? profile!.name.characters.first
@@ -160,7 +215,7 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'مظهر التطبيق',
+                      context.tr('مظهر التطبيق'),
                       style: AppTextStyles.cairo(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -170,7 +225,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'اختر المظهر المفضل أو اتركه متوافقاً مع إعدادات نظام جهازك',
+                  context.tr(
+                    'اختر المظهر المفضل أو اتركه متوافقاً مع إعدادات نظام جهازك',
+                  ),
                   style: AppTextStyles.cairo(
                     fontSize: 12,
                     color: isDark
@@ -226,24 +283,27 @@ class SettingsScreen extends ConsumerWidget {
                       color: AppColors.primary,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      'الإشعارات والتنبيهات',
-                      style: AppTextStyles.cairo(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        context.tr('الإشعارات والتنبيهات'),
+                        style: AppTextStyles.cairo(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    const Spacer(),
                     Switch(
                       value: notifPrefs.notificationsEnabled,
-                      activeColor: AppColors.primary,
+                      activeThumbColor: AppColors.primary,
                       onChanged: (val) => notifNotifier.toggleMaster(val),
                     ),
                   ],
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'تحكم في تذكيرات المهام اليومية، جلسات مؤقت التركيز والملخص الصباحي',
+                  context.tr(
+                    'تحكم في تذكيرات المهام اليومية، جلسات مؤقت التركيز والملخص الصباحي',
+                  ),
                   style: AppTextStyles.cairo(
                     fontSize: 12,
                     color: isDark
@@ -256,10 +316,10 @@ class SettingsScreen extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.warning.withOpacity(0.12),
+                      color: AppColors.warning.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: AppColors.warning.withOpacity(0.3),
+                        color: AppColors.warning.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -272,31 +332,36 @@ class SettingsScreen extends ConsumerWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            'لم يتم تفعيل إذن الإشعارات بعد على هذا الجهاز.',
+                            context.tr(
+                              'لم يتم تفعيل إذن الإشعارات بعد على هذا الجهاز.',
+                            ),
                             style: AppTextStyles.cairo(fontSize: 12),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            final status = await notifService.requestPermission();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    status.isGranted
-                                        ? 'تم تفعيل إذن الإشعارات بنجاح!'
-                                        : 'تعذر الحصول على إذن الإشعارات من المتصفح أو النظام.',
-                                    style: AppTextStyles.cairo(),
+                        Flexible(
+                          child: TextButton(
+                            onPressed: () async {
+                              final status = await notifService
+                                  .requestPermission();
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      status.isGranted
+                                          ? 'تم تفعيل إذن الإشعارات بنجاح!'
+                                          : 'تعذر الحصول على إذن الإشعارات من المتصفح أو النظام.',
+                                      style: AppTextStyles.cairo(),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            'طلب الإذن',
-                            style: AppTextStyles.cairo(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.warning,
+                                );
+                              }
+                            },
+                            child: Text(
+                              context.tr('طلب الإذن'),
+                              style: AppTextStyles.cairo(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.warning,
+                              ),
                             ),
                           ),
                         ),
@@ -310,7 +375,8 @@ class SettingsScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   _NotificationToggleTile(
                     title: 'تذكير المهام الدراسية (قبل 15 دقيقة)',
-                    description: 'تنبيه مبكر قبل موعد كل مهمة في المخطط الدراسي',
+                    description:
+                        'تنبيه مبكر قبل موعد كل مهمة في المخطط الدراسي',
                     icon: Icons.alarm_rounded,
                     value: notifPrefs.taskRemindersEnabled,
                     onChanged: (val) => notifNotifier.toggleTaskReminders(val),
@@ -318,7 +384,8 @@ class SettingsScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   _NotificationToggleTile(
                     title: 'تنبيهات مؤقت التركيز والاستراحات',
-                    description: 'إشعار فوري عند اكتمال جلسة المذاكرة أو وقت الراحة',
+                    description:
+                        'إشعار فوري عند اكتمال جلسة المذاكرة أو وقت الراحة',
                     icon: Icons.timer_rounded,
                     value: notifPrefs.pomodoroAlertsEnabled,
                     onChanged: (val) => notifNotifier.togglePomodoroAlerts(val),
@@ -378,7 +445,9 @@ class SettingsScreen extends ConsumerWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'تم إرسال إشعار تجريبي وتسجيله في مركز الإشعارات!',
+                              context.tr(
+                                'تم إرسال إشعار تجريبي وتسجيله في مركز الإشعارات!',
+                              ),
                               style: AppTextStyles.cairo(),
                             ),
                           ),
@@ -387,7 +456,7 @@ class SettingsScreen extends ConsumerWidget {
                     },
                     icon: const Icon(Icons.send_rounded, size: 18),
                     label: Text(
-                      'إرسال إشعار تجريبي الآن',
+                      context.tr('إرسال إشعار تجريبي الآن'),
                       style: AppTextStyles.cairo(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -400,7 +469,7 @@ class SettingsScreen extends ConsumerWidget {
           // 4. Danger Zone
           AppCard(
             padding: const EdgeInsets.all(18),
-            border: Border.all(color: AppColors.danger.withOpacity(0.3)),
+            border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -413,7 +482,7 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'منطقة الخطر',
+                      context.tr('منطقة الخطر'),
                       style: AppTextStyles.cairo(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -424,7 +493,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'سيتم حذف جميع السجلات والملف الشخصي نهائياً من قاعدة البيانات المحلية وإعادة فتح شاشة التهيئة.',
+                  context.tr(
+                    'سيتم حذف جميع السجلات والملف الشخصي نهائياً من قاعدة البيانات المحلية وإعادة فتح شاشة التهيئة.',
+                  ),
                   style: AppTextStyles.cairo(
                     fontSize: 13,
                     color: isDark
@@ -474,7 +545,7 @@ class _ThemeOptionTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withOpacity(0.08)
+              ? AppColors.primary.withValues(alpha: 0.08)
               : (isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9)),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
@@ -496,7 +567,7 @@ class _ThemeOptionTile extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                title,
+                context.tr(title),
                 style: AppTextStyles.cairo(
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
@@ -545,7 +616,7 @@ class _NotificationToggleTile extends StatelessWidget {
           height: 36,
           decoration: BoxDecoration(
             color: value
-                ? AppColors.primary.withOpacity(0.12)
+                ? AppColors.primary.withValues(alpha: 0.12)
                 : (isDark ? Colors.white10 : Colors.black12),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -563,7 +634,7 @@ class _NotificationToggleTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
+                context.tr(title),
                 style: AppTextStyles.cairo(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -584,7 +655,7 @@ class _NotificationToggleTile extends StatelessWidget {
         ),
         Switch(
           value: value,
-          activeColor: AppColors.primary,
+          activeThumbColor: AppColors.primary,
           onChanged: onChanged,
         ),
       ],

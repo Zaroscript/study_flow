@@ -1,4 +1,6 @@
-# Flutter Production Readiness & Audit Report 🚀
+# Flutter Production Readiness & Audit Report — superseded
+
+> **2026-11-17: NOT READY FOR RELEASE.** The historical readiness and test-pass claims below are not supported by the current source and reproducible checks. Read [the current full-project audit](PROJECT-REVIEW-2026-11-17.md) before making any release decision. The downloadable APK identifies itself as `com.simplemobiletools.notes.pro`, and the native database implementation is in-memory. The standalone assertion-enabled test runner fails. This notice preserves the earlier report as history; it does not endorse its conclusions.
 
 - **Project**: ENote (StudyFlow)
 - **Framework**: Flutter 3.22+ / Dart 3.0+

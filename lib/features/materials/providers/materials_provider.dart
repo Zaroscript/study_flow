@@ -1,10 +1,17 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+
+import '../../../data/repositories/study_flow_repository.dart';
+import '../../common/providers/study_flow_state_provider.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/models/material_item_model.dart';
 
 final materialsProvider =
     StateNotifierProvider<MaterialsNotifier, MaterialsState>((ref) {
-      return MaterialsNotifier();
+      return MaterialsNotifier(ref.watch(studyFlowRepositoryProvider));
     });
 
 class MaterialsState {
@@ -33,153 +40,117 @@ class MaterialsState {
 }
 
 class MaterialsNotifier extends StateNotifier<MaterialsState> {
-  MaterialsNotifier()
-    : super(
-        const MaterialsState(
-          folders: [
-            MaterialFolder(
-              id: 'f1',
-              name: 'الرياضيات',
-              color: 'indigo',
-              icon: 'calculate',
-              filesCount: 3,
-            ),
-            MaterialFolder(
-              id: 'f2',
-              name: 'الفيزياء',
-              color: 'blue',
-              icon: 'science',
-              filesCount: 2,
-            ),
-            MaterialFolder(
-              id: 'f3',
-              name: 'الكيمياء',
-              color: 'purple',
-              icon: 'biotech',
-              filesCount: 2,
-            ),
-            MaterialFolder(
-              id: 'f4',
-              name: 'اللغة العربية',
-              color: 'green',
-              icon: 'menu_book',
-              filesCount: 2,
-            ),
-            MaterialFolder(
-              id: 'f5',
-              name: 'اللغة الإنجليزية',
-              color: 'pink',
-              icon: 'language',
-              filesCount: 1,
-            ),
-          ],
-          items: [
-            MaterialItem(
-              id: 'm1',
-              folderId: 'f1',
-              subject: 'الرياضيات',
-              title: 'كتاب التفاضل والتكامل الرسمي',
-              type: MaterialType.book,
-              totalPages: 160,
-              readPages: 65,
-              description: 'كتاب الوزارة المعتمد وشرح المسائل المحلولة',
-              dateAdded: '2026-11-10',
-            ),
-            MaterialItem(
-              id: 'm2',
-              folderId: 'f1',
-              subject: 'الرياضيات',
-              title: 'ملخص قوانين الجبر والهندسة الفراغية',
-              type: MaterialType.summary,
-              totalPages: 35,
-              readPages: 35,
-              description: 'ملخص سريع لجميع القوانين الهامة للامتحان',
-              dateAdded: '2026-11-12',
-            ),
-            MaterialItem(
-              id: 'm3',
-              folderId: 'f2',
-              subject: 'الفيزياء',
-              title: 'مذكرة بنك أسئلة الكهربية والمغناطيسية',
-              type: MaterialType.examBank,
-              totalPages: 80,
-              readPages: 25,
-              description: 'تدريبات مكثفة على مسائل كيرشوف وقانون أوم',
-              dateAdded: '2026-11-13',
-            ),
-            MaterialItem(
-              id: 'm4',
-              folderId: 'f3',
-              subject: 'الكيمياء',
-              title: 'دليل الكيمياء العضوية والتفاعلات',
-              type: MaterialType.pdf,
-              totalPages: 110,
-              readPages: 40,
-              description: 'تجميعة معادلات الألكانات والألكينات وطرق التحضير',
-              dateAdded: '2026-11-14',
-            ),
-            MaterialItem(
-              id: 'm5',
-              folderId: 'f4',
-              subject: 'اللغة العربية',
-              title: 'كتاب القواعد النحوية الشامل',
-              type: MaterialType.book,
-              totalPages: 90,
-              readPages: 30,
-              description: 'شرح مفصل للمشتقات وإعراب الجمل',
-              dateAdded: '2026-11-14',
-            ),
-          ],
-        ),
+  final IStudyFlowRepository _repository;
+  late final Future<void> _ready;
+  Future<void> _writes = Future.value();
+  MaterialsNotifier(this._repository)
+    : super(const MaterialsState(folders: [], items: [])) {
+    _ready = _load();
+    unawaited(_ready.catchError(_report));
+  }
+  void _report(Object error, StackTrace stack) {
+    FlutterError.reportError(
+      FlutterErrorDetails(
+        exception: error,
+        stack: stack,
+        library: 'ENote library',
+      ),
+    );
+  }
+
+  Future<void> _load() async {
+    final json = await _repository.getFeatureState('materials');
+    if (mounted && json != null) {
+      state = MaterialsState(
+        folders: (json['folders'] as List)
+            .map(
+              (x) =>
+                  MaterialFolder.fromJson(Map<String, dynamic>.from(x as Map)),
+            )
+            .toList(),
+        items: (json['items'] as List)
+            .map(
+              (x) => MaterialItem.fromJson(Map<String, dynamic>.from(x as Map)),
+            )
+            .toList(),
       );
+    }
+  }
+
+  Future<void> flush() => _writes;
+  void _commit(MaterialsState Function(MaterialsState) change) {
+    final write = _writes.then((_) async {
+      await _ready;
+      if (!mounted) return;
+      final next = change(state);
+      await _repository.saveFeatureState('materials', {
+        'folders': next.folders.map((x) => x.toJson()).toList(),
+        'items': next.items.map((x) => x.toJson()).toList(),
+      });
+      if (mounted) state = next;
+    });
+    _writes = write.catchError(_report);
+  }
 
   void addFolder(String name, String color) {
-    final newFolder = MaterialFolder(
-      id: 'f_${DateTime.now().millisecondsSinceEpoch}',
-      name: name,
-      color: color,
-      filesCount: 0,
+    if (name.trim().isEmpty) return;
+    _commit(
+      (current) => current.copyWith(
+        folders: [
+          ...current.folders,
+          MaterialFolder(
+            id: 'f_${DateTime.now().microsecondsSinceEpoch}',
+            name: name.trim(),
+            color: color,
+          ),
+        ],
+      ),
     );
-    state = state.copyWith(folders: [...state.folders, newFolder]);
   }
 
   void addMaterialItem(MaterialItem item) {
-    final updatedItems = [...state.items, item];
-    final updatedFolders = state.folders.map((f) {
-      if (f.id == item.folderId) {
-        return f.copyWith(filesCount: f.filesCount + 1);
-      }
-      return f;
-    }).toList();
-
-    state = state.copyWith(folders: updatedFolders, items: updatedItems);
-  }
-
-  void updateReadingProgress(String itemId, int readPages) {
-    final updatedItems = state.items.map((item) {
-      if (item.id == itemId) {
-        final clampedPages = readPages.clamp(0, item.totalPages);
-        return item.copyWith(readPages: clampedPages);
-      }
-      return item;
-    }).toList();
-
-    state = state.copyWith(items: updatedItems);
-  }
-
-  void deleteItem(String itemId) {
-    final item = state.items.firstWhere(
-      (i) => i.id == itemId,
-      orElse: () => state.items.first,
+    _commit(
+      (current) => _withCounts(current.folders, [
+        ...current.items.where((x) => x.id != item.id),
+        item,
+      ]),
     );
-    final updatedItems = state.items.where((i) => i.id != itemId).toList();
-    final updatedFolders = state.folders.map((f) {
-      if (f.id == item.folderId) {
-        return f.copyWith(filesCount: (f.filesCount - 1).clamp(0, 999));
-      }
-      return f;
-    }).toList();
-
-    state = state.copyWith(folders: updatedFolders, items: updatedItems);
   }
+
+  void updateReadingProgress(String id, int pages) {
+    _commit(
+      (current) => current.copyWith(
+        items: current.items
+            .map(
+              (i) => i.id == id
+                  ? i.copyWith(readPages: pages.clamp(0, i.totalPages))
+                  : i,
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  void deleteItem(String id) {
+    _commit(
+      (current) => _withCounts(
+        current.folders,
+        current.items.where((i) => i.id != id).toList(),
+      ),
+    );
+  }
+
+  MaterialsState _withCounts(
+    List<MaterialFolder> folders,
+    List<MaterialItem> items,
+  ) => MaterialsState(
+    folders: folders
+        .map(
+          (f) => f.copyWith(
+            filesCount: items.where((i) => i.folderId == f.id).length,
+          ),
+        )
+        .toList(),
+    items: items,
+  );
 }

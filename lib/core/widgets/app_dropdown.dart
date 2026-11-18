@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/text_styles.dart';
@@ -18,13 +19,13 @@ class AppDropdown<T> extends StatelessWidget {
   final String? hint;
 
   const AppDropdown({
-    Key? key,
+    super.key,
     this.label,
     required this.value,
     required this.options,
     required this.onChanged,
     this.hint,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class AppDropdown<T> extends StatelessWidget {
       children: [
         if (label != null) ...[
           Text(
-            label!,
+            context.tr(label!),
             style: AppTextStyles.cairo(
               fontSize: 14,
               fontWeight: FontWeight.w600,
@@ -49,7 +50,7 @@ class AppDropdown<T> extends StatelessWidget {
           const SizedBox(height: 6),
         ],
         DropdownButtonFormField<T>(
-          value: value,
+          initialValue: value,
           isExpanded: true,
           onChanged: onChanged,
           icon: const Icon(Icons.keyboard_arrow_down, size: 20),
@@ -61,12 +62,14 @@ class AppDropdown<T> extends StatelessWidget {
           ),
           dropdownColor: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: BorderRadius.circular(12),
-          decoration: InputDecoration(hintText: hint),
+          decoration: InputDecoration(
+            hintText: hint == null ? null : context.tr(hint!),
+          ),
           items: options.map((option) {
             return DropdownMenuItem<T>(
               value: option.value,
               child: Text(
-                option.label,
+                context.tr(option.label),
                 style: AppTextStyles.cairo(
                   fontSize: 16,
                   color: isDark

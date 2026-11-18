@@ -5,10 +5,11 @@ import '../../../data/models/goal_model.dart';
 import '../../../data/models/task_model.dart';
 import '../models/notification_item_model.dart';
 import 'web_notification_platform.dart';
+import 'notification_gateway.dart';
 
 typedef VoidCallback = void Function();
 
-const bool kIsWeb = bool.fromEnvironment('dart.library.html');
+const bool kIsWeb = bool.fromEnvironment('dart.library.js_interop');
 
 /// Abstract storage interface to decouple persistence from platform plugins.
 abstract class INotificationStorage {
@@ -34,38 +35,6 @@ class InMemoryNotificationStorage implements INotificationStorage {
   Future<void> clear() async => _store.clear();
 }
 
-/// Storage adapter for SharedPreferences
-class SharedPreferencesNotificationStorage implements INotificationStorage {
-  final dynamic _prefs;
-  SharedPreferencesNotificationStorage(this._prefs);
-
-  @override
-  Future<String?> getString(String key) async {
-    try {
-      return _prefs?.getString(key) as String?;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  @override
-  Future<bool> setString(String key, String value) async {
-    try {
-      final res = await _prefs?.setString(key, value);
-      return (res as bool?) ?? true;
-    } catch (_) {
-      return true;
-    }
-  }
-
-  @override
-  Future<void> clear() async {
-    try {
-      await _prefs?.clear();
-    } catch (_) {}
-  }
-}
-
 /// Comprehensive notification service orchestrating local reminders,
 /// web notifications, scheduled alerts, and user preference enforcement.
 class NotificationService {
@@ -80,14 +49,19 @@ class NotificationService {
   NotificationService._() : _storage = InMemoryNotificationStorage();
 
   /// Constructor for dependency injection and testing.
-  factory NotificationService({INotificationStorage? storage}) {
+  factory NotificationService({
+    INotificationStorage? storage,
+    NotificationGateway? gateway,
+  }) {
     final service = NotificationService._();
     if (storage != null) {
       service._storage = storage;
     }
+    if (gateway != null) service._gateway = gateway;
     return service;
   }
 
+  NotificationGateway _gateway = UnavailableNotificationGateway();
   INotificationStorage _storage;
 
   final List<NotificationItem> _deliveredHistory = [];
@@ -106,8 +80,7 @@ class NotificationService {
   List<NotificationItem> get scheduledNotifications =>
       List.unmodifiable(_scheduledQueue);
 
-  int get unreadCount =>
-      _deliveredHistory.where((item) => !item.isRead).length;
+  int get unreadCount => _deliveredHistory.where((item) => !item.isRead).length;
 
   /// Register change listener for reactive UI components.
   void addListener(VoidCallback listener) {
@@ -139,6 +112,8 @@ class NotificationService {
     await _loadPreferences();
     await _loadHistory();
     await _loadPermissionStatus();
+    await _loadQueue();
+    await syncNotifications();
   }
 
   Future<void> _loadPreferences() async {
@@ -178,29 +153,104 @@ class NotificationService {
       return;
     }
 
-    final raw = await _storage.getString(_keyPermission);
+    _permissionStatus = await _gateway.permission();
+  }
+
+  Future<void> _loadQueue() async {
+    final raw = await _storage.getString('studyflow_notifications_queue');
+    _scheduledQueue.clear();
     if (raw != null) {
-      _permissionStatus = NotificationPermissionStatus.values.firstWhere(
-        (e) => e.name == raw,
-        orElse: () => NotificationPermissionStatus.notDetermined,
+      final items = jsonDecode(raw) as List<dynamic>;
+      _scheduledQueue.addAll(
+        items.map(
+          (i) => NotificationItem.fromJson(Map<String, dynamic>.from(i as Map)),
+        ),
       );
     }
   }
 
+  Future<void> _saveQueue() async {
+    final success = await _storage.setString(
+      'studyflow_notifications_queue',
+      jsonEncode(_scheduledQueue.map((i) => i.toJson()).toList()),
+    );
+    if (!success) throw StateError('Notification queue was not saved');
+  }
+
+  Future<void> syncNotifications() async {
+    if (!_gateway.handlesScheduling) return;
+    final desired = _scheduledQueue
+        .where((item) => item.scheduledTime?.isAfter(DateTime.now()) == true)
+        .toList();
+    if (_preferences.notificationsEnabled &&
+        _preferences.dailyBriefingEnabled) {
+      final now = DateTime.now();
+      var next = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        _preferences.dailyBriefingHour,
+        _preferences.dailyBriefingMinute,
+      );
+      if (!next.isAfter(now)) {
+        next = DateTime(
+          now.year,
+          now.month,
+          now.day + 1,
+          _preferences.dailyBriefingHour,
+          _preferences.dailyBriefingMinute,
+        );
+      }
+      desired.add(
+        NotificationItem(
+          id: 'daily-study',
+          title: 'ENote',
+          body: 'حان وقت مراجعة خطتك الدراسية / Time to review your study plan',
+          type: NotificationType.dailyBriefing,
+          channelId: NotificationChannel.dailyBriefing,
+          createdAt: now,
+          scheduledTime: next,
+          payload: const {'repeat': 'daily'},
+        ),
+      );
+    }
+    await _gateway.reconcile(_preferences.notificationsEnabled ? desired : []);
+  }
+
+  Future<void> clearAllData() async {
+    for (final timer in _activeTimers.values) {
+      timer.cancel();
+    }
+    _activeTimers.clear();
+    _scheduledQueue.clear();
+    _deliveredHistory.clear();
+    await _gateway.cancelAll();
+    await _storage.clear();
+    _preferences = const NotificationPreferences();
+    _permissionStatus = await _gateway.permission();
+    _notifyListeners();
+  }
+
   Future<void> _savePreferences() async {
     final raw = _preferences.encode();
-    await _storage.setString(_keyPrefs, raw);
+    if (!await _storage.setString(_keyPrefs, raw)) {
+      throw StateError('Notification preferences not saved');
+    }
     _notifyListeners();
   }
 
   Future<void> _saveHistory() async {
     final list = _deliveredHistory.map((e) => e.toJson()).toList();
     final raw = jsonEncode(list);
-    await _storage.setString(_keyHistory, raw);
+    if (!await _storage.setString(_keyHistory, raw)) {
+      throw StateError('Notification history not saved');
+    }
     _notifyListeners();
   }
 
-  Future<void> _savePermissionStatus(NotificationPermissionStatus status) async {
+  Future<void> _savePermissionStatus(
+    NotificationPermissionStatus status,
+  ) async {
     _permissionStatus = status;
     await _storage.setString(_keyPermission, status.name);
     _notifyListeners();
@@ -219,15 +269,16 @@ class NotificationService {
       }
     }
 
-    // On mobile / desktop platforms, default to granted once requested
-    await _savePermissionStatus(NotificationPermissionStatus.granted);
-    return NotificationPermissionStatus.granted;
+    final status = await _gateway.permission(request: true);
+    await _savePermissionStatus(status);
+    return status;
   }
 
   /// Update user notification preferences and persist.
   Future<void> updatePreferences(NotificationPreferences newPreferences) async {
     _preferences = newPreferences;
     await _savePreferences();
+    await syncNotifications();
   }
 
   /// Check if a specific notification type is allowed by user preferences.
@@ -261,7 +312,9 @@ class NotificationService {
       return null;
     }
 
-    final notifId = id ?? 'notif_${DateTime.now().millisecondsSinceEpoch}_${_deliveredHistory.length}';
+    final notifId =
+        id ??
+        'notif_${DateTime.now().millisecondsSinceEpoch}_${_deliveredHistory.length}';
     final item = NotificationItem(
       id: notifId,
       title: title,
@@ -284,6 +337,7 @@ class NotificationService {
       );
     }
 
+    if (!kIsWeb && _permissionStatus.isGranted) await _gateway.show(item);
     _deliveredHistory.insert(0, item);
 
     // Cap history size to 100 items for performance
@@ -325,7 +379,7 @@ class NotificationService {
     }
 
     // Cancel any existing schedule with the same ID
-    cancelScheduledNotification(id);
+    await cancelScheduledNotification(id);
 
     final item = NotificationItem(
       id: id,
@@ -342,6 +396,12 @@ class NotificationService {
     );
 
     _scheduledQueue.add(item);
+    await _saveQueue();
+    if (_gateway.handlesScheduling) {
+      await syncNotifications();
+      _notifyListeners();
+      return item;
+    }
 
     final duration = scheduledTime.difference(now);
     final timer = Timer(duration, () async {
@@ -364,10 +424,12 @@ class NotificationService {
   }
 
   /// Cancel a specific scheduled notification.
-  void cancelScheduledNotification(String id) {
+  Future<void> cancelScheduledNotification(String id) async {
     _activeTimers[id]?.cancel();
     _activeTimers.remove(id);
     _scheduledQueue.removeWhere((e) => e.id == id);
+    await _saveQueue();
+    await syncNotifications();
     _notifyListeners();
   }
 
@@ -414,16 +476,15 @@ class NotificationService {
     return scheduleNotification(
       id: reminderId,
       title: '⏰ تذكير بمهمة: ${task.title}',
-      body: 'تبدأ المهمة خلال $minutes دقيقة (${task.startTime}). استعد وركز لتحقيق هدفك!',
+      body:
+          'تبدأ المهمة خلال $minutes دقيقة (${task.startTime}). استعد وركز لتحقيق هدفك!',
       scheduledTime: reminderTime,
       type: NotificationType.taskReminder,
       channelId: NotificationChannel.tasks,
-      priority: isUrgent ? NotificationPriority.urgent : NotificationPriority.high,
-      payload: {
-        'route': '/planner',
-        'taskId': task.id,
-        'taskDate': task.date,
-      },
+      priority: isUrgent
+          ? NotificationPriority.urgent
+          : NotificationPriority.high,
+      payload: {'route': '/planner', 'taskId': task.id, 'taskDate': task.date},
     );
   }
 
@@ -479,7 +540,8 @@ class NotificationService {
         final notif = await showNotification(
           id: 'goal_completed_${goal.id}',
           title: '🎯 هدف مكتمل بنجاح!',
-          body: 'تهانينا! حققت هدف "${goal.title}" بالكامل بنسبة 100%. استمر في التألق! 🚀',
+          body:
+              'تهانينا! حققت هدف "${goal.title}" بالكامل بنسبة 100%. استمر في التألق! 🚀',
           type: NotificationType.goalDeadline,
           channelId: NotificationChannel.goals,
           priority: NotificationPriority.high,
@@ -490,7 +552,8 @@ class NotificationService {
         final notif = await showNotification(
           id: 'goal_overdue_${goal.id}',
           title: '🚨 تنبيه انتهاء موعد الهدف',
-          body: 'انتهت المهلة المحددة لهدف "${goal.title}" ونسبة الإنجاز $percent%. راجع الهدف أو قم بتمديده.',
+          body:
+              'انتهت المهلة المحددة لهدف "${goal.title}" ونسبة الإنجاز $percent%. راجع الهدف أو قم بتمديده.',
           type: NotificationType.goalDeadline,
           channelId: NotificationChannel.goals,
           priority: NotificationPriority.urgent,
@@ -501,7 +564,8 @@ class NotificationService {
         final notif = await showNotification(
           id: 'goal_urgent_${goal.id}',
           title: '⚠️ تنبيه عاجل لاقتراب موعد الهدف',
-          body: 'متبقي $daysLeft أيام فقط على هدف "${goal.title}" وإنجازك $percent%. كثف جهودك لتداركه!',
+          body:
+              'متبقي $daysLeft أيام فقط على هدف "${goal.title}" وإنجازك $percent%. كثف جهودك لتداركه!',
           type: NotificationType.goalDeadline,
           channelId: NotificationChannel.goals,
           priority: NotificationPriority.urgent,
@@ -546,7 +610,9 @@ class NotificationService {
   Future<void> markAsRead(String id) async {
     final index = _deliveredHistory.indexWhere((e) => e.id == id);
     if (index != -1 && !_deliveredHistory[index].isRead) {
-      _deliveredHistory[index] = _deliveredHistory[index].copyWith(isRead: true);
+      _deliveredHistory[index] = _deliveredHistory[index].copyWith(
+        isRead: true,
+      );
       await _saveHistory();
     }
   }

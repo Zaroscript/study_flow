@@ -12,10 +12,14 @@ import '../local/database/app_database.dart';
 class DriftStudyFlowRepository implements IStudyFlowRepository {
   final IAppDatabase _database;
 
-  PomodoroSettings _pomodoroSettings = const PomodoroSettings();
-  int _studyMinutes = 0;
-
   DriftStudyFlowRepository(this._database);
+
+  @override
+  Future<Map<String, dynamic>?> getFeatureState(String key) =>
+      _database.readDocument(key);
+  @override
+  Future<void> saveFeatureState(String key, Map<String, dynamic> value) =>
+      _database.writeDocument(key, value);
 
   @override
   Future<UserProfile?> getProfile() async {
@@ -132,35 +136,39 @@ class DriftStudyFlowRepository implements IStudyFlowRepository {
     final tasks = await _database.getTasks();
     final completed = tasks.where((t) => t.completed).length;
     final score = tasks.isEmpty
-        ? 85
+        ? 0
         : ((completed / tasks.length) * 100).round();
 
     return StudyStats(
-      studyTimeMinutes: _studyMinutes,
+      studyTimeMinutes:
+          (await _database.readDocument('stats'))?['studyTimeMinutes']
+              as int? ??
+          0,
       tasksCompleted: completed,
-      focusScore: score > 0 ? score : 85,
+      focusScore: score,
     );
   }
 
   @override
   Future<void> updateStats(StudyStats stats) async {
-    _studyMinutes = stats.studyTimeMinutes;
+    await _database.writeDocument('stats', stats.toJson());
   }
 
   @override
   Future<PomodoroSettings> getPomodoroSettings() async {
-    return _pomodoroSettings;
+    final json = await _database.readDocument('pomodoro');
+    return json == null
+        ? const PomodoroSettings()
+        : PomodoroSettings.fromJson(json);
   }
 
   @override
   Future<void> updatePomodoroSettings(PomodoroSettings settings) async {
-    _pomodoroSettings = settings;
+    await _database.writeDocument('pomodoro', settings.toJson());
   }
 
   @override
   Future<void> clearAllData() async {
     await _database.clearAllTables();
-    _studyMinutes = 0;
-    _pomodoroSettings = const PomodoroSettings();
   }
 }

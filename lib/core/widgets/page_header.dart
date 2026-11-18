@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PageHeader extends StatelessWidget {
   final String title;
@@ -19,12 +20,12 @@ class PageHeader extends StatelessWidget {
       children: [
         Semantics(
           header: true,
-          child: Text(title, style: theme.textTheme.headlineSmall),
+          child: Text(context.tr(title), style: theme.textTheme.headlineSmall),
         ),
         if (description != null) ...[
           const SizedBox(height: 8),
           Text(
-            description!,
+            context.tr(description!),
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -39,7 +40,7 @@ class PageHeader extends StatelessWidget {
           final compact =
               constraints.maxWidth < 540 ||
               MediaQuery.textScalerOf(context).scale(16) > 20;
-          if (compact)
+          if (compact) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,6 +48,7 @@ class PageHeader extends StatelessWidget {
                 if (action != null) ...[const SizedBox(height: 16), action!],
               ],
             );
+          }
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -1,5 +1,8 @@
+import 'package:study_flow/l10n/ui_labels.dart';
+
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/theme/text_styles.dart';
 
@@ -37,11 +40,11 @@ class FlipCardDigit extends StatefulWidget {
   final double height;
 
   const FlipCardDigit({
-    Key? key,
+    super.key,
     required this.digit,
     this.width = 52.0,
     this.height = 84.0,
-  }) : super(key: key);
+  });
 
   @override
   State<FlipCardDigit> createState() => _FlipCardDigitState();
@@ -86,7 +89,14 @@ class _FlipCardDigitState extends State<FlipCardDigit>
     if (widget.digit != _currentDigit) {
       _oldDigit = _currentDigit;
       _currentDigit = widget.digit;
-      _controller.forward(from: 0.0);
+      if (MediaQuery.disableAnimationsOf(context) ||
+          MediaQuery.accessibleNavigationOf(context)) {
+        _controller.stop();
+        _oldDigit = _currentDigit;
+        _controller.value = 0;
+      } else {
+        _controller.forward(from: 0.0);
+      }
     }
   }
 
@@ -115,10 +125,7 @@ class _FlipCardDigitState extends State<FlipCardDigit>
               ? const [Color(0xFF222D42), Color(0xFF172032)]
               : const [Color(0xFF131B29), Color(0xFF0D131F)],
         ),
-        border: Border.all(
-          color: const Color(0x1FFFFFFF),
-          width: 1.0,
-        ),
+        border: Border.all(color: const Color(0x1FFFFFFF), width: 1.0),
         boxShadow: const [
           BoxShadow(
             color: Color(0x66000000),
@@ -151,9 +158,7 @@ class _FlipCardDigitState extends State<FlipCardDigit>
               left: 0,
               right: 0,
               height: 1,
-              child: Container(
-                color: Colors.white.withOpacity(0.12),
-              ),
+              child: Container(color: Colors.white.withValues(alpha: 0.12)),
             ),
           // Subtle bottom shadow for bottom half
           if (!isTop)
@@ -162,15 +167,13 @@ class _FlipCardDigitState extends State<FlipCardDigit>
               left: 0,
               right: 0,
               height: 1,
-              child: Container(
-                color: Colors.black.withOpacity(0.4),
-              ),
+              child: Container(color: Colors.black.withValues(alpha: 0.4)),
             ),
           // Dynamic lighting / shading overlay during flip
           if (shadowOpacity > 0.0)
             Positioned.fill(
               child: Container(
-                color: Colors.black.withOpacity(shadowOpacity),
+                color: Colors.black.withValues(alpha: shadowOpacity),
               ),
             ),
         ],
@@ -302,9 +305,7 @@ class _FlipCardDigitState extends State<FlipCardDigit>
             left: 0,
             right: 0,
             height: 1.5,
-            child: Container(
-              color: const Color(0xFF070B13),
-            ),
+            child: Container(color: const Color(0xFF070B13)),
           ),
 
           // Left Mechanical Axle Pin Notch
@@ -332,9 +333,7 @@ class _FlipCardDigitState extends State<FlipCardDigit>
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xFF080C14),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(3),
-                ),
+                borderRadius: BorderRadius.horizontal(left: Radius.circular(3)),
               ),
             ),
           ),
@@ -351,11 +350,11 @@ class FlipColonSeparator extends StatefulWidget {
   final double height;
 
   const FlipColonSeparator({
-    Key? key,
+    super.key,
     required this.color,
     this.isBlinking = false,
     this.height = 84.0,
-  }) : super(key: key);
+  });
 
   @override
   State<FlipColonSeparator> createState() => _FlipColonSeparatorState();
@@ -372,22 +371,29 @@ class _FlipColonSeparatorState extends State<FlipColonSeparator>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
-    if (widget.isBlinking) {
+  }
+
+  void _syncMotion() {
+    if (widget.isBlinking &&
+        !MediaQuery.disableAnimationsOf(context) &&
+        !MediaQuery.accessibleNavigationOf(context)) {
       _blinkController.repeat(reverse: true);
+    } else {
+      _blinkController.stop();
+      _blinkController.value = 1;
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncMotion();
   }
 
   @override
   void didUpdateWidget(covariant FlipColonSeparator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.isBlinking != oldWidget.isBlinking) {
-      if (widget.isBlinking) {
-        _blinkController.repeat(reverse: true);
-      } else {
-        _blinkController.stop();
-        _blinkController.value = 1.0;
-      }
-    }
+    _syncMotion();
   }
 
   @override
@@ -411,11 +417,7 @@ class _FlipColonSeparatorState extends State<FlipColonSeparator>
             opacity: opacity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildDot(),
-                const SizedBox(height: 12),
-                _buildDot(),
-              ],
+              children: [_buildDot(), const SizedBox(height: 12), _buildDot()],
             ),
           );
         },
@@ -432,7 +434,7 @@ class _FlipColonSeparatorState extends State<FlipColonSeparator>
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: widget.color.withOpacity(0.6),
+            color: widget.color.withValues(alpha: 0.6),
             blurRadius: 8,
             spreadRadius: 1,
           ),
@@ -453,7 +455,7 @@ class FlipClockWidget extends StatelessWidget {
   final double cardHeight;
 
   const FlipClockWidget({
-    Key? key,
+    super.key,
     required this.timeLeft,
     this.totalTime = 1500,
     required this.accentColor,
@@ -461,7 +463,7 @@ class FlipClockWidget extends StatelessWidget {
     this.isActive = false,
     this.cardWidth = 52.0,
     this.cardHeight = 84.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -478,147 +480,161 @@ class FlipClockWidget extends StatelessWidget {
         ? ((totalTime - clampedTime) / totalTime).clamp(0.0, 1.0)
         : 0.0;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Adjust responsive dimensions if constraints are tight
-        final maxWidth = constraints.maxWidth;
-        final responsiveWidth = maxWidth < 340 ? 44.0 : cardWidth;
-        final responsiveHeight = maxWidth < 340 ? 72.0 : cardHeight;
+    return Semantics(
+      label: context.l10n.accessibleTimer(
+        modeLabel,
+        context.display(minutes),
+        context.display(seconds),
+      ),
+      child: ExcludeSemantics(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Adjust responsive dimensions if constraints are tight
+            final maxWidth = constraints.maxWidth;
+            final responsiveWidth = maxWidth < 340 ? 44.0 : cardWidth;
+            final responsiveHeight = maxWidth < 340 ? 72.0 : cardHeight;
 
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Session Status Pill
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: accentColor.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: accentColor.withOpacity(0.25),
-                  width: 1.0,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: accentColor,
-                      shape: BoxShape.circle,
-                      boxShadow: isActive
-                          ? [
-                              BoxShadow(
-                                color: accentColor.withOpacity(0.7),
-                                blurRadius: 6,
-                                spreadRadius: 1,
-                              ),
-                            ]
-                          : null,
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Session Status Pill
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: accentColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: accentColor.withValues(alpha: 0.25),
+                      width: 1.0,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$modeLabel • ${isActive ? 'جارية الآن' : 'متوقف مؤقتاً'}',
-                    style: AppTextStyles.cairo(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: accentColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Flip Clock Row [Minutes Pair] : [Seconds Pair]
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Minutes Pair
-                  Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FlipCardDigit(
-                        digit: m1,
-                        width: responsiveWidth,
-                        height: responsiveHeight,
-                      ),
-                      const SizedBox(width: 4),
-                      FlipCardDigit(
-                        digit: m2,
-                        width: responsiveWidth,
-                        height: responsiveHeight,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 8),
-
-                  // Colon Separator
-                  FlipColonSeparator(
-                    color: accentColor,
-                    isBlinking: isActive,
-                    height: responsiveHeight,
-                  ),
-                  const SizedBox(width: 8),
-
-                  // Seconds Pair
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FlipCardDigit(
-                        digit: s1,
-                        width: responsiveWidth,
-                        height: responsiveHeight,
-                      ),
-                      const SizedBox(width: 4),
-                      FlipCardDigit(
-                        digit: s2,
-                        width: responsiveWidth,
-                        height: responsiveHeight,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Progress Bar Track
-            Container(
-              width: math.min(maxWidth, 280.0),
-              height: 5,
-              decoration: BoxDecoration(
-                color: const Color(0x2094A3B8),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: FractionallySizedBox(
-                  widthFactor: progress,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: accentColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: accentColor.withOpacity(0.5),
-                          blurRadius: 6,
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: accentColor,
+                          shape: BoxShape.circle,
+                          boxShadow: isActive
+                              ? [
+                                  BoxShadow(
+                                    color: accentColor.withValues(alpha: 0.7),
+                                    blurRadius: 6,
+                                    spreadRadius: 1,
+                                  ),
+                                ]
+                              : null,
                         ),
-                      ],
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          '$modeLabel • ${isActive ? context.l10n.activeSession : context.l10n.pausedSession}',
+                          style: AppTextStyles.cairo(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: accentColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Flip Clock Row [Minutes Pair] : [Seconds Pair]
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Minutes Pair
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          FlipCardDigit(
+                            digit: m1,
+                            width: responsiveWidth,
+                            height: responsiveHeight,
+                          ),
+                          const SizedBox(width: 4),
+                          FlipCardDigit(
+                            digit: m2,
+                            width: responsiveWidth,
+                            height: responsiveHeight,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+
+                      // Colon Separator
+                      FlipColonSeparator(
+                        color: accentColor,
+                        isBlinking: isActive,
+                        height: responsiveHeight,
+                      ),
+                      const SizedBox(width: 8),
+
+                      // Seconds Pair
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          FlipCardDigit(
+                            digit: s1,
+                            width: responsiveWidth,
+                            height: responsiveHeight,
+                          ),
+                          const SizedBox(width: 4),
+                          FlipCardDigit(
+                            digit: s2,
+                            width: responsiveWidth,
+                            height: responsiveHeight,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Progress Bar Track
+                Container(
+                  width: math.min(maxWidth, 280.0),
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: const Color(0x2094A3B8),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: FractionallySizedBox(
+                      widthFactor: progress,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: accentColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: accentColor.withValues(alpha: 0.5),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        );
-      },
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

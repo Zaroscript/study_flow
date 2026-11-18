@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/text_styles.dart';
@@ -56,7 +57,8 @@ class AppEmptyState extends StatelessWidget {
   /// Factory for when an active filter yields 0 matches
   factory AppEmptyState.filtered({
     String title = 'لا توجد نتائج مطابقة',
-    String description = 'جرّب تغيير خيارات التصفية أو إزالة الفلتر لعرض جميع العناصر.',
+    String description =
+        'جرّب تغيير خيارات التصفية أو إزالة الفلتر لعرض جميع العناصر.',
     IconData icon = Icons.filter_alt_off_outlined,
     String actionLabel = 'عرض الكل',
     VoidCallback? onClearFilter,
@@ -75,7 +77,8 @@ class AppEmptyState extends StatelessWidget {
   /// Factory for error recovery
   factory AppEmptyState.error({
     String title = 'تعذر تحميل المحتوى',
-    String description = 'حدث خطأ غير متوقع أثناء استرجاع البيانات. يرجى المحاولة مجدداً.',
+    String description =
+        'حدث خطأ غير متوقع أثناء استرجاع البيانات. يرجى المحاولة مجدداً.',
     IconData icon = Icons.error_outline_rounded,
     String actionLabel = 'إعادة المحاولة',
     VoidCallback? onRetry,
@@ -94,22 +97,21 @@ class AppEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     Color iconBgColor;
     Color iconColor;
 
     switch (type) {
       case EmptyStateType.initial:
-        iconBgColor = AppColors.primary.withOpacity(0.12);
+        iconBgColor = AppColors.primary.withValues(alpha: 0.12);
         iconColor = AppColors.primary;
         break;
       case EmptyStateType.filtered:
-        iconBgColor = AppColors.warning.withOpacity(0.12);
+        iconBgColor = AppColors.warning.withValues(alpha: 0.12);
         iconColor = AppColors.warning;
         break;
       case EmptyStateType.error:
-        iconBgColor = AppColors.danger.withOpacity(0.12);
+        iconBgColor = AppColors.danger.withValues(alpha: 0.12);
         iconColor = AppColors.danger;
         break;
     }
@@ -132,7 +134,7 @@ class AppEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              title,
+              context.tr(title),
               textAlign: TextAlign.center,
               style: AppTextStyles.cairo(
                 fontSize: 18,
@@ -144,7 +146,7 @@ class AppEmptyState extends StatelessWidget {
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
               child: Text(
-                description,
+                context.tr(description),
                 textAlign: TextAlign.center,
                 style: AppTextStyles.cairo(
                   fontSize: 14,

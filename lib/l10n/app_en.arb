@@ -1,0 +1,2090 @@
+{
+  "@@locale": "en",
+  "label9794059229": "Research, lectures and projects",
+  "@label9794059229": {
+    "description": "Interface label: Research, lectures and projects"
+  },
+  "label327647350e": "All caught up! You have read every notification.",
+  "@label327647350e": {
+    "description": "Interface label: All caught up! You have read every notification."
+  },
+  "label96cab1ba1b": "Red",
+  "@label96cab1ba1b": {
+    "description": "Interface label: Red"
+  },
+  "label83b4b55adb": "Other",
+  "@label83b4b55adb": {
+    "description": "Interface label: Other"
+  },
+  "labela6b0763996": "Green",
+  "@labela6b0763996": {
+    "description": "Interface label: Green"
+  },
+  "label184b890547": "Great effort! Review the explanations for the questions you missed.",
+  "@label184b890547": {
+    "description": "Interface label: Great effort! Review the explanations for the questions you missed."
+  },
+  "label256fbd4d63": "Purple",
+  "@label256fbd4d63": {
+    "description": "Interface label: Purple"
+  },
+  "labelb2d33354b5": "Blue",
+  "@labelb2d33354b5": {
+    "description": "Interface label: Blue"
+  },
+  "labelc22a33af23": "Memory and effective learning fundamentals",
+  "@labelc22a33af23": {
+    "description": "Interface label: Memory and effective learning fundamentals"
+  },
+  "label62b0721618": "Yellow",
+  "@label62b0721618": {
+    "description": "Interface label: Yellow"
+  },
+  "label64aa1cf1d3": "Schedule times for today’s tasks to see your time distribution here.",
+  "@label64aa1cf1d3": {
+    "description": "Interface label: Schedule times for today’s tasks to see your time distribution here."
+  },
+  "label572e3c0c8b": "Add your first summary or idea to revisit later.",
+  "@label572e3c0c8b": {
+    "description": "Interface label: Add your first summary or idea to revisit later."
+  },
+  "label3a45e59ce6": "Best streak",
+  "@label3a45e59ce6": {
+    "description": "Interface label: Best streak"
+  },
+  "label3957c8cfd0": "Yesterday",
+  "@label3957c8cfd0": {
+    "description": "Interface label: Yesterday"
+  },
+  "label4ab1332cb5": "You",
+  "@label4ab1332cb5": {
+    "description": "Interface label: You"
+  },
+  "label17bb0fc3ae": "You are ready to go!",
+  "@label17bb0fc3ae": {
+    "description": "Interface label: You are ready to go!"
+  },
+  "label3bc56b236c": "Create a folder for each subject to keep books, notes and files together.",
+  "@label3bc56b236c": {
+    "description": "Interface label: Create a folder for each subject to keep books, notes and files together."
+  },
+  "label7d647179ef": "Achievements and badges",
+  "@label7d647179ef": {
+    "description": "Interface label: Achievements and badges"
+  },
+  "label345c9b984b": "Total files",
+  "@label345c9b984b": {
+    "description": "Interface label: Total files"
+  },
+  "label88efd3f598": "Total pages",
+  "@label88efd3f598": {
+    "description": "Interface label: Total pages"
+  },
+  "label78111d1be8": "Send a test notification",
+  "@label78111d1be8": {
+    "description": "Interface label: Send a test notification"
+  },
+  "label8f0b2f504b": "Notify me when a study session or break ends",
+  "@label8f0b2f504b": {
+    "description": "Interface label: Notify me when a study session or break ends"
+  },
+  "label9c80a6131b": "Encouragement and reminders for today's tasks",
+  "@label9c80a6131b": {
+    "description": "Interface label: Encouragement and reminders for today's tasks"
+  },
+  "label9d0806067c": "Goal reminders",
+  "@label9d0806067c": {
+    "description": "Interface label: Goal reminders"
+  },
+  "labelbde855a064": "Add progress (+1)",
+  "@labelbde855a064": {
+    "description": "Interface label: Add progress (+1)"
+  },
+  "labelc7a51040d4": "Add habit",
+  "@labelc7a51040d4": {
+    "description": "Interface label: Add habit"
+  },
+  "label1fcc2c1763": "New habit",
+  "@label1fcc2c1763": {
+    "description": "Interface label: New habit"
+  },
+  "labelf629361869": "Add a subject",
+  "@labelf629361869": {
+    "description": "Interface label: Add a subject"
+  },
+  "labelb441edc2ab": "Create a subject folder",
+  "@labelb441edc2ab": {
+    "description": "Interface label: Create a subject folder"
+  },
+  "label1552e5f5ad": "Add a note",
+  "@label1552e5f5ad": {
+    "description": "Interface label: Add a note"
+  },
+  "labelfafed82e68": "Add a file",
+  "@labelfafed82e68": {
+    "description": "Interface label: Add a file"
+  },
+  "label4e13fff422": "Add a file or book",
+  "@label4e13fff422": {
+    "description": "Interface label: Add a file or book"
+  },
+  "label6954b8cdca": "Add your first file",
+  "@label6954b8cdca": {
+    "description": "Interface label: Add your first file"
+  },
+  "label21164b4c0f": "Add task",
+  "@label21164b4c0f": {
+    "description": "Interface label: Add task"
+  },
+  "label133d2cb86b": "Add a study task",
+  "@label133d2cb86b": {
+    "description": "Interface label: Add a study task"
+  },
+  "label4aeb2adb11": "Add a goal",
+  "@label4aeb2adb11": {
+    "description": "Interface label: Add a goal"
+  },
+  "labelb84d5c5e4d": "Add a study goal",
+  "@labelb84d5c5e4d": {
+    "description": "Interface label: Add a study goal"
+  },
+  "labelb588673a63": "Add homework",
+  "@labelb588673a63": {
+    "description": "Interface label: Add homework"
+  },
+  "label3191b586a7": "New assignment",
+  "@label3191b586a7": {
+    "description": "Interface label: New assignment"
+  },
+  "label2e47b5f289": "Try again",
+  "@label2e47b5f289": {
+    "description": "Interface label: Try again"
+  },
+  "labeld242591f4a": "Reset timer",
+  "@labeld242591f4a": {
+    "description": "Interface label: Reset timer"
+  },
+  "label7edd904a2e": "Timer and alarm settings",
+  "@label7edd904a2e": {
+    "description": "Interface label: Timer and alarm settings"
+  },
+  "label5bf826c5e5": "Close",
+  "@label5bf826c5e5": {
+    "description": "Interface label: Close"
+  },
+  "label5e964cb2c1": "Complete a focus session (25 minutes)",
+  "@label5e964cb2c1": {
+    "description": "Interface label: Complete a focus session (25 minutes)"
+  },
+  "label2d67c55659": "Complete a study task",
+  "@label2d67c55659": {
+    "description": "Interface label: Complete a study task"
+  },
+  "labele776b0209b": "Cancel",
+  "@labele776b0209b": {
+    "description": "Interface label: Cancel"
+  },
+  "labelc5cc69b5c4": "Complete a task in your daily planner",
+  "@labelc5cc69b5c4": {
+    "description": "Interface label: Complete a task in your daily planner"
+  },
+  "label54e28418a2": "Create a study plan",
+  "@label54e28418a2": {
+    "description": "Interface label: Create a study plan"
+  },
+  "label707e9ad0b9": "Create Folder",
+  "@label707e9ad0b9": {
+    "description": "Interface label: Create Folder"
+  },
+  "labelfffd7b92c0": "Create a practice quiz",
+  "@labelfffd7b92c0": {
+    "description": "Interface label: Create a practice quiz"
+  },
+  "label09dfa4bf2a": "Finish homework before its deadline",
+  "@label09dfa4bf2a": {
+    "description": "Interface label: Finish homework before its deadline"
+  },
+  "label1e5093f2e1": "Pause",
+  "@label1e5093f2e1": {
+    "description": "Interface label: Pause"
+  },
+  "label652e3cf3c4": "Search titles or content…",
+  "@label652e3cf3c4": {
+    "description": "Interface label: Search titles or content…"
+  },
+  "label2b290d0462": "Set up your workspace",
+  "@label2b290d0462": {
+    "description": "Interface label: Set up your workspace"
+  },
+  "label12cfbc9db4": "Start focusing",
+  "@label12cfbc9db4": {
+    "description": "Interface label: Start focusing"
+  },
+  "label8b6bffc240": "Build positive daily habits",
+  "@label8b6bffc240": {
+    "description": "Interface label: Build positive daily habits"
+  },
+  "labeladd43f99c5": "Build consistent study habits to work towards your goals.",
+  "@labeladd43f99c5": {
+    "description": "Interface label: Build consistent study habits to work towards your goals."
+  },
+  "labeldf1e61baa2": "Quiz me on physics with multiple choice questions",
+  "@labeldf1e61baa2": {
+    "description": "Interface label: Quiz me on physics with multiple choice questions"
+  },
+  "labelf0065a3563": "Choose your education level",
+  "@labelf0065a3563": {
+    "description": "Interface label: Choose your education level"
+  },
+  "labelc695a6727c": "Choose a theme or follow your device settings",
+  "@labelc695a6727c": {
+    "description": "Interface label: Choose a theme or follow your device settings"
+  },
+  "labele2627de87d": "Choose a note for a local summary",
+  "@labele2627de87d": {
+    "description": "Interface label: Choose a note for a local summary"
+  },
+  "labelad1bf7a9f8": "Ask about a subject, a plan or a quiz…",
+  "@labelad1bf7a9f8": {
+    "description": "Interface label: Ask about a subject, a plan or a quiz…"
+  },
+  "labelc3f2fec662": "Break",
+  "@labelc3f2fec662": {
+    "description": "Interface label: Break"
+  },
+  "labeld5dfe01751": "Long break",
+  "@labeld5dfe01751": {
+    "description": "Interface label: Long break"
+  },
+  "labelfa96e585b2": "Long break (minutes)",
+  "@labelfa96e585b2": {
+    "description": "Interface label: Long break (minutes)"
+  },
+  "labelf21b23e924": "Short break",
+  "@labelf21b23e924": {
+    "description": "Interface label: Short break"
+  },
+  "labela2d8e5730b": "Short break (minutes)",
+  "@labela2d8e5730b": {
+    "description": "Interface label: Short break (minutes)"
+  },
+  "label5ae0209cf4": "Student name",
+  "@label5ae0209cf4": {
+    "description": "Interface label: Student name"
+  },
+  "label6618dc51b6": "Student name:",
+  "@label6618dc51b6": {
+    "description": "Interface label: Student name:"
+  },
+  "labela15f43fe00": "Habit name",
+  "@labela15f43fe00": {
+    "description": "Interface label: Habit name"
+  },
+  "labelb673c0111f": "Subject Name",
+  "@labelb673c0111f": {
+    "description": "Interface label: Subject Name"
+  },
+  "label4d072b0e9b": "Subject or topic:",
+  "@label4d072b0e9b": {
+    "description": "Interface label: Subject or topic:"
+  },
+  "label37251b0910": "Your name and education level help personalize your study space.",
+  "@label37251b0910": {
+    "description": "Interface label: Your name and education level help personalize your study space."
+  },
+  "label7b94973f96": "Now",
+  "@label7b94973f96": {
+    "description": "Interface label: Now"
+  },
+  "label85c4f658c9": "Sun",
+  "@label85c4f658c9": {
+    "description": "Interface label: Sun"
+  },
+  "label70eb298427": "Wed",
+  "@label70eb298427": {
+    "description": "Interface label: Wed"
+  },
+  "label259bd1aefe": "Sounds and effects",
+  "@label259bd1aefe": {
+    "description": "Interface label: Sounds and effects"
+  },
+  "label943b13bbbc": "Goals",
+  "@label943b13bbbc": {
+    "description": "Interface label: Goals"
+  },
+  "label98129d55bf": "Study goals",
+  "@label98129d55bf": {
+    "description": "Interface label: Study goals"
+  },
+  "label44ad0c1afc": "Priority",
+  "@label44ad0c1afc": {
+    "description": "Interface label: Priority"
+  },
+  "label95a522655e": "Mon",
+  "@label95a522655e": {
+    "description": "Interface label: Mon"
+  },
+  "label810ea582a5": "Statistics",
+  "@label810ea582a5": {
+    "description": "Interface label: Statistics"
+  },
+  "label8eec5361dc": "Notifications and reminders",
+  "@label8eec5361dc": {
+    "description": "Interface label: Notifications and reminders"
+  },
+  "label90b6c869a1": "Settings",
+  "@label90b6c869a1": {
+    "description": "Interface label: Settings"
+  },
+  "label11a71f2cb6": "Current progress",
+  "@label11a71f2cb6": {
+    "description": "Interface label: Current progress"
+  },
+  "label8c4a54a93c": "Progress must be between zero and the total target.",
+  "@label8c4a54a93c": {
+    "description": "Interface label: Progress must be between zero and the total target."
+  },
+  "labele19b16bdb7": "Full name",
+  "@labele19b16bdb7": {
+    "description": "Interface label: Full name"
+  },
+  "labela63e974f36": "Haptic feedback",
+  "@labela63e974f36": {
+    "description": "Interface label: Haptic feedback"
+  },
+  "labelfb631b39ab": "Focus",
+  "@labelfb631b39ab": {
+    "description": "Interface label: Focus"
+  },
+  "label7c75fec5c0": "Category",
+  "@label7c75fec5c0": {
+    "description": "Interface label: Category"
+  },
+  "label7be18f05e3": "Explanation:",
+  "@label7be18f05e3": {
+    "description": "Interface label: Explanation:"
+  },
+  "label1fec4efe90": "Progress",
+  "@label1fec4efe90": {
+    "description": "Interface label: Progress"
+  },
+  "label0b5ca28bab": "Overall progress",
+  "@label0b5ca28bab": {
+    "description": "Interface label: Overall progress"
+  },
+  "labele1c0cc7d53": "Daily reminders:",
+  "@labele1c0cc7d53": {
+    "description": "Interface label: Daily reminders:"
+  },
+  "label5965d7956e": "Tue",
+  "@label5965d7956e": {
+    "description": "Interface label: Tue"
+  },
+  "label8d067a376a": "Fri",
+  "@label8d067a376a": {
+    "description": "Interface label: Fri"
+  },
+  "label0a19938ed9": "Rewards (XP)",
+  "@label0a19938ed9": {
+    "description": "Interface label: Rewards (XP)"
+  },
+  "labelc261b1dbcd": "Maintain a daily study streak",
+  "@labelc261b1dbcd": {
+    "description": "Interface label: Maintain a daily study streak"
+  },
+  "labelea7bf454d2": "Thu",
+  "@labelea7bf454d2": {
+    "description": "Interface label: Thu"
+  },
+  "labelb986d8fb16": "Home",
+  "@labelb986d8fb16": {
+    "description": "Interface label: Home"
+  },
+  "label825de89502": "Mathematics",
+  "@label825de89502": {
+    "description": "Interface label: Mathematics"
+  },
+  "labelf533ebab64": "Previous",
+  "@labelf533ebab64": {
+    "description": "Interface label: Previous"
+  },
+  "labelc7e6b0c840": "Sat",
+  "@labelc7e6b0c840": {
+    "description": "Interface label: Sat"
+  },
+  "label37f705f7ca": "Current streak",
+  "@label37f705f7ca": {
+    "description": "Interface label: Current streak"
+  },
+  "labelbf0c4c9e43": "Daily habits",
+  "@labelbf0c4c9e43": {
+    "description": "Interface label: Daily habits"
+  },
+  "labelbaffa49c77": "Title",
+  "@labelbaffa49c77": {
+    "description": "Interface label: Title"
+  },
+  "label81f1d57162": "Physics",
+  "@label81f1d57162": {
+    "description": "Interface label: Physics"
+  },
+  "label11fdef2dc5": "All",
+  "@label11fdef2dc5": {
+    "description": "Interface label: All"
+  },
+  "labelb510d10bcd": "Subject",
+  "@labelb510d10bcd": {
+    "description": "Interface label: Subject"
+  },
+  "label23aa451148": "Subject",
+  "@label23aa451148": {
+    "description": "Interface label: Subject"
+  },
+  "label2b722794a7": "Subject:",
+  "@label2b722794a7": {
+    "description": "Interface label: Subject:"
+  },
+  "label3a4342e920": "Folder / subject",
+  "@label3a4342e920": {
+    "description": "Interface label: Folder / subject"
+  },
+  "labela6b32448b7": "This folder is empty",
+  "@labela6b32448b7": {
+    "description": "Interface label: This folder is empty"
+  },
+  "label1711387d68": "Content",
+  "@label1711387d68": {
+    "description": "Interface label: Content"
+  },
+  "label7a286c5563": "Planner",
+  "@label7a286c5563": {
+    "description": "Interface label: Planner"
+  },
+  "labeldc69e909cb": "Daily planner",
+  "@labeldc69e909cb": {
+    "description": "Interface label: Daily planner"
+  },
+  "label3eb87a1f76": "Middle school",
+  "@label3eb87a1f76": {
+    "description": "Interface label: Middle school"
+  },
+  "label2b7e1606ae": "High school",
+  "@label2b7e1606ae": {
+    "description": "Interface label: High school"
+  },
+  "label0fa4c92748": "University",
+  "@label0fa4c92748": {
+    "description": "Interface label: University"
+  },
+  "label7258aef4a4": "Education level",
+  "@label7258aef4a4": {
+    "description": "Interface label: Education level"
+  },
+  "label624cec98eb": "Education level:",
+  "@label624cec98eb": {
+    "description": "Interface label: Education level:"
+  },
+  "label6a4ef56148": "More",
+  "@label6a4ef56148": {
+    "description": "Interface label: More"
+  },
+  "label04f582e7c3": "Study assistant",
+  "@label04f582e7c3": {
+    "description": "Interface label: Study assistant"
+  },
+  "label57333f55c1": "Study assistant",
+  "@label57333f55c1": {
+    "description": "Interface label: Study assistant"
+  },
+  "label536dd0128a": "Local study assistant",
+  "@label536dd0128a": {
+    "description": "Interface label: Local study assistant"
+  },
+  "labelf08dcc6140": "Preparing a response…",
+  "@labelf08dcc6140": {
+    "description": "Interface label: Preparing a response…"
+  },
+  "labelaf76e78def": "Rewards and badges",
+  "@labelaf76e78def": {
+    "description": "Interface label: Rewards and badges"
+  },
+  "label0bababdcc9": "Library",
+  "@label0bababdcc9": {
+    "description": "Interface label: Library"
+  },
+  "labelced8429c05": "Books, notes and PDFs",
+  "@labelced8429c05": {
+    "description": "Interface label: Books, notes and PDFs"
+  },
+  "label6b5542e840": "Library and notes",
+  "@label6b5542e840": {
+    "description": "Interface label: Library and notes"
+  },
+  "labelb172fc1d3b": "Notes",
+  "@labelb172fc1d3b": {
+    "description": "Interface label: Notes"
+  },
+  "labele61ac719b7": "Morning digest",
+  "@labele61ac719b7": {
+    "description": "Interface label: Morning digest"
+  },
+  "label1ca0eecebf": "Daily morning digest",
+  "@label1ca0eecebf": {
+    "description": "Interface label: Daily morning digest"
+  },
+  "label2f1419b780": "Profile",
+  "@label2f1419b780": {
+    "description": "Interface label: Profile"
+  },
+  "label3ea2be5019": "Alarm muted",
+  "@label3ea2be5019": {
+    "description": "Interface label: Alarm muted"
+  },
+  "labele61db7663e": "Alarm enabled",
+  "@labele61db7663e": {
+    "description": "Interface label: Alarm enabled"
+  },
+  "label385634c132": "Tasks",
+  "@label385634c132": {
+    "description": "Interface label: Tasks"
+  },
+  "label8aa995d913": "Completed tasks this week",
+  "@label8aa995d913": {
+    "description": "Interface label: Completed tasks this week"
+  },
+  "labelaa2d5b333d": "Subjects",
+  "@labelaa2d5b333d": {
+    "description": "Interface label: Subjects"
+  },
+  "label0a259af8b7": "Study edition",
+  "@label0a259af8b7": {
+    "description": "Interface label: Study edition"
+  },
+  "labele7bf204fac": "Total target",
+  "@labele7bf204fac": {
+    "description": "Interface label: Total target"
+  },
+  "label9c18690657": "Homework",
+  "@label9c18690657": {
+    "description": "Interface label: Homework"
+  },
+  "labela34a799122": "Dark",
+  "@labela34a799122": {
+    "description": "Interface label: Dark"
+  },
+  "label7d3a88b2b9": "Light",
+  "@label7d3a88b2b9": {
+    "description": "Interface label: Light"
+  },
+  "label39fe99a473": "Preferred study time:",
+  "@label39fe99a473": {
+    "description": "Interface label: Preferred study time:"
+  },
+  "label32976e5b33": "Focus session complete! Take a well-earned break.",
+  "@label32976e5b33": {
+    "description": "Interface label: Focus session complete! Take a well-earned break."
+  },
+  "label79beb7bb26": "Open your study space ✦",
+  "@label79beb7bb26": {
+    "description": "Interface label: Open your study space ✦"
+  },
+  "label2a9826c7d7": "Edit your student profile",
+  "@label2a9826c7d7": {
+    "description": "Interface label: Edit your student profile"
+  },
+  "labele75a15ba7f": "Vibration",
+  "@labele75a15ba7f": {
+    "description": "Interface label: Vibration"
+  },
+  "label684b539df9": "Search notes",
+  "@label684b539df9": {
+    "description": "Interface label: Search notes"
+  },
+  "label842ce7d95f": "Start a focus session for this plan",
+  "@label842ce7d95f": {
+    "description": "Interface label: Start a focus session for this plan"
+  },
+  "label50daf2b8bb": "New conversation",
+  "@label50daf2b8bb": {
+    "description": "Interface label: New conversation"
+  },
+  "label013ff80b0a": "Purple",
+  "@label013ff80b0a": {
+    "description": "Interface label: Purple"
+  },
+  "labelcde07e48c5": "Question bank",
+  "@labelcde07e48c5": {
+    "description": "Interface label: Question bank"
+  },
+  "labele3413c3640": "Plan your next step using your actual task data.",
+  "@labele3413c3640": {
+    "description": "Interface label: Plan your next step using your actual task data."
+  },
+  "labelfb5db35cd7": "Strong foundations and organization",
+  "@labelfb5db35cd7": {
+    "description": "Interface label: Strong foundations and organization"
+  },
+  "labelca4e6a21b2": "Confirm study plan",
+  "@labelca4e6a21b2": {
+    "description": "Interface label: Confirm study plan"
+  },
+  "label82e2c6a8f6": "Confirm data reset",
+  "@label82e2c6a8f6": {
+    "description": "Interface label: Confirm data reset"
+  },
+  "label6d5892d913": "History",
+  "@label6d5892d913": {
+    "description": "Interface label: History"
+  },
+  "label4ea6e4d5ff": "End date",
+  "@label4ea6e4d5ff": {
+    "description": "Interface label: End date"
+  },
+  "label744dccdcdc": "Due date",
+  "@label744dccdcdc": {
+    "description": "Interface label: Due date"
+  },
+  "label7ea0c084e5": "Keep track of assignments and deadlines.",
+  "@label7ea0c084e5": {
+    "description": "Interface label: Keep track of assignments and deadlines."
+  },
+  "label39364a1b73": "Discard changes",
+  "@label39364a1b73": {
+    "description": "Interface label: Discard changes"
+  },
+  "label16a0e757de": "Discard changes?",
+  "@label16a0e757de": {
+    "description": "Interface label: Discard changes?"
+  },
+  "label8465206f36": "Try a sample summary",
+  "@label8465206f36": {
+    "description": "Interface label: Try a sample summary"
+  },
+  "label4309a75e68": "Update",
+  "@label4309a75e68": {
+    "description": "Interface label: Update"
+  },
+  "label2a5183092b": "Update pages",
+  "@label2a5183092b": {
+    "description": "Interface label: Update pages"
+  },
+  "label7537f1d8f6": "Update reading progress",
+  "@label7537f1d8f6": {
+    "description": "Interface label: Update reading progress"
+  },
+  "label87ac7c9859": "Goal deadline reminders",
+  "@label87ac7c9859": {
+    "description": "Interface label: Goal deadline reminders"
+  },
+  "labelaee54b6433": "Complete a study goal",
+  "@labelaee54b6433": {
+    "description": "Interface label: Complete a study goal"
+  },
+  "label23f32ccb64": "Reach 100% of a study goal",
+  "@label23f32ccb64": {
+    "description": "Interface label: Reach 100% of a study goal"
+  },
+  "label990aa481cf": "Manage task, focus timer and morning reminders",
+  "@label990aa481cf": {
+    "description": "Interface label: Manage task, focus timer and morning reminders"
+  },
+  "label72c55adc2c": "Personalize your profile, appearance and preferences",
+  "@label72c55adc2c": {
+    "description": "Interface label: Personalize your profile, appearance and preferences"
+  },
+  "labeld467da0e5d": "Skip",
+  "@labeld467da0e5d": {
+    "description": "Interface label: Skip"
+  },
+  "label123d0ce932": "Task reminders (15 minutes before)",
+  "@label123d0ce932": {
+    "description": "Interface label: Task reminders (15 minutes before)"
+  },
+  "labeldf404d8370": "Study reminders",
+  "@labeldf404d8370": {
+    "description": "Interface label: Study reminders"
+  },
+  "label98df46fbd8": "Undo",
+  "@label98df46fbd8": {
+    "description": "Interface label: Undo"
+  },
+  "label7bc073b199": "Move to today",
+  "@label7bc073b199": {
+    "description": "Interface label: Move to today"
+  },
+  "label36bbf1d771": "Focus",
+  "@label36bbf1d771": {
+    "description": "Interface label: Focus"
+  },
+  "labeldd427da7eb": "Focus and prioritization",
+  "@labeldd427da7eb": {
+    "description": "Interface label: Focus and prioritization"
+  },
+  "labelb81f2b0399": "Record progress",
+  "@labelb81f2b0399": {
+    "description": "Interface label: Record progress"
+  },
+  "labeleb5578a0a5": "Play alarm sound",
+  "@labeleb5578a0a5": {
+    "description": "Interface label: Play alarm sound"
+  },
+  "label47fa6eedc6": "Play a sound with notifications",
+  "@label47fa6eedc6": {
+    "description": "Interface label: Play a sound with notifications"
+  },
+  "label72cac6825a": "Edit note",
+  "@label72cac6825a": {
+    "description": "Interface label: Edit note"
+  },
+  "label3c89739532": "Edit profile",
+  "@label3c89739532": {
+    "description": "Interface label: Edit profile"
+  },
+  "labelfbeb103b29": "Edit your name and education level",
+  "@labelfbeb103b29": {
+    "description": "Interface label: Edit your name and education level"
+  },
+  "label4f3cfb06a9": "Notification permission was not granted by the browser or system.",
+  "@label4f3cfb06a9": {
+    "description": "Interface label: Notification permission was not granted by the browser or system."
+  },
+  "labelc19e997e6e": "Unable to load content",
+  "@labelc19e997e6e": {
+    "description": "Interface label: Unable to load content"
+  },
+  "label364c0b68d6": "Could not delete. Please retry.",
+  "@label364c0b68d6": {
+    "description": "Interface label: Could not delete. Please retry."
+  },
+  "labeld8e329ab4f": "Could not save. Please retry.",
+  "@labeld8e329ab4f": {
+    "description": "Interface label: Could not save. Please retry."
+  },
+  "label5b26593d75": "Could not restore. Please retry.",
+  "@label5b26593d75": {
+    "description": "Interface label: Could not restore. Please retry."
+  },
+  "labeld03be70807": "Independent learning and professional courses",
+  "@labeld03be70807": {
+    "description": "Interface label: Independent learning and professional courses"
+  },
+  "label661611374b": "Assignment details",
+  "@label661611374b": {
+    "description": "Interface label: Assignment details"
+  },
+  "label2f262e249f": "Vibrate when a notification arrives",
+  "@label2f262e249f": {
+    "description": "Interface label: Vibrate when a notification arrives"
+  },
+  "label9c28e43ea4": "Use dark mode",
+  "@label9c28e43ea4": {
+    "description": "Interface label: Use dark mode"
+  },
+  "labelc0d49c119f": "Use light mode",
+  "@labelc0d49c119f": {
+    "description": "Interface label: Use light mode"
+  },
+  "labelc91a04c5c6": "Summarize notes",
+  "@labelc91a04c5c6": {
+    "description": "Interface label: Summarize notes"
+  },
+  "label9025946250": "Summarize a saved note",
+  "@label9025946250": {
+    "description": "Interface label: Summarize a saved note"
+  },
+  "label8f1fa03ce2": "Follow system",
+  "@label8f1fa03ce2": {
+    "description": "Interface label: Follow system"
+  },
+  "label43285fe2a5": "Test notification sent and saved to your notification history.",
+  "@label43285fe2a5": {
+    "description": "Interface label: Test notification sent and saved to your notification history."
+  },
+  "labela1712a9876": "Your study space is ready.",
+  "@labela1712a9876": {
+    "description": "Interface label: Your study space is ready."
+  },
+  "label978dd66713": "Deleted",
+  "@label978dd66713": {
+    "description": "Interface label: Deleted"
+  },
+  "labelf4f4fd90c6": "Profile updated! ✅",
+  "@labelf4f4fd90c6": {
+    "description": "Interface label: Profile updated! ✅"
+  },
+  "label6aa73219b5": "Notification permission granted!",
+  "@label6aa73219b5": {
+    "description": "Interface label: Notification permission granted!"
+  },
+  "label4f975c463c": "Summary copied to clipboard!",
+  "@label4f975c463c": {
+    "description": "Interface label: Summary copied to clipboard!"
+  },
+  "labelc340d44e50": "Add 5 minutes",
+  "@labelc340d44e50": {
+    "description": "Interface label: Add 5 minutes"
+  },
+  "label99ec32bdc8": "Vibrate when time runs out",
+  "@label99ec32bdc8": {
+    "description": "Interface label: Vibrate when time runs out"
+  },
+  "labela742813ba8": "Notify me before a deadline or when a goal is complete",
+  "@labela742813ba8": {
+    "description": "Interface label: Notify me before a deadline or when a goal is complete"
+  },
+  "label96f5148fc6": "Remind me before each scheduled task",
+  "@label96f5148fc6": {
+    "description": "Interface label: Remind me before each scheduled task"
+  },
+  "labela4084551f3": "Focus and break notifications",
+  "@labela4084551f3": {
+    "description": "Interface label: Focus and break notifications"
+  },
+  "label91ffc329a4": "Organize books, notes and PDFs into subject folders",
+  "@label91ffc329a4": {
+    "description": "Interface label: Organize books, notes and PDFs into subject folders"
+  },
+  "label26f63063a4": "This note has unsaved changes.",
+  "@label26f63063a4": {
+    "description": "Interface label: This note has unsaved changes."
+  },
+  "label0d99062ae7": "Today’s planned time",
+  "@label0d99062ae7": {
+    "description": "Interface label: Today’s planned time"
+  },
+  "label2d8fcf372a": "Create quiz",
+  "@label2d8fcf372a": {
+    "description": "Interface label: Create quiz"
+  },
+  "label9e437f768f": "Create a study plan",
+  "@label9e437f768f": {
+    "description": "Interface label: Create a study plan"
+  },
+  "labeld82f15bc46": "Tasks are grouped by their scheduled day.",
+  "@labeld82f15bc46": {
+    "description": "Interface label: Tasks are grouped by their scheduled day."
+  },
+  "label550da3f152": "Change or clear the filters to see more items.",
+  "@label550da3f152": {
+    "description": "Interface label: Change or clear the filters to see more items."
+  },
+  "labeldb1f635346": "Try a different search or view all messages.",
+  "@labeldb1f635346": {
+    "description": "Interface label: Try a different search or view all messages."
+  },
+  "label9ef4a40af8": "Focus session complete",
+  "@label9ef4a40af8": {
+    "description": "Interface label: Focus session complete"
+  },
+  "label6daa9348a6": "Books, notes and summaries for this subject",
+  "@label6daa9348a6": {
+    "description": "Interface label: Books, notes and summaries for this subject"
+  },
+  "label6aca22bf47": "Stay focused with a timer and an optional alarm",
+  "@label6aca22bf47": {
+    "description": "Interface label: Stay focused with a timer and an optional alarm"
+  },
+  "labeldbe6f46a0f": "Could not save your data. Please try again.",
+  "@labeldbe6f46a0f": {
+    "description": "Interface label: Could not save your data. Please try again."
+  },
+  "label6725522272": "Could not save your changes.",
+  "@label6725522272": {
+    "description": "Interface label: Could not save your changes."
+  },
+  "label79f05a8b5e": "Could not restore your data. Please try again.",
+  "@label79f05a8b5e": {
+    "description": "Interface label: Could not restore your data. Please try again."
+  },
+  "label9e1ffc1710": "Set study goals and track your progress, step by step.",
+  "@label9e1ffc1710": {
+    "description": "Interface label: Set study goals and track your progress, step by step."
+  },
+  "labele0219fd385": "Choose a sustainable daily study pace.",
+  "@labele0219fd385": {
+    "description": "Interface label: Choose a sustainable daily study pace."
+  },
+  "labelaf769a073e": "Delete habit",
+  "@labelaf769a073e": {
+    "description": "Interface label: Delete habit"
+  },
+  "labeldc7679723f": "Delete item",
+  "@labeldc7679723f": {
+    "description": "Interface label: Delete item"
+  },
+  "labeld3204c4f82": "Delete note",
+  "@labeld3204c4f82": {
+    "description": "Interface label: Delete note"
+  },
+  "labelb8eea0d23c": "Delete task",
+  "@labelb8eea0d23c": {
+    "description": "Interface label: Delete task"
+  },
+  "labeld4c6598d6f": "OK",
+  "@labeld4c6598d6f": {
+    "description": "Interface label: OK"
+  },
+  "labela5b4472cdf": "Save settings",
+  "@labela5b4472cdf": {
+    "description": "Interface label: Save settings"
+  },
+  "label41097c7fa7": "Save changes",
+  "@label41097c7fa7": {
+    "description": "Interface label: Save changes"
+  },
+  "labeld6a07f1209": "Save habit",
+  "@labeld6a07f1209": {
+    "description": "Interface label: Save habit"
+  },
+  "labelb2fbee589f": "Save note",
+  "@labelb2fbee589f": {
+    "description": "Interface label: Save note"
+  },
+  "labelb465f6facc": "Save task (+50 XP on completion)",
+  "@labelb465f6facc": {
+    "description": "Interface label: Save task (+50 XP on completion)"
+  },
+  "label87d00b45ea": "Save goal (+300 XP on completion)",
+  "@label87d00b45ea": {
+    "description": "Interface label: Save goal (+300 XP on completion)"
+  },
+  "label05a254cff3": "Save homework",
+  "@label05a254cff3": {
+    "description": "Interface label: Save homework"
+  },
+  "labelc788bf129c": "Save to folder",
+  "@labelc788bf129c": {
+    "description": "Interface label: Save to folder"
+  },
+  "label104b09cb1e": "New plan",
+  "@label104b09cb1e": {
+    "description": "Interface label: New plan"
+  },
+  "label03cd948cfb": "Study plans",
+  "@label03cd948cfb": {
+    "description": "Interface label: Study plans"
+  },
+  "label3b7587c187": "Study plans, note summaries and motivating XP levels.",
+  "@label3b7587c187": {
+    "description": "Interface label: Study plans, note summaries and motivating XP levels."
+  },
+  "label569f485e0f": "Alarm options",
+  "@label569f485e0f": {
+    "description": "Interface label: Alarm options"
+  },
+  "label996e5739fa": "Study",
+  "@label996e5739fa": {
+    "description": "Interface label: Study"
+  },
+  "labelc1b1cba364": "Tutoring",
+  "@labelc1b1cba364": {
+    "description": "Interface label: Tutoring"
+  },
+  "label15df61a24e": "Let's get to know you",
+  "@label15df61a24e": {
+    "description": "Interface label: Let's get to know you"
+  },
+  "labelb030187c8a": "min",
+  "@labelb030187c8a": {
+    "description": "Interface label: min"
+  },
+  "label302a236dd7": "A morning reminder to review today's tasks and goals",
+  "@label302a236dd7": {
+    "description": "Interface label: A morning reminder to review today's tasks and goals"
+  },
+  "label974e44e09a": "YOUR STUDY COMPANION",
+  "@label974e44e09a": {
+    "description": "Interface label: YOUR STUDY COMPANION"
+  },
+  "label0579ba926d": "Your study companion for planning and productivity",
+  "@label0579ba926d": {
+    "description": "Interface label: Your study companion for planning and productivity"
+  },
+  "label4724e35d72": "Your break is over. Ready for another focus session?",
+  "@label4724e35d72": {
+    "description": "Interface label: Your break is over. Ready for another focus session?"
+  },
+  "labelea9ccc80d4": "Play an alarm when a session ends",
+  "@labelea9ccc80d4": {
+    "description": "Interface label: Play an alarm when a session ends"
+  },
+  "label66b6b05b6e": "Low priority 🟢",
+  "@label66b6b05b6e": {
+    "description": "Interface label: Low priority 🟢"
+  },
+  "label8af22f7f74": "Exercise",
+  "@label8af22f7f74": {
+    "description": "Interface label: Exercise"
+  },
+  "label516dc08820": "3D Flip Clock",
+  "@label516dc08820": {
+    "description": "Interface label: 3D Flip Clock"
+  },
+  "labelb118689dc8": "A flip clock for personalized focus sessions.",
+  "@labelb118689dc8": {
+    "description": "Interface label: A flip clock for personalized focus sessions."
+  },
+  "labele69eeda4a9": "Study reminders, timer alerts and goal updates will appear here.",
+  "@labele69eeda4a9": {
+    "description": "Interface label: Study reminders, timer alerts and goal updates will appear here."
+  },
+  "labelc2363be47f": "Reminders, tasks and important deadlines",
+  "@labelc2363be47f": {
+    "description": "Interface label: Reminders, tasks and important deadlines"
+  },
+  "labelacc4f1dbd0": "Keep track of assignments and due dates.",
+  "@labelacc4f1dbd0": {
+    "description": "Interface label: Keep track of assignments and due dates."
+  },
+  "label567fd7776f": "Cyan",
+  "@label567fd7776f": {
+    "description": "Interface label: Cyan"
+  },
+  "label67bd2e990e": "Easy",
+  "@label67bd2e990e": {
+    "description": "Interface label: Easy"
+  },
+  "label2206359913": "All local records and your profile will be deleted permanently. Setup will reopen.",
+  "@label2206359913": {
+    "description": "Interface label: All local records and your profile will be deleted permanently. Setup will reopen."
+  },
+  "labelaedf71a3b5": "Personal",
+  "@labelaedf71a3b5": {
+    "description": "Interface label: Personal"
+  },
+  "label871e19f899": "Morning",
+  "@label871e19f899": {
+    "description": "Interface label: Morning"
+  },
+  "labela0092ad019": "Morning 🌅",
+  "@labela0092ad019": {
+    "description": "Interface label: Morning 🌅"
+  },
+  "label3c3ca997ea": "Hard",
+  "@label3c3ca997ea": {
+    "description": "Interface label: Hard"
+  },
+  "labele4d549d8b8": "Plan four hours of mathematics study",
+  "@labele4d549d8b8": {
+    "description": "Interface label: Plan four hours of mathematics study"
+  },
+  "label67dd1cf4d8": "S",
+  "@label67dd1cf4d8": {
+    "description": "Interface label: S"
+  },
+  "label20b3762405": "Early energy",
+  "@label20b3762405": {
+    "description": "Interface label: Early energy"
+  },
+  "label42f9d7dd3a": "ENote student",
+  "@label42f9d7dd3a": {
+    "description": "Interface label: ENote student"
+  },
+  "label3944fbff8c": "Meals",
+  "@label3944fbff8c": {
+    "description": "Interface label: Meals"
+  },
+  "label1cb6df5b0b": "Request permission",
+  "@label1cb6df5b0b": {
+    "description": "Interface label: Request permission"
+  },
+  "label0fac5b494f": "Urgent",
+  "@label0fac5b494f": {
+    "description": "Interface label: Urgent"
+  },
+  "labeld768c54e09": "Urgent and important 🔴",
+  "@labeld768c54e09": {
+    "description": "Interface label: Urgent and important 🔴"
+  },
+  "label6df4e67087": "Study habits and goals",
+  "@label6df4e67087": {
+    "description": "Interface label: Study habits and goals"
+  },
+  "label1785948751": "General",
+  "@label1785948751": {
+    "description": "Interface label: General"
+  },
+  "label688478b29d": "View details",
+  "@label688478b29d": {
+    "description": "Interface label: View details"
+  },
+  "labeld36294e5ab": "View all",
+  "@labeld36294e5ab": {
+    "description": "Interface label: View all"
+  },
+  "label692f26f23f": "View all tasks",
+  "@label692f26f23f": {
+    "description": "Interface label: View all tasks"
+  },
+  "label8bb5dd6e7e": "File or book title",
+  "@label8bb5dd6e7e": {
+    "description": "Interface label: File or book title"
+  },
+  "labelacd5788daa": "Task title",
+  "@labelacd5788daa": {
+    "description": "Interface label: Task title"
+  },
+  "label78e6d86cae": "Goal title",
+  "@label78e6d86cae": {
+    "description": "Interface label: Goal title"
+  },
+  "label09e80f8b25": "Open menu",
+  "@label09e80f8b25": {
+    "description": "Interface label: Open menu"
+  },
+  "labelecf1101c09": "Open folder",
+  "@labelecf1101c09": {
+    "description": "Interface label: Open folder"
+  },
+  "label87562cc1d4": "Open & edit",
+  "@label87562cc1d4": {
+    "description": "Interface label: Open & edit"
+  },
+  "labelc239328252": "Reading",
+  "@labelc239328252": {
+    "description": "Interface label: Reading"
+  },
+  "labela8217a8d30": "Mark all as read",
+  "@labela8217a8d30": {
+    "description": "Interface label: Mark all as read"
+  },
+  "labela2973604fe": "Textbook",
+  "@labela2973604fe": {
+    "description": "Interface label: Textbook"
+  },
+  "labelf6ac956795": "Practice quiz",
+  "@labelf6ac956795": {
+    "description": "Interface label: Practice quiz"
+  },
+  "labelce9c2c913f": "Quizzes",
+  "@labelce9c2c913f": {
+    "description": "Interface label: Quizzes"
+  },
+  "label8d129a336a": "How can I use the Feynman technique to explain a difficult lesson?",
+  "@label8d129a336a": {
+    "description": "Interface label: How can I use the Feynman technique to explain a difficult lesson?"
+  },
+  "label829e0bd9c7": "How can I organize Pomodoro sessions for demanding subjects?",
+  "@label829e0bd9c7": {
+    "description": "Interface label: How can I organize Pomodoro sessions for demanding subjects?"
+  },
+  "labelc5f489ce86": "How do I earn experience points (XP)?",
+  "@labelc5f489ce86": {
+    "description": "Interface label: How do I earn experience points (XP)?"
+  },
+  "label7b9f0ae614": "No study goals yet",
+  "@label7b9f0ae614": {
+    "description": "Interface label: No study goals yet"
+  },
+  "labelb63dfe54db": "No notifications yet",
+  "@labelb63dfe54db": {
+    "description": "Interface label: No notifications yet"
+  },
+  "labele6f0d31a45": "No habits yet",
+  "@labele6f0d31a45": {
+    "description": "Interface label: No habits yet"
+  },
+  "label36b81cdaa1": "No folders yet",
+  "@label36b81cdaa1": {
+    "description": "Interface label: No folders yet"
+  },
+  "labelf0c4b21404": "No conversations in this section",
+  "@labelf0c4b21404": {
+    "description": "Interface label: No conversations in this section"
+  },
+  "labele056af301c": "Your notebook is empty.",
+  "@labele056af301c": {
+    "description": "Interface label: Your notebook is empty."
+  },
+  "labela6c181654c": "No tasks match the selected filter.",
+  "@labela6c181654c": {
+    "description": "Interface label: No tasks match the selected filter."
+  },
+  "label8280b0566c": "No matching tasks",
+  "@label8280b0566c": {
+    "description": "Interface label: No matching tasks"
+  },
+  "label8d88b0583d": "No matching results",
+  "@label8d88b0583d": {
+    "description": "Interface label: No matching results"
+  },
+  "labele9fc96d46d": "No search results",
+  "@labele9fc96d46d": {
+    "description": "Interface label: No search results"
+  },
+  "label1d682b0f5f": "No homework yet",
+  "@label1d682b0f5f": {
+    "description": "Interface label: No homework yet"
+  },
+  "labelbffcea26b6": "No pending homework 🎉",
+  "@labelbffcea26b6": {
+    "description": "Interface label: No pending homework 🎉"
+  },
+  "labeld4cc8c9dec": "Move unfinished tasks from previous days into today's schedule.",
+  "@labeld4cc8c9dec": {
+    "description": "Interface label: Move unfinished tasks from previous days into today's schedule."
+  },
+  "labelc76c1dd108": "Start your day by adding one task and setting its priority.",
+  "@labelc76c1dd108": {
+    "description": "Interface label: Start your day by adding one task and setting its priority."
+  },
+  "labelabac469fea": "Notifications are not enabled on this device yet.",
+  "@labelabac469fea": {
+    "description": "Interface label: Notifications are not enabled on this device yet."
+  },
+  "labeldb34c74349": "Habit color",
+  "@labeldb34c74349": {
+    "description": "Interface label: Habit color"
+  },
+  "labelba9a5a70e2": "Folder Color",
+  "@labelba9a5a70e2": {
+    "description": "Interface label: Folder Color"
+  },
+  "labele27138980b": "Goal color",
+  "@labele27138980b": {
+    "description": "Interface label: Goal color"
+  },
+  "label3e40b089ae": "Circular Dial",
+  "@label3e40b089ae": {
+    "description": "Interface label: Circular Dial"
+  },
+  "label4b3e9fa5a2": "Focus timer",
+  "@label4b3e9fa5a2": {
+    "description": "Interface label: Focus timer"
+  },
+  "label7b906a637f": "Focus timer and alarm",
+  "@label7b906a637f": {
+    "description": "Interface label: Focus timer and alarm"
+  },
+  "label4151ec4bf0": "Pomodoro timer",
+  "@label4151ec4bf0": {
+    "description": "Interface label: Pomodoro timer"
+  },
+  "label83beab0bf9": "Interactive flip timer",
+  "@label83beab0bf9": {
+    "description": "Interface label: Interactive flip timer"
+  },
+  "labelad20ffd9c6": "New subject",
+  "@labelad20ffd9c6": {
+    "description": "Interface label: New subject"
+  },
+  "labelde68b96fa2": "Keep editing",
+  "@labelde68b96fa2": {
+    "description": "Interface label: Keep editing"
+  },
+  "label70fc837b66": "Continue",
+  "@label70fc837b66": {
+    "description": "Interface label: Continue"
+  },
+  "labelb6485345d0": "Habit tracker",
+  "@labelb6485345d0": {
+    "description": "Interface label: Habit tracker"
+  },
+  "label91fa23bdc1": "Medium",
+  "@label91fa23bdc1": {
+    "description": "Interface label: Medium"
+  },
+  "label5b23306afc": "Paused",
+  "@label5b23306afc": {
+    "description": "Interface label: Paused"
+  },
+  "label4199b13158": "For example: Alex Morgan",
+  "@label4199b13158": {
+    "description": "Interface label: For example: Alex Morgan"
+  },
+  "label78511344e9": "e.g. Finish 5 chemistry chapters",
+  "@label78511344e9": {
+    "description": "Interface label: e.g. Finish 5 chemistry chapters"
+  },
+  "label2f1b39aa4f": "For example: Biology and geology",
+  "@label2f1b39aa4f": {
+    "description": "Interface label: For example: Biology and geology"
+  },
+  "label2e25135000": "e.g. Read for 20 minutes",
+  "@label2e25135000": {
+    "description": "Interface label: e.g. Read for 20 minutes"
+  },
+  "labelecba2e1028": "For example: Complete pages 45 and 46",
+  "@labelecba2e1028": {
+    "description": "Interface label: For example: Complete pages 45 and 46"
+  },
+  "labelf53e275ac2": "For example: Mathematics",
+  "@labelf53e275ac2": {
+    "description": "Interface label: For example: Mathematics"
+  },
+  "label04603f0aea": "For example: Mathematics, biology, grammar, English…",
+  "@label04603f0aea": {
+    "description": "Interface label: For example: Mathematics, biology, grammar, English…"
+  },
+  "labele99bcccbab": "For example: Wave physics, organic chemistry…",
+  "@labele99bcccbab": {
+    "description": "Interface label: For example: Wave physics, organic chemistry…"
+  },
+  "label8e6a795bfb": "For example: Modern physics — chapter one",
+  "@label8e6a795bfb": {
+    "description": "Interface label: For example: Modern physics — chapter one"
+  },
+  "label602257483b": "e.g. Review physics chapter three",
+  "@label602257483b": {
+    "description": "Interface label: e.g. Review physics chapter three"
+  },
+  "label886f4689ba": "Subject Folders",
+  "@label886f4689ba": {
+    "description": "Interface label: Subject Folders"
+  },
+  "label44ee4b4e2e": "School",
+  "@label44ee4b4e2e": {
+    "description": "Interface label: School"
+  },
+  "label72f5aa4bf0": "Homework",
+  "@label72f5aa4bf0": {
+    "description": "Interface label: Homework"
+  },
+  "label22dd79192c": "Study session 📚",
+  "@label22dd79192c": {
+    "description": "Interface label: Study session 📚"
+  },
+  "label5588426963": "Study notes",
+  "@label5588426963": {
+    "description": "Interface label: Study notes"
+  },
+  "labele347a191c4": "Suggested study sessions:",
+  "@labele347a191c4": {
+    "description": "Interface label: Suggested study sessions:"
+  },
+  "labela766af2149": "Welcome to ENote",
+  "@labela766af2149": {
+    "description": "Interface label: Welcome to ENote"
+  },
+  "labelf62cbfd887": "Notification center",
+  "@labelf62cbfd887": {
+    "description": "Interface label: Notification center"
+  },
+  "label4804f096ea": "Evening",
+  "@label4804f096ea": {
+    "description": "Interface label: Evening"
+  },
+  "labelc5f89a1a8f": "Evening 🌙",
+  "@labelc5f89a1a8f": {
+    "description": "Interface label: Evening 🌙"
+  },
+  "label9a67f666e6": "Study assistant and rewards",
+  "@label9a67f666e6": {
+    "description": "Interface label: Study assistant and rewards"
+  },
+  "label1e2d12cd3d": "Difficulty:",
+  "@label1e2d12cd3d": {
+    "description": "Interface label: Difficulty:"
+  },
+  "labela5967ab83e": "Clear history",
+  "@labela5967ab83e": {
+    "description": "Interface label: Clear history"
+  },
+  "label6a7442e269": "Clear all",
+  "@label6a7442e269": {
+    "description": "Interface label: Clear all"
+  },
+  "labelfc7726661c": "Reset all data",
+  "@labelfc7726661c": {
+    "description": "Interface label: Reset all data"
+  },
+  "label1f6c788785": "Clear notification history",
+  "@label1f6c788785": {
+    "description": "Interface label: Clear notification history"
+  },
+  "label05db58dea6": "Delete permanently",
+  "@label05db58dea6": {
+    "description": "Interface label: Delete permanently"
+  },
+  "label8d4efa9231": "Appearance",
+  "@label8d4efa9231": {
+    "description": "Interface label: Appearance"
+  },
+  "label723d0053b2": "Enabled",
+  "@label723d0053b2": {
+    "description": "Interface label: Enabled"
+  },
+  "label5be2920627": "Your idea library",
+  "@label5be2920627": {
+    "description": "Interface label: Your idea library"
+  },
+  "label49304cdf56": "An organized reference library",
+  "@label49304cdf56": {
+    "description": "Interface label: An organized reference library"
+  },
+  "labeldc2b264e54": "Your library starts with an idea",
+  "@labeldc2b264e54": {
+    "description": "Interface label: Your library starts with an idea"
+  },
+  "label60f4db06c4": "Completed ✅",
+  "@label60f4db06c4": {
+    "description": "Interface label: Completed ✅"
+  },
+  "label163617e7b4": "Notes / description",
+  "@label163617e7b4": {
+    "description": "Interface label: Notes / description"
+  },
+  "label6462f7d8ed": "Important notes about this file…",
+  "@label6462f7d8ed": {
+    "description": "Interface label: Important notes about this file…"
+  },
+  "label11b7bd05ae": "Untitled note",
+  "@label11b7bd05ae": {
+    "description": "Interface label: Untitled note"
+  },
+  "labelb1881eb305": "New note",
+  "@labelb1881eb305": {
+    "description": "Interface label: New note"
+  },
+  "label15c19b7233": "Revision summary",
+  "@label15c19b7233": {
+    "description": "Interface label: Revision summary"
+  },
+  "label10f88ffecc": "Keep useful summaries and ideas. Open a note to read or edit it.",
+  "@label10f88ffecc": {
+    "description": "Interface label: Keep useful summaries and ideas. Open a note to read or edit it."
+  },
+  "labele19e2de0e6": "PDF file",
+  "@labele19e2de0e6": {
+    "description": "Interface label: PDF file"
+  },
+  "label599ff0e242": "Subject folders, reading progress and quick lecture links.",
+  "@label599ff0e242": {
+    "description": "Interface label: Subject folders, reading progress and quick lecture links."
+  },
+  "label6d2bdbe820": "Excellent! You have a strong understanding of these concepts.",
+  "@label6d2bdbe820": {
+    "description": "Interface label: Excellent! You have a strong understanding of these concepts."
+  },
+  "label3c62f15bb9": "Danger zone",
+  "@label3c62f15bb9": {
+    "description": "Interface label: Danger zone"
+  },
+  "label3840526624": "One place for your study planner, focus timer and library.",
+  "@label3840526624": {
+    "description": "Interface label: One place for your study planner, focus timer and library."
+  },
+  "labela8a5bc6ef1": "Follow-up practice:",
+  "@labela8a5bc6ef1": {
+    "description": "Interface label: Follow-up practice:"
+  },
+  "labelae88baca41": "Medium priority 🟡",
+  "@labelae88baca41": {
+    "description": "Interface label: Medium priority 🟡"
+  },
+  "label940db99942": "New task",
+  "@label940db99942": {
+    "description": "Interface label: New task"
+  },
+  "labeld58c5e3e1e": "Copy summary",
+  "@labeld58c5e3e1e": {
+    "description": "Interface label: Copy summary"
+  },
+  "labelf6364c4add": "Study tips:",
+  "@labelf6364c4add": {
+    "description": "Interface label: Study tips:"
+  },
+  "label0f7ff327d3": "Practical ways to manage exam anxiety",
+  "@label0f7ff327d3": {
+    "description": "Interface label: Practical ways to manage exam anxiety"
+  },
+  "labelf0a58ece2d": "Plan tasks, set priorities and move unfinished work",
+  "@labelf0a58ece2d": {
+    "description": "Interface label: Plan tasks, set priorities and move unfinished work"
+  },
+  "labeleae7f982b4": "This is a test notification from ENote.",
+  "@labeleae7f982b4": {
+    "description": "Interface label: This is a test notification from ENote."
+  },
+  "label9a4ddd6a0c": "Earn rewards for steady study progress",
+  "@label9a4ddd6a0c": {
+    "description": "Interface label: Earn rewards for steady study progress"
+  },
+  "labelf91b2a057a": "Track goals, progress and reminders",
+  "@labelf91b2a057a": {
+    "description": "Interface label: Track goals, progress and reminders"
+  },
+  "label0de5fa048d": "Quick revision points:",
+  "@label0de5fa048d": {
+    "description": "Interface label: Quick revision points:"
+  },
+  "labela095899ef6": "Material type",
+  "@labela095899ef6": {
+    "description": "Interface label: Material type"
+  },
+  "labelef807a53df": "Sleep",
+  "@labelef807a53df": {
+    "description": "Interface label: Sleep"
+  },
+  "label05e4edca5a": "Daily focus target:",
+  "@label05e4edca5a": {
+    "description": "Interface label: Daily focus target:"
+  },
+  "label9cd557906e": "Daily focus target:",
+  "@label9cd557906e": {
+    "description": "Interface label: Daily focus target:"
+  },
+  "label6aad1061ae": "New goal",
+  "@label6aad1061ae": {
+    "description": "Interface label: New goal"
+  },
+  "label55b226e012": "Quiet, focused learning",
+  "@label55b226e012": {
+    "description": "Interface label: Quiet, focused learning"
+  },
+  "labelc214fd0117": "These are planned study times, rather than measured focus time.",
+  "@labelc214fd0117": {
+    "description": "Interface label: These are planned study times, rather than measured focus time."
+  },
+  "labeld19814bd0e": "Delete all data permanently and restart setup? This cannot be undone.",
+  "@labeld19814bd0e": {
+    "description": "Interface label: Delete all data permanently and restart setup? This cannot be undone."
+  },
+  "label291b4d8ee6": "Clear all previous notifications from your history?",
+  "@label291b4d8ee6": {
+    "description": "Interface label: Clear all previous notifications from your history?"
+  },
+  "label561006bf87": "Homework",
+  "@label561006bf87": {
+    "description": "Interface label: Homework"
+  },
+  "label836d81cd5f": "Pink",
+  "@label836d81cd5f": {
+    "description": "Interface label: Pink"
+  },
+  "label9a138c0a0c": "End time",
+  "@label9a138c0a0c": {
+    "description": "Interface label: End time"
+  },
+  "label87c6d39f1b": "End time must be after start time.",
+  "@label87c6d39f1b": {
+    "description": "Interface label: End time must be after start time."
+  },
+  "labelff4ce1add7": "Start time",
+  "@labelff4ce1add7": {
+    "description": "Interface label: Start time"
+  },
+  "labelb0dd339f81": "Focus time",
+  "@labelb0dd339f81": {
+    "description": "Interface label: Focus time"
+  },
+  "label920d9af502": "Focus time (minutes)",
+  "@label920d9af502": {
+    "description": "Interface label: Focus time (minutes)"
+  },
+  "label7eca13df80": "friend",
+  "@label7eca13df80": {
+    "description": "Interface label: friend"
+  },
+  "label0ef6b8d03f": "friend",
+  "@label0ef6b8d03f": {
+    "description": "Interface label: friend"
+  },
+  "labelf5ea0c01bd": "Enter your name to continue.",
+  "@labelf5ea0c01bd": {
+    "description": "Interface label: Enter your name to continue."
+  },
+  "label107bf0dd88": "Enter your name.",
+  "@label107bf0dd88": {
+    "description": "Interface label: Enter your name."
+  },
+  "label5a5df8828e": "Choose your education level.",
+  "@label5a5df8828e": {
+    "description": "Interface label: Choose your education level."
+  },
+  "label2ac9ce07e3": "A fresh start for your day",
+  "@label2ac9ce07e3": {
+    "description": "Interface label: A fresh start for your day"
+  },
+  "label41aaf92e8c": "⏰ Break finished!",
+  "@label41aaf92e8c": {
+    "description": "Interface label: ⏰ Break finished!"
+  },
+  "label0c03f5a479": "🎉 Well done! (+100 XP)",
+  "@label0c03f5a479": {
+    "description": "Interface label: 🎉 Well done! (+100 XP)"
+  },
+  "label67cb01e45b": "🔔 ENote test notification",
+  "@label67cb01e45b": {
+    "description": "Interface label: 🔔 ENote test notification"
+  },
+  "messagea5a66bd9f3": "Study time available: {p0} hours",
+  "@messagea5a66bd9f3": {
+    "description": "Study time available: {p0} hours",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message6731cf5a72": "Questions: {p0}",
+  "@message6731cf5a72": {
+    "description": "Questions: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message44326941d7": "Study plan ({p0} hours total)",
+  "@message44326941d7": {
+    "description": "Study plan ({p0} hours total)",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message16e923f5ae": "Quiz: {p0}",
+  "@message16e923f5ae": {
+    "description": "Quiz: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message4178437921": "Difficulty: {p0} · {p1} questions",
+  "@message4178437921": {
+    "description": "Difficulty: {p0} · {p1} questions",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "messageed951c324b": "Score: {p0}/{p1}",
+  "@messageed951c324b": {
+    "description": "Score: {p0}/{p1}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "messageb8d204704d": "Question {p0}",
+  "@messageb8d204704d": {
+    "description": "Question {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message2c49b1d2f5": "Quiz complete: {p0}%!",
+  "@message2c49b1d2f5": {
+    "description": "Quiz complete: {p0}%!",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message5c10ff4a67": "Study summary · {p0} minute read",
+  "@message5c10ff4a67": {
+    "description": "Study summary · {p0} minute read",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagec991cdd692": "{p0} of {p1}",
+  "@messagec991cdd692": {
+    "description": "{p0} of {p1}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "message30abd8f96f": "Rewards ({p0} XP)",
+  "@message30abd8f96f": {
+    "description": "Rewards ({p0} XP)",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message34a64aeb49": "Level {p0} · {p1}",
+  "@message34a64aeb49": {
+    "description": "Level {p0} · {p1}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "message0b8b5f7fdc": "🔥 Streak: {p0} days",
+  "@message0b8b5f7fdc": {
+    "description": "🔥 Streak: {p0} days",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagee8c8186e98": "🏆 Badges: {p0} of {p1} unlocked",
+  "@messagee8c8186e98": {
+    "description": "🏆 Badges: {p0} of {p1} unlocked",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "message0d5e44a09a": "Target: {p0} | Current: {p1} • Due: {p2}",
+  "@message0d5e44a09a": {
+    "description": "Target: {p0} | Current: {p1} • Due: {p2}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      },
+      "p2": {
+        "type": "String"
+      }
+    }
+  },
+  "message48e253cc7a": "Pending ({p0})",
+  "@message48e253cc7a": {
+    "description": "Pending ({p0})",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagedf894fb490": "Due: {p0}",
+  "@messagedf894fb490": {
+    "description": "Due: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message9c2bab3499": "Completed ({p0})",
+  "@message9c2bab3499": {
+    "description": "Completed ({p0})",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagec60ab2054f": "Books and files: {p0}",
+  "@messagec60ab2054f": {
+    "description": "Books and files: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messageee6fe30168": "Last page read in “{p0}”:",
+  "@messageee6fe30168": {
+    "description": "Last page read in “{p0}”:",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messageb531bc554d": "Reading progress: {p0} of {p1} pages",
+  "@messageb531bc554d": {
+    "description": "Reading progress: {p0} of {p1} pages",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "messagea8ccbc2d66": "New: {p0}",
+  "@messagea8ccbc2d66": {
+    "description": "New: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message32dc4a31fd": "Moved {p0} tasks to today. ⚡",
+  "@message32dc4a31fd": {
+    "description": "Moved {p0} tasks to today. ⚡",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message1c7f213a95": "Move unfinished tasks ({p0})",
+  "@message1c7f213a95": {
+    "description": "Move unfinished tasks ({p0})",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message70cec35d5a": "Level {p0}",
+  "@message70cec35d5a": {
+    "description": "Level {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagee98e93f406": "{p0} XP until level {p1}",
+  "@messagee98e93f406": {
+    "description": "{p0} XP until level {p1}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "message7ae08743a2": "{p0}/{p1} unlocked",
+  "@message7ae08743a2": {
+    "description": "{p0}/{p1} unlocked",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "minutes": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@minutes": {
+    "description": "Localized minutes count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "days": "{count, plural, =1{1 day} other{{count} days}}",
+  "@days": {
+    "description": "Localized days count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "files": "{count, plural, =1{1 file} other{{count} files}}",
+  "@files": {
+    "description": "Localized files count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "tasks": "{count, plural, =1{1 task} other{{count} tasks}}",
+  "@tasks": {
+    "description": "Localized tasks count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "subjects": "{count, plural, =1{1 subject} other{{count} subjects}}",
+  "@subjects": {
+    "description": "Localized subjects count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "localWelcome": "Welcome to ENote. These are local study templates, not a connected AI model. Create a study plan, practise study strategies, or extract lines from your notes.",
+  "localPlanRequest": "Create a study plan for {subject} over {hours} hours.",
+  "@localPlanRequest": {
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "localPlanReply": "Here is a local study template for {subject}. Adjust it to your syllabus.",
+  "@localPlanReply": {
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "localQuizRequest": "Practise study strategies for {subject}.",
+  "@localQuizRequest": {
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "localQuizReply": "This practice quiz covers study strategies. It does not assess your subject knowledge.",
+  "localNoteRequest": "Extract review points from {title}.",
+  "@localNoteRequest": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "localNoteReply": "Here are selected lines from your notes. Review them against the original.",
+  "localNewChat": "New conversation. Choose a study template to begin.",
+  "localSubject": "Your subject",
+  "localNote": "Study note",
+  "localMedium": "Medium",
+  "localOverview": "A flexible study template: understand, practise, recall, and review.",
+  "localUnderstand": "Understand the key ideas",
+  "localUnderstandBody": "Choose one topic. Read a short section and identify the ideas you need to understand.",
+  "localPractise": "Practise with examples",
+  "localPractiseBody": "Work through examples on your own, then compare your steps with a reliable solution.",
+  "localRecall": "Recall without looking",
+  "localRecallBody": "Close your notes. Explain the topic in your own words and mark any gaps.",
+  "localReview": "Review and plan the next step",
+  "localReviewBody": "Check your mistakes and decide what to revisit in your next session.",
+  "localPlanTip": "Start with one manageable task and take breaks when needed.",
+  "localPomodoroTip": "Try 25 minutes of focus followed by a 5-minute break; adjust to your needs.",
+  "localRevision": "Revisit the material in a later session and test what you remember.",
+  "localStrategies": "Study strategies",
+  "localQuizQ1": "Which activity lets you check what you remember?",
+  "localQuizA1": "Recall the idea with your notes closed",
+  "localQuizB1": "Only reread the same paragraph",
+  "localQuizC1": "Skip every difficult topic",
+  "localQuizWhy1": "Recalling without looking reveals gaps that rereading can hide.",
+  "localQuizQ2": "What is a useful next step after making a mistake?",
+  "localQuizA2": "Check the reasoning and try a similar example",
+  "localQuizB2": "Ignore the mistake",
+  "localQuizC2": "Memorise only the answer",
+  "localQuizWhy2": "Understanding the missed step helps you correct the method.",
+  "localQuizQ3": "How can you check whether your explanation is clear?",
+  "localQuizA3": "Explain the idea simply in your own words",
+  "localQuizB3": "Copy a definition without understanding it",
+  "localQuizC3": "Use more jargon in every sentence",
+  "localQuizWhy3": "Explaining an idea simply can expose what you have not yet understood.",
+  "localNoteSummary": "Selected lines from your note; this is an extract, not an AI-generated summary.",
+  "localNoteAction": "Check the selected points against the original and add your own explanation.",
+  "localExamSupport": "Break your next study task into a small, manageable step. Take a pause when you need one, and ask a trusted person for support if worry is getting in the way.",
+  "validationRequired": "This field is required.",
+  "validationInteger": "Enter a whole number between {min} and {max}.",
+  "@validationInteger": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "validationTime": "Enter a valid time, such as 09:30.",
+  "validationDate": "Choose a valid date in YYYY-MM-DD format.",
+  "activeSession": "In progress",
+  "pausedSession": "Paused",
+  "accessibleTimer": "{mode}: {minutes} minutes and {seconds} seconds remaining.",
+  "@accessibleTimer": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "label945de519f6": "English",
+  "label3021745a89": "Chemistry",
+  "label11076c4f66": "Physics",
+  "label62c3bc6f61": "Hours",
+  "label40add5d3e4": "hour",
+  "labelf8b69a90e2": "Biology",
+  "label8d6a5d1bbd": "On your plan today",
+  "labelb0404d47aa": "Closer to your goals",
+  "label5a5af57b42": "Weekly Performance Analytics",
+  "label40a5b383bd": "Your time deserves a good plan.",
+  "label009481fb62": "Start a focus session",
+  "label8dc921a995": "Today’s completed tasks",
+  "label7d4a462dd1": "Recorded focus minutes",
+  "labelbbd1d11263": "Goals in progress",
+  "labelbf5148ef5b": "Completed",
+  "label0277b904ae": "Focus Master",
+  "label913c73d22f": "Goal Hunter",
+  "label47ffed7d09": "Hello,",
+  "@label47ffed7d09": {
+    "description": "مرحبًا،"
+  },
+  "label49e48fe128": "Your day is a fresh page. Start with one task.",
+  "@label49e48fe128": {
+    "description": "يومك صفحة جديدة. ابدأ بمهمة واحدة."
+  },
+  "labele53b4c8cec": "Add your first goal and start tracking your progress.",
+  "@labele53b4c8cec": {
+    "description": "أضف هدفك الأول وابدأ متابعة تقدّمك."
+  },
+  "labeld9f0a500e2": "Rewards history",
+  "@labeld9f0a500e2": {
+    "description": "سجل الجوائز"
+  },
+  "labelb76be2f7f7": "Tasks actually completed over the last seven days.",
+  "@labelb76be2f7f7": {
+    "description": "توزيع المهام المنجزة فعلياً خلال الأيام السبعة الأخيرة."
+  },
+  "label56e7da3baa": "Planned study time distribution today",
+  "@label56e7da3baa": {
+    "description": "توزيع وقت المذاكرة المخطط اليوم"
+  },
+  "labelcd239b96a6": "Set your priorities and start with one task. Take a short break between focus sessions.",
+  "@labelcd239b96a6": {
+    "description": "رتّب أولوياتك وابدأ بمهمة واحدة. خذ استراحة قصيرة بين جلسات التركيز."
+  },
+  "label2bbfef15df": "Interactive study plans, instant quizzes, and smart summaries of your study notes.",
+  "@label2bbfef15df": {
+    "description": "خطط مذاكرة تفاعلية، كويزات فورية، وتلخيص ذكي لملاحظاتك الدراسية."
+  },
+  "label17a9410884": "No pending homework. Well done!",
+  "@label17a9410884": {
+    "description": "لا توجد واجبات معلقة. أحسنت!"
+  }
+}

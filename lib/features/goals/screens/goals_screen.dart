@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/core/utils/app_validators.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/widgets/app_feedback.dart';
 import '../../../core/widgets/app_sheet.dart';
@@ -22,7 +24,7 @@ import '../../rewards/providers/rewards_provider.dart';
 import '../services/goals_smart_service.dart';
 
 class GoalsScreen extends ConsumerWidget {
-  const GoalsScreen({Key? key}) : super(key: key);
+  const GoalsScreen({super.key});
 
   Color _resolveColor(String colorKey) {
     switch (colorKey) {
@@ -93,7 +95,7 @@ class GoalsScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'إضافة هدف دراسي جديد',
+                      context.tr('إضافة هدف دراسي جديد'),
                       style: AppTextStyles.cairo(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -102,13 +104,14 @@ class GoalsScreen extends ConsumerWidget {
                     IconButton(
                       onPressed: () => Navigator.pop(ctx),
                       icon: const Icon(Icons.close),
-                      tooltip: 'إغلاق',
+                      tooltip: context.tr('إغلاق'),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 AppTextField(
                   label: 'عنوان الهدف',
+                  validation: FieldValidation.required,
                   hint: 'مثال: إنهاء 5 فصول من الكيمياء',
                   controller: titleCtrl,
                 ),
@@ -118,6 +121,7 @@ class GoalsScreen extends ConsumerWidget {
                     Expanded(
                       child: AppTextField(
                         label: 'الهدف الإجمالي',
+                        validation: FieldValidation.positiveInteger,
                         controller: targetCtrl,
                         keyboardType: TextInputType.number,
                       ),
@@ -126,6 +130,7 @@ class GoalsScreen extends ConsumerWidget {
                     Expanded(
                       child: AppTextField(
                         label: 'الإنجاز الحالي',
+                        validation: FieldValidation.nonNegativeInteger,
                         controller: currentCtrl,
                         keyboardType: TextInputType.number,
                       ),
@@ -133,7 +138,11 @@ class GoalsScreen extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                AppTextField(label: 'تاريخ الانتهاء', controller: deadlineCtrl),
+                AppTextField(
+                  label: 'تاريخ الانتهاء',
+                  validation: FieldValidation.date,
+                  controller: deadlineCtrl,
+                ),
                 const SizedBox(height: 12),
                 AppDropdown<String>(
                   label: 'لون الهدف',
@@ -149,17 +158,19 @@ class GoalsScreen extends ConsumerWidget {
                   isFullWidth: true,
                   onPressed: () {
                     final title = titleCtrl.text.trim();
-                    final target = int.tryParse(targetCtrl.text);
-                    final current = int.tryParse(currentCtrl.text);
+                    final target = AppValidators.parseInt(targetCtrl.text);
+                    final current = AppValidators.parseInt(currentCtrl.text);
                     if (target == null ||
                         target < 1 ||
                         current == null ||
                         current < 0 ||
                         current > target) {
                       ScaffoldMessenger.of(ctx).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
-                            'الإنجاز الحالي يجب أن يكون بين صفر والهدف الإجمالي.',
+                            context.tr(
+                              'الإنجاز الحالي يجب أن يكون بين صفر والهدف الإجمالي.',
+                            ),
                           ),
                         ),
                       );
@@ -169,8 +180,8 @@ class GoalsScreen extends ConsumerWidget {
                       final newGoal = GoalModel(
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         title: title,
-                        target: int.tryParse(targetCtrl.text) ?? 10,
-                        current: int.tryParse(currentCtrl.text) ?? 0,
+                        target: AppValidators.parseInt(targetCtrl.text) ?? 10,
+                        current: AppValidators.parseInt(currentCtrl.text) ?? 0,
                         deadline: deadlineCtrl.text.trim(),
                         color: selectedColor,
                       );
@@ -219,7 +230,9 @@ class GoalsScreen extends ConsumerWidget {
                     ? const Color(0xFF1E293B)
                     : const Color(0xFFF8FAFC),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,11 +245,15 @@ class GoalsScreen extends ConsumerWidget {
                         size: 20,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        'إشعارات وتنبيهات الأهداف (Goals Notifier)',
-                        style: AppTextStyles.cairo(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          context.tr(
+                            'إشعارات وتنبيهات الأهداف (Goals Notifier)',
+                          ),
+                          style: AppTextStyles.cairo(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -244,12 +261,15 @@ class GoalsScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   ...alerts.map((alert) {
                     Color alertColor = AppColors.primary;
-                    if (alert.type == GoalAlertType.danger)
+                    if (alert.type == GoalAlertType.danger) {
                       alertColor = AppColors.danger;
-                    if (alert.type == GoalAlertType.warning)
+                    }
+                    if (alert.type == GoalAlertType.warning) {
                       alertColor = AppColors.warning;
-                    if (alert.type == GoalAlertType.success)
+                    }
+                    if (alert.type == GoalAlertType.success) {
                       alertColor = AppColors.success;
+                    }
 
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
@@ -258,7 +278,7 @@ class GoalsScreen extends ConsumerWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: alertColor.withOpacity(0.08),
+                        color: alertColor.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(10),
                         border: Border(
                           right: BorderSide(color: alertColor, width: 3),
@@ -285,7 +305,7 @@ class GoalsScreen extends ConsumerWidget {
                         ],
                       ),
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
             ),
@@ -295,7 +315,8 @@ class GoalsScreen extends ConsumerWidget {
           if (goals.isEmpty)
             AppEmptyState.initial(
               title: 'لا توجد أهداف مسجلة حالياً',
-              description: 'حدد أهدافك الدراسية الكبيرة وتابع إنجازك خطوة بخطوة.',
+              description:
+                  'حدد أهدافك الدراسية الكبيرة وتابع إنجازك خطوة بخطوة.',
               icon: Icons.track_changes_rounded,
               actionLabel: 'إضافة هدف',
               onAction: () => _showAddGoalSheet(context, ref),
@@ -346,7 +367,7 @@ class GoalsScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'التقدم الإجمالي',
+                            context.tr('التقدم الإجمالي'),
                             style: AppTextStyles.cairo(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -376,7 +397,11 @@ class GoalsScreen extends ConsumerWidget {
                         runSpacing: 8,
                         children: [
                           Text(
-                            'الهدف: ${goal.target} | الحالي: ${goal.current} • حتى ${goal.deadline}',
+                            context.l10n.message0d5e44a09a(
+                              context.display(goal.target),
+                              context.display(goal.current),
+                              context.display(goal.deadline),
+                            ),
                             style: AppTextStyles.cairo(
                               fontSize: 12,
                               color: isDark
@@ -392,13 +417,14 @@ class GoalsScreen extends ConsumerWidget {
                                   size: 24,
                                 ),
                                 color: goalColor,
-                                tooltip: 'إضافة تقدم (+1)',
-                                onPressed: () {
+                                tooltip: context.tr('إضافة تقدم (+1)'),
+                                onPressed: () async {
                                   if (goal.current >= goal.target) return;
                                   final newCurrent = goal.current + 1;
-                                  ref
+                                  await ref
                                       .read(goalsProvider.notifier)
                                       .incrementGoal(goal.id);
+                                  if (!context.mounted) return;
                                   ref.read(rewardsProvider.notifier).addXP(10);
                                   if (newCurrent >= goal.target) {
                                     AppHaptics.milestone();
@@ -417,7 +443,7 @@ class GoalsScreen extends ConsumerWidget {
                                 },
                               ),
                               IconButton(
-                                tooltip: 'حذف العنصر',
+                                tooltip: context.tr('حذف العنصر'),
                                 icon: const Icon(
                                   Icons.delete_outline,
                                   size: 20,

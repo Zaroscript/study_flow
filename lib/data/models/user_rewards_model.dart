@@ -63,6 +63,20 @@ class BadgeItem {
 }
 
 class UserRewards {
+  factory UserRewards.fromJson(Map<String, dynamic> json) => UserRewards(
+    currentXP: (json['currentXP'] as num?)?.toInt() ?? 0,
+    streakDays: (json['streakDays'] as num?)?.toInt() ?? 0,
+    bestStreak: (json['bestStreak'] as num?)?.toInt() ?? 0,
+    badges: (json['badges'] as List? ?? [])
+        .map((b) => BadgeItem.fromJson(Map<String, dynamic>.from(b as Map)))
+        .toList(),
+  );
+  Map<String, dynamic> toJson() => {
+    'currentXP': currentXP,
+    'streakDays': streakDays,
+    'bestStreak': bestStreak,
+    'badges': badges.map((b) => b.toJson()).toList(),
+  };
   final int currentXP;
   final int streakDays;
   final int bestStreak;

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> deleteWithUndo(
   BuildContext context, {
@@ -31,9 +31,10 @@ Future<void> deleteWithUndo(
       ),
     );
   } catch (_) {
-    if (context.mounted)
+    if (context.mounted) {
       messenger.showSnackBar(
         const SnackBar(content: Text('تعذّر الحذف. حاول مرة أخرى.')),
       );
+    }
   }
 }

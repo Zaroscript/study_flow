@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/widgets/app_sheet.dart';
 
@@ -17,7 +18,7 @@ import '../../../core/widgets/page_header.dart';
 import '../providers/materials_provider.dart';
 
 class MaterialsScreen extends ConsumerWidget {
-  const MaterialsScreen({Key? key}) : super(key: key);
+  const MaterialsScreen({super.key});
 
   Color _resolveColor(String colorKey) {
     switch (colorKey) {
@@ -74,7 +75,7 @@ class MaterialsScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'إضافة مجلد مادة جديدة',
+                      context.tr('إضافة مجلد مادة جديدة'),
                       style: AppTextStyles.cairo(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class MaterialsScreen extends ConsumerWidget {
                     IconButton(
                       onPressed: () => Navigator.pop(ctx),
                       icon: const Icon(Icons.close),
-                      tooltip: 'إغلاق',
+                      tooltip: context.tr('إغلاق'),
                     ),
                   ],
                 ),
@@ -162,7 +163,7 @@ class MaterialsScreen extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.12),
+                          color: AppColors.primary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
@@ -172,26 +173,28 @@ class MaterialsScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'المواد الدراسية',
-                            style: AppTextStyles.cairo(
-                              fontSize: 12,
-                              color: isDark
-                                  ? AppColors.textMutedDark
-                                  : AppColors.textMutedLight,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr('المواد الدراسية'),
+                              style: AppTextStyles.cairo(
+                                fontSize: 12,
+                                color: isDark
+                                    ? AppColors.textMutedDark
+                                    : AppColors.textMutedLight,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${state.folders.length} مواد',
-                            style: AppTextStyles.cairo(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              context.l10n.subjects(state.folders.length),
+                              style: AppTextStyles.cairo(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -211,7 +214,7 @@ class MaterialsScreen extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: AppColors.success.withOpacity(0.12),
+                          color: AppColors.success.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
@@ -221,26 +224,30 @@ class MaterialsScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'إجمالي الملفات',
-                            style: AppTextStyles.cairo(
-                              fontSize: 12,
-                              color: isDark
-                                  ? AppColors.textMutedDark
-                                  : AppColors.textMutedLight,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr('إجمالي الملفات'),
+                              style: AppTextStyles.cairo(
+                                fontSize: 12,
+                                color: isDark
+                                    ? AppColors.textMutedDark
+                                    : AppColors.textMutedLight,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${state.totalBooksCount} كتب وملفات',
-                            style: AppTextStyles.cairo(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              context.l10n.messagec60ab2054f(
+                                context.display(state.totalBooksCount),
+                              ),
+                              style: AppTextStyles.cairo(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -251,7 +258,7 @@ class MaterialsScreen extends ConsumerWidget {
           const SizedBox(height: 24),
 
           Text(
-            'مجلدات المواد الدراسية',
+            context.tr('مجلدات المواد الدراسية'),
             style: AppTextStyles.cairo(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -290,84 +297,84 @@ class MaterialsScreen extends ConsumerWidget {
                     AppHaptics.selection();
                     context.push('/materials/${folder.id}', extra: folder);
                   },
-                border: Border(
-                  top: BorderSide(color: folderColor, width: 1),
-                  right: BorderSide(color: Theme.of(context).dividerColor),
-                  left: BorderSide(color: Theme.of(context).dividerColor),
-                  bottom: BorderSide(color: Theme.of(context).dividerColor),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: folderColor.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(10),
+                  border: Border(
+                    top: BorderSide(color: folderColor, width: 1),
+                    right: BorderSide(color: Theme.of(context).dividerColor),
+                    left: BorderSide(color: Theme.of(context).dividerColor),
+                    bottom: BorderSide(color: Theme.of(context).dividerColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: folderColor.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              Icons.folder_open_rounded,
+                              color: folderColor,
+                              size: 24,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.folder_open_rounded,
-                            color: folderColor,
-                            size: 24,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? const Color(0xFF334155)
+                                  : const Color(0xFFF1F5F9),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              context.l10n.files(folder.filesCount),
+                              style: AppTextStyles.cairo(
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: isDark
+                                    ? AppColors.textMutedDark
+                                    : AppColors.textMutedLight,
+                              ),
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 3,
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            folder.name,
+                            style: AppTextStyles.cairo(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? const Color(0xFF334155)
-                                : const Color(0xFFF1F5F9),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '${folder.filesCount} ملف',
+                          const SizedBox(height: 2),
+                          Text(
+                            context.tr('فتح المجلد'),
                             style: AppTextStyles.cairo(
                               fontSize: 11,
-                              fontWeight: FontWeight.bold,
                               color: isDark
                                   ? AppColors.textMutedDark
                                   : AppColors.textMutedLight,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          folder.name,
-                          style: AppTextStyles.cairo(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          'فتح المجلد',
-                          style: AppTextStyles.cairo(
-                            fontSize: 11,
-                            color: isDark
-                                ? AppColors.textMutedDark
-                                : AppColors.textMutedLight,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );

@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../constants/app_colors.dart';
 
@@ -40,40 +39,48 @@ class AppTheme {
       materialTapTargetSize: MaterialTapTargetSize.padded,
       visualDensity: VisualDensity.standard,
     );
-    final text = GoogleFonts.cairoTextTheme(base.textTheme).copyWith(
-      headlineSmall: GoogleFonts.cairo(
-        fontSize: 26,
-        height: 1.5,
-        fontWeight: FontWeight.w700,
-        color: scheme.onSurface,
-      ),
-      titleLarge: GoogleFonts.cairo(
-        fontSize: 20,
-        height: 1.5,
-        fontWeight: FontWeight.w700,
-        color: scheme.onSurface,
-      ),
-      bodyLarge: GoogleFonts.cairo(
-        fontSize: 16,
-        height: 1.7,
-        color: scheme.onSurface,
-      ),
-      bodyMedium: GoogleFonts.cairo(
-        fontSize: 14,
-        height: 1.7,
-        color: scheme.onSurface,
-      ),
-      labelLarge: GoogleFonts.cairo(
-        fontSize: 15,
-        height: 1.5,
-        fontWeight: FontWeight.w700,
-      ),
-      labelSmall: GoogleFonts.cairo(
-        fontSize: 12,
-        height: 1.5,
-        color: scheme.onSurfaceVariant,
-      ),
-    );
+    final text = base.textTheme
+        .apply(fontFamily: 'Cairo')
+        .copyWith(
+          headlineSmall: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 26,
+            height: 1.5,
+            fontWeight: FontWeight.w700,
+            color: scheme.onSurface,
+          ),
+          titleLarge: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 20,
+            height: 1.5,
+            fontWeight: FontWeight.w700,
+            color: scheme.onSurface,
+          ),
+          bodyLarge: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 16,
+            height: 1.7,
+            color: scheme.onSurface,
+          ),
+          bodyMedium: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 14,
+            height: 1.7,
+            color: scheme.onSurface,
+          ),
+          labelLarge: const TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 15,
+            height: 1.5,
+            fontWeight: FontWeight.w700,
+          ),
+          labelSmall: TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 12,
+            height: 1.5,
+            color: scheme.onSurfaceVariant,
+          ),
+        );
     OutlineInputBorder border(Color color, [double width = 1]) =>
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

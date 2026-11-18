@@ -1,9 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../utils/app_validators.dart';
 
+enum FieldValidation {
+  none,
+  required,
+  focusMinutes,
+  shortBreakMinutes,
+  longBreakMinutes,
+  positiveInteger,
+  nonNegativeInteger,
+  time,
+  date,
+}
+
 class AppTextField extends StatelessWidget {
   final String? label, hint;
+  final FieldValidation validation;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final bool obscureText, readOnly;
@@ -13,6 +27,7 @@ class AppTextField extends StatelessWidget {
   final int maxLines;
   const AppTextField({
     super.key,
+    this.validation = FieldValidation.none,
     this.label,
     this.hint,
     this.controller,
@@ -25,32 +40,34 @@ class AppTextField extends StatelessWidget {
     this.maxLines = 1,
     this.readOnly = false,
   });
-  String? _validate(String? value) {
-    if (validator != null) return validator!(value);
-    final name = label ?? '';
-    if (name.contains('وقت التركيز'))
-      return AppValidators.integer(value, min: 1, max: 120);
-    if (name.contains('استراحة قصيرة'))
-      return AppValidators.integer(value, min: 1, max: 30);
-    if (name.contains('استراحة طويلة'))
-      return AppValidators.integer(value, min: 1, max: 60);
-    if (name == 'الهدف الإجمالي') return AppValidators.integer(value, min: 1);
-    if (name == 'الإنجاز الحالي') return AppValidators.integer(value);
-    if (name == 'وقت البدء' || name == 'وقت الانتهاء')
-      return AppValidators.time(value);
-    if (name.contains('تاريخ')) return AppValidators.date(value);
-    if ([
-      'العنوان',
-      'عنوان المهمة',
-      'عنوان الهدف',
-      'اسم العادة',
-      'المادة',
-      'تفاصيل الواجب',
-      'الاسم الكامل',
-    ].contains(name))
-      return AppValidators.required(value);
-    return null;
-  }
+  String? _validate(String? value) => validator != null
+      ? validator!(value)
+      : switch (validation) {
+          FieldValidation.none => null,
+          FieldValidation.required => AppValidators.required(value),
+          FieldValidation.focusMinutes => AppValidators.integer(
+            value,
+            min: 1,
+            max: 120,
+          ),
+          FieldValidation.shortBreakMinutes => AppValidators.integer(
+            value,
+            min: 1,
+            max: 30,
+          ),
+          FieldValidation.longBreakMinutes => AppValidators.integer(
+            value,
+            min: 1,
+            max: 60,
+          ),
+          FieldValidation.positiveInteger => AppValidators.integer(
+            value,
+            min: 1,
+          ),
+          FieldValidation.nonNegativeInteger => AppValidators.integer(value),
+          FieldValidation.time => AppValidators.time(value),
+          FieldValidation.date => AppValidators.date(value),
+        };
 
   @override
   Widget build(BuildContext context) => TextFormField(
@@ -59,7 +76,26 @@ class AppTextField extends StatelessWidget {
     obscureText: obscureText,
     readOnly: readOnly,
     maxLines: obscureText ? 1 : maxLines,
-    validator: _validate,
+    validator: (value) {
+      final error = _validate(value);
+      if (error == null) return null;
+      if (error == 'هذا الحقل مطلوب') return context.l10n.validationRequired;
+      if (error == 'استخدم وقتًا صالحًا مثل 09:30') {
+        return context.l10n.validationTime;
+      }
+      if (error == 'اختر تاريخًا صالحًا بصيغة YYYY-MM-DD') {
+        return context.l10n.validationDate;
+      }
+      final range = RegExp(r'^أدخل عددًا صحيحًا بين (\d+) و(\d+)$')
+          .firstMatch(error);
+      if (range != null) {
+        return context.l10n.validationInteger(
+          context.display(int.parse(range[1]!)),
+          context.display(int.parse(range[2]!)),
+        );
+      }
+      return context.tr(error);
+    },
     onChanged: onChanged,
     autovalidateMode: AutovalidateMode.onUserInteraction,
     style: Theme.of(context).textTheme.bodyLarge,
@@ -68,8 +104,8 @@ class AppTextField extends StatelessWidget {
         : TextInputAction.newline,
     scrollPadding: const EdgeInsets.all(32),
     decoration: InputDecoration(
-      labelText: label,
-      hintText: hint,
+      labelText: label == null ? null : context.tr(label!),
+      hintText: hint == null ? null : context.tr(hint!),
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       errorMaxLines: 3,

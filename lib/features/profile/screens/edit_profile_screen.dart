@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,7 +15,7 @@ import '../../../data/models/user_profile.dart';
 import '../../common/providers/study_flow_state_provider.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -72,7 +73,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'تم تحديث الملف الشخصي بنجاح! ✅',
+              context.tr('تم تحديث الملف الشخصي بنجاح! ✅'),
               style: AppTextStyles.cairo(fontWeight: FontWeight.bold),
             ),
             backgroundColor: AppColors.success,
@@ -96,8 +97,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final gradeOptions = AppConstants.educationalGrades
         .map((grade) => DropdownOption(value: grade, label: grade))
         .toList();
@@ -105,7 +104,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'تعديل الملف الشخصي',
+          context.tr('تعديل الملف الشخصي'),
           style: AppTextStyles.cairo(fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
@@ -134,10 +133,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.danger.withOpacity(0.1),
+                          color: AppColors.danger.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: AppColors.danger.withOpacity(0.3),
+                            color: AppColors.danger.withValues(alpha: 0.3),
                           ),
                         ),
                         child: Row(
@@ -170,8 +169,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       controller: _nameController,
                       prefixIcon: const Icon(Icons.person_outline, size: 20),
                       onChanged: (_) {
-                        if (_errorMessage != null)
+                        if (_errorMessage != null) {
                           setState(() => _errorMessage = null);
+                        }
                       },
                     ),
                     const SizedBox(height: 16),

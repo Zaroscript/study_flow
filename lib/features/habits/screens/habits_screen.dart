@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/widgets/app_feedback.dart';
 import '../../../core/widgets/app_sheet.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
 import '../../../core/widgets/app_button.dart';
@@ -19,7 +18,7 @@ import '../../../data/models/habit_model.dart';
 import '../../common/providers/study_flow_state_provider.dart';
 
 class HabitsScreen extends ConsumerWidget {
-  const HabitsScreen({Key? key}) : super(key: key);
+  const HabitsScreen({super.key});
 
   List<DateTime> _getLast7Days() {
     final now = DateTime.now();
@@ -60,7 +59,7 @@ class HabitsScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'إضافة عادة جديدة',
+                  context.tr('إضافة عادة جديدة'),
                   style: AppTextStyles.cairo(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -69,13 +68,14 @@ class HabitsScreen extends ConsumerWidget {
                 IconButton(
                   onPressed: () => Navigator.pop(ctx),
                   icon: const Icon(Icons.close),
-                  tooltip: 'إغلاق',
+                  tooltip: context.tr('إغلاق'),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             AppTextField(
               label: 'اسم العادة',
+              validation: FieldValidation.required,
               hint: 'مثال: القراءة لمدة 20 دقيقة',
               controller: nameCtrl,
             ),
@@ -116,7 +116,6 @@ class HabitsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final habits = ref.watch(habitsProvider);
     final days = _getLast7Days();
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -170,7 +169,7 @@ class HabitsScreen extends ConsumerWidget {
                             ),
                           ),
                           IconButton(
-                            tooltip: 'حذف العادة',
+                            tooltip: context.tr('حذف العادة'),
                             icon: Icon(
                               Icons.delete_outline,
                               color: Theme.of(context).colorScheme.error,
@@ -232,16 +231,17 @@ class HabitsScreen extends ConsumerWidget {
                                         minWidth: 48,
                                         minHeight: 48,
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         final willComplete = !completed;
                                         if (willComplete) {
                                           AppHaptics.medium();
                                         } else {
                                           AppHaptics.light();
                                         }
-                                        ref
+                                        await ref
                                             .read(habitsProvider.notifier)
                                             .toggleHabit(habit.id, dateKey);
+                                        if (!context.mounted) return;
                                       },
                                     ),
                                   ],

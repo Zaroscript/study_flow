@@ -8,6 +8,8 @@ import '../models/stats_model.dart';
 import '../models/pomodoro_settings.dart';
 
 abstract class IStudyFlowRepository {
+  Future<Map<String, dynamic>?> getFeatureState(String key);
+  Future<void> saveFeatureState(String key, Map<String, dynamic> value);
   Future<UserProfile?> getProfile();
   Future<void> saveProfile(UserProfile profile);
   Future<void> clearProfile();

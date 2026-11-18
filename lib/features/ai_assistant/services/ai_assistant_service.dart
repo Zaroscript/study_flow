@@ -1,7 +1,17 @@
+import 'english_study_templates.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_ar.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../models/ai_assistant_models.dart';
 
 class AiAssistantService {
-  AiAssistantService._();
+  AiAssistantService._({this.isEnglish = false});
+  factory AiAssistantService.forLanguage(String language) =>
+      language == 'en' ? AiAssistantService._(isEnglish: true) : instance;
+  final bool isEnglish;
+  AppLocalizations get labels =>
+      isEnglish ? AppLocalizationsEn() : AppLocalizationsAr();
+  final _english = EnglishStudyTemplates();
 
   static final AiAssistantService instance = AiAssistantService._();
 
@@ -11,7 +21,10 @@ class AiAssistantService {
     required int availableHours,
     String level = 'متوسط',
   }) {
-    final cleanSubject = subject.trim().isEmpty ? 'المادة الدراسية' : subject.trim();
+    if (isEnglish) return _english.plan(subject, availableHours);
+    final cleanSubject = subject.trim().isEmpty
+        ? 'المادة الدراسية'
+        : subject.trim();
     final totalMinutes = (availableHours <= 0 ? 2 : availableHours) * 60;
     final planId = 'plan_${DateTime.now().millisecondsSinceEpoch}';
 
@@ -19,11 +32,30 @@ class AiAssistantService {
     final phase1Minutes = (totalMinutes * 0.25).round();
     final phase2Minutes = (totalMinutes * 0.40).round();
     final phase3Minutes = (totalMinutes * 0.20).round();
-    final phase4Minutes = totalMinutes - (phase1Minutes + phase2Minutes + phase3Minutes);
+    final phase4Minutes =
+        totalMinutes - (phase1Minutes + phase2Minutes + phase3Minutes);
 
-    final isMathOrScience = _matchesCategory(cleanSubject, ['رياضيات', 'حساب', 'جبر', 'تفاضل', 'تكامل', 'فيزياء', 'كيمياء', 'ميكانيكا', 'هندسة']);
-    final isLanguage = _matchesCategory(cleanSubject, ['عربي', 'نحو', 'بلاغة', 'لغة', 'إنجليزي', 'english', 'فرنسي', 'أدب']);
-    final isMemorizationOrHistory = _matchesCategory(cleanSubject, ['تاريخ', 'جغرافيا', 'أحياء', 'علوم', 'دراسات', 'فلسفة', 'اجتماع']);
+    final isMathOrScience = _matchesCategory(cleanSubject, [
+      'رياضيات',
+      'حساب',
+      'جبر',
+      'تفاضل',
+      'تكامل',
+      'فيزياء',
+      'كيمياء',
+      'ميكانيكا',
+      'هندسة',
+    ]);
+    final isLanguage = _matchesCategory(cleanSubject, [
+      'عربي',
+      'نحو',
+      'بلاغة',
+      'لغة',
+      'إنجليزي',
+      'english',
+      'فرنسي',
+      'أدب',
+    ]);
 
     List<AiStudySessionPhase> phases;
     List<String> tips;
@@ -34,7 +66,8 @@ class AiAssistantService {
         AiStudySessionPhase(
           title: 'المرحلة 1: تفكيك القوانين والمفاهيم النظرية',
           durationMinutes: phase1Minutes,
-          description: 'فهم النظريات وتدوين ورقة القوانين الخاصة بـ $cleanSubject بدون حفظ أعمى.',
+          description:
+              'فهم النظريات وتدوين ورقة القوانين الخاصة بـ $cleanSubject بدون حفظ أعمى.',
           cognitiveLevel: 'استيعاب مفاهيمي',
           energyBadge: 'طاقة عالية ⚡',
           subtasks: [
@@ -126,7 +159,8 @@ class AiAssistantService {
         AiStudySessionPhase(
           title: 'المرحلة 4: تقييم ختامي وتطبيق سريع',
           durationMinutes: phase4Minutes,
-          description: 'حل نموذج اختبار تجريبي مصغر للتأكد من شمول كافة جوانب الدرس.',
+          description:
+              'حل نموذج اختبار تجريبي مصغر للتأكد من شمول كافة جوانب الدرس.',
           cognitiveLevel: 'تقييم شامل',
           energyBadge: 'استقرار وثقة ✨',
           subtasks: [
@@ -147,7 +181,8 @@ class AiAssistantService {
         AiStudySessionPhase(
           title: 'المرحلة 1: القراءة الاستكشافية ورسم الخريطة الذهنية',
           durationMinutes: phase1Minutes,
-          description: 'مسح سريع للعناوين الرئيسية والفرعية ورسم هيكل عام لموضوعات $cleanSubject.',
+          description:
+              'مسح سريع للعناوين الرئيسية والفرعية ورسم هيكل عام لموضوعات $cleanSubject.',
           cognitiveLevel: 'هيكلة وإدراك شامل',
           energyBadge: 'طاقة أولية ⚡',
           subtasks: [
@@ -203,7 +238,8 @@ class AiAssistantService {
       id: planId,
       subject: cleanSubject,
       availableHours: availableHours,
-      overview: 'خطة مدروسة مصممة خصيصاً لمادة "$cleanSubject" موزعة على $availableHours ساعات بأسلوب التكرار المتباعد والتطبيق العملي لضمان أعلى درجات الاستيعاب والتركيز.',
+      overview:
+          'خطة مدروسة مصممة خصيصاً لمادة "$cleanSubject" موزعة على $availableHours ساعات بأسلوب التكرار المتباعد والتطبيق العملي لضمان أعلى درجات الاستيعاب والتركيز.',
       phases: phases,
       smartTips: tips,
       pomodoroRecommendation: pomodoroRec,
@@ -217,6 +253,7 @@ class AiAssistantService {
     String difficulty = 'متوسط',
     int count = 3,
   }) {
+    if (isEnglish) return _english.quiz(subject, difficulty, count);
     final cleanSubject = subject.trim().isEmpty ? 'عام' : subject.trim();
     final quizId = 'quiz_${DateTime.now().millisecondsSinceEpoch}';
 
@@ -231,10 +268,8 @@ class AiAssistantService {
   }
 
   /// Extracts key summaries and high-yield insights from study notes
-  AiNoteInsight generateNoteInsights({
-    required String content,
-    String? title,
-  }) {
+  AiNoteInsight generateNoteInsights({required String content, String? title}) {
+    if (isEnglish) return _english.extract(content, title);
     final noteTitle = (title != null && title.trim().isNotEmpty)
         ? title.trim()
         : 'ملاحظة دراسية';
@@ -246,7 +281,10 @@ class AiAssistantService {
         .where((l) => l.isNotEmpty)
         .toList();
 
-    final wordCount = content.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+    final wordCount = content
+        .split(RegExp(r'\s+'))
+        .where((w) => w.isNotEmpty)
+        .length;
     final estimatedReadTime = (wordCount / 60).ceil().clamp(1, 15);
 
     // Extract bullet points
@@ -283,7 +321,8 @@ class AiAssistantService {
       keywords = _extractKeywords(content);
     }
 
-    final summary = 'تحتوي هذه الملاحظة على حوالي $wordCount كلمة تغطي مفاهيم رئيسية في "$noteTitle". ركزت النقاط المستخلصة على الأفكار المحورية التي يمكن الاستناد إليها في المراجعة المركزة قبل الاختبارات.';
+    final summary =
+        'تحتوي هذه الملاحظة على حوالي $wordCount كلمة تغطي مفاهيم رئيسية في "$noteTitle". ركزت النقاط المستخلصة على الأفكار المحورية التي يمكن الاستناد إليها في المراجعة المركزة قبل الاختبارات.';
 
     return AiNoteInsight(
       id: insightId,
@@ -301,9 +340,22 @@ class AiAssistantService {
     String userPrompt, {
     List<AiChatMessage>? history,
   }) {
+    if (isEnglish) return _english.prompt(userPrompt.trim());
     final text = userPrompt.trim();
     final lower = text.toLowerCase();
     final msgId = 'msg_${DateTime.now().millisecondsSinceEpoch}';
+
+    if (lower.contains('قلق') ||
+        lower.contains('خوف') ||
+        lower.contains('توتر')) {
+      return AiChatMessage(
+        id: msgId,
+        sender: AiSender.assistant,
+        timestamp: DateTime.now(),
+        type: AiMessageType.text,
+        content: labels.localExamSupport,
+      );
+    }
 
     // 1. Study Plan Intent
     if (lower.contains('خطة') ||
@@ -322,7 +374,8 @@ class AiAssistantService {
         timestamp: DateTime.now(),
         type: AiMessageType.studyPlan,
         studyPlan: plan,
-        content: '✨ قمت بإعداد **خطة دراسية ذكية وشاملة** لمادة **${plan.subject}** موزعة على **${plan.availableHours} ساعات** بتقنيات المذاكرة المتقدمة وتقسيم مراحل التركيز.\n\nتفضل بالاطلاع على تفاصيل الخطة أدناه ويمكنك تعديلها في أي وقت!',
+        content:
+            '✨ قمت بإعداد **خطة دراسية ذكية وشاملة** لمادة **${plan.subject}** موزعة على **${plan.availableHours} ساعات** بتقنيات المذاكرة المتقدمة وتقسيم مراحل التركيز.\n\nتفضل بالاطلاع على تفاصيل الخطة أدناه ويمكنك تعديلها في أي وقت!',
       );
     }
 
@@ -337,7 +390,11 @@ class AiAssistantService {
       final difficulty = lower.contains('صعب')
           ? 'صعب'
           : (lower.contains('سهل') ? 'سهل' : 'متوسط');
-      final quiz = generateQuiz(subject: subject, difficulty: difficulty, count: 3);
+      final quiz = generateQuiz(
+        subject: subject,
+        difficulty: difficulty,
+        count: 3,
+      );
 
       return AiChatMessage(
         id: msgId,
@@ -345,7 +402,8 @@ class AiAssistantService {
         timestamp: DateTime.now(),
         type: AiMessageType.quiz,
         quiz: quiz,
-        content: '🎯 إليك **اختبار تدريبي سريع** لمادة **${quiz.subject}** بمستوى **$difficulty**.\n\nاختر الإجابة التي تراها صحيحة لكل سؤال لتحصل على التقييم الفوري مع التفسير العلمي للشرح:',
+        content:
+            '🎯 إليك **اختبار تدريبي سريع** لمادة **${quiz.subject}** بمستوى **$difficulty**.\n\nاختر الإجابة التي تراها صحيحة لكل سؤال لتحصل على التقييم الفوري مع التفسير العلمي للشرح:',
       );
     }
 
@@ -391,7 +449,9 @@ class AiAssistantService {
       );
     }
 
-    if (lower.contains('بومودورو') || lower.contains('pomodoro') || lower.contains('تركيز')) {
+    if (lower.contains('بومودورو') ||
+        lower.contains('pomodoro') ||
+        lower.contains('تركيز')) {
       return AiChatMessage(
         id: msgId,
         sender: AiSender.assistant,
@@ -404,21 +464,6 @@ class AiAssistantService {
 - **بعد 4 دورات:** خذ استراحة طويلة (15 - 30 دقيقة) لتجديد الطاقة العصبية.
 
 💡 **نصيحة ذهبية:** يمكنك تفعيل مؤقت البومودورو مباشرة من قسم **"مؤقت التركيز"** في التطبيق!''',
-      );
-    }
-
-    if (lower.contains('قلق') || lower.contains('خوف') || lower.contains('توتر') || lower.contains('امتحانات')) {
-      return AiChatMessage(
-        id: msgId,
-        sender: AiSender.assistant,
-        timestamp: DateTime.now(),
-        type: AiMessageType.text,
-        content: '''🌿 **كيف تتغلب على قلق الامتحانات وضغط المذاكرة؟**
-
-1. **قسّم الجبل لحجارة صغيرة:** الخوف يأتي من رؤية المنهج ككتلة واحدة ضخمة. قسّمه إلى فصول، ثم صفحات، وركز فقط على الصفحة التي أمامك الآن.
-2. **تنفس صندوقي (Box Breathing):** شهيق في 4 ثوانٍ، حبس النفس 4 ثوانٍ، زفير في 4 ثوانٍ، توقف 4 ثوانٍ. يهدئ الجهاز العصبي خلال دقيقتين.
-3. **النوم أولاً:** قلة النوم تقلل من كفاءة استرجاع الذاكرة بنسبة 40%. حافظ على 7 ساعات نوم خصوصاً ليلة الاختبار.
-4. **حل نماذج تجريبية:** التعرض المسبق لشكل ورقة الامتحان يزيل رهبة المجهول تماماً.''',
       );
     }
 
@@ -451,7 +496,11 @@ class AiAssistantService {
     if (text.contains('ساعة واحدة') || text.contains('ساعة')) {
       if (text.contains('ساعتين') || text.contains('ساعتان')) return 2;
       if (text.contains('3') || text.contains('ثلاث')) return 3;
-      if (text.contains('4') || text.contains('اربع') || text.contains('أربع')) return 4;
+      if (text.contains('4') ||
+          text.contains('اربع') ||
+          text.contains('أربع')) {
+        return 4;
+      }
       if (text.contains('5') || text.contains('خمس')) return 5;
       if (text.contains('6') || text.contains('ست')) return 6;
       return 1;
@@ -472,7 +521,10 @@ class AiAssistantService {
         final rest = text.substring(index + kw.length).trim();
         final words = rest.split(RegExp(r'\s+'));
         if (words.isNotEmpty && words.first.isNotEmpty) {
-          final candidate = words.take(2).join(' ').replaceAll(RegExp(r'[^\w\s\u0600-\u06FF]'), '');
+          final candidate = words
+              .take(2)
+              .join(' ')
+              .replaceAll(RegExp(r'[^\w\s\u0600-\u06FF]'), '');
           if (candidate.isNotEmpty && !candidate.contains('ساع')) {
             return candidate;
           }
@@ -485,7 +537,9 @@ class AiAssistantService {
     if (text.contains('أحياء') || text.contains('احياء')) return 'الأحياء';
     if (text.contains('تاريخ')) return 'التاريخ';
     if (text.contains('عربي') || text.contains('نحو')) return 'اللغة العربية';
-    if (text.contains('انجليزي') || text.contains('إنجليزي')) return 'اللغة الإنجليزية';
+    if (text.contains('انجليزي') || text.contains('إنجليزي')) {
+      return 'اللغة الإنجليزية';
+    }
     return 'المادة الدراسية';
   }
 
@@ -493,14 +547,19 @@ class AiAssistantService {
     return _extractSubjectFromPlanPrompt(text);
   }
 
-  static List<AiQuizQuestion> _buildQuizQuestions(String subject, String difficulty, int count) {
+  static List<AiQuizQuestion> _buildQuizQuestions(
+    String subject,
+    String difficulty,
+    int count,
+  ) {
     final lower = subject.toLowerCase();
 
     if (_matchesCategory(lower, ['رياضيات', 'حساب', 'جبر', 'تفاضل'])) {
       return [
         const AiQuizQuestion(
           id: 'q_math_1',
-          question: 'إذا كانت د(س) = 3س² + 5س - 7، فإن المشتقة الأولى د\'(س) تساوي:',
+          question:
+              'إذا كانت د(س) = 3س² + 5س - 7، فإن المشتقة الأولى د\'(س) تساوي:',
           options: ['6س + 5', '3س + 5', '6س² + 5', '6س - 7'],
           correctIndex: 0,
           explanation: 'مشتقة 3س² هي 2 × 3س = 6س، ومشتقة 5س هي 5، ومشتقة الثابت صفر. فيكون الناتج 6س + 5.',
@@ -533,7 +592,12 @@ class AiAssistantService {
         const AiQuizQuestion(
           id: 'q_phy_1',
           question: 'ما هي وحدة قياس القوة في النظام الدولي للوحدات (SI)؟',
-          options: ['الجول (Joule)', 'النيوتن (Newton)', 'الواط (Watt)', 'الباسكال (Pascal)'],
+          options: [
+            'الجول (Joule)',
+            'النيوتن (Newton)',
+            'الواط (Watt)',
+            'الباسكال (Pascal)',
+          ],
           correctIndex: 1,
           explanation: 'النيوتن هو وحدة القوة المشتقة (كجم·م/ث²)، بينما الجول للطاقة والواط للقدرة.',
           hint: 'سميت باسم العالم الذي وضع قوانين الحركة والجاذبية الشهيرة.',
@@ -542,7 +606,12 @@ class AiAssistantService {
         const AiQuizQuestion(
           id: 'q_phy_2',
           question: 'وفقاً لقانون نيوتن الثاني، إذا تضاعفت القوة المؤثرة على جسم مع ثبات كتلته، فإن تسارعه:',
-          options: ['يقل إلى النصف', 'يتضاعف مرتين', 'يظل ثابتاً', 'يتضاعف 4 مرات'],
+          options: [
+            'يقل إلى النصف',
+            'يتضاعف مرتين',
+            'يظل ثابتاً',
+            'يتضاعف 4 مرات',
+          ],
           correctIndex: 1,
           explanation: 'القوة = الكتلة × التسارع (ق = ك × ت). العلاقة بين القوة والتسارع طردية خطية عند ثبات الكتلة.',
           hint: 'تذكر علاقة ق = ك × ت (التناسب الطردي).',
@@ -550,8 +619,14 @@ class AiAssistantService {
         ),
         const AiQuizQuestion(
           id: 'q_phy_3',
-          question: 'في الدوائر الكهربائية، النسبة بين فرق الجهد وشدة التيار تمثل:',
-          options: ['المقاومة الكهربائية', 'القدرة الكهربائية', 'السعة الكهربائية', 'الشحنة الكهربائية'],
+          question:
+              'في الدوائر الكهربائية، النسبة بين فرق الجهد وشدة التيار تمثل:',
+          options: [
+            'المقاومة الكهربائية',
+            'القدرة الكهربائية',
+            'السعة الكهربائية',
+            'الشحنة الكهربائية',
+          ],
           correctIndex: 0,
           explanation: 'قانون أوم ينص على أن المقاومة (م) = فرق الجهد (جـ) ÷ شدة التيار (ت).',
           hint: 'هذا هو قانون أوم الأساسي.',
@@ -565,7 +640,12 @@ class AiAssistantService {
         const AiQuizQuestion(
           id: 'q_chem_1',
           question: 'ما هو العنصر الأكثر وفرة في الغلاف الجوي للأرض؟',
-          options: ['الأكسجين (O₂)', 'النيتروجين (N₂)', 'ثاني أكسيد الكربون (CO₂)', 'الهيدروجين (H₂)'],
+          options: [
+            'الأكسجين (O₂)',
+            'النيتروجين (N₂)',
+            'ثاني أكسيد الكربون (CO₂)',
+            'الهيدروجين (H₂)',
+          ],
           correctIndex: 1,
           explanation: 'غاز النيتروجين يشكل حوالي 78% من الغلاف الجوي، بينما الأكسجين يشكل حوالي 21%.',
           hint: 'يشكل قرابة 78% من الهواء المحيط بنا.',
@@ -582,10 +662,12 @@ class AiAssistantService {
         ),
         const AiQuizQuestion(
           id: 'q_chem_3',
-          question: 'الرقم الهيدروجيني (pH) لمحلول متعادل عند درجة حرارة 25°C يساوي:',
+          question:
+              'الرقم الهيدروجيني (pH) لمحلول متعادل عند درجة حرارة 25°C يساوي:',
           options: ['0', '7', '14', '1'],
           correctIndex: 1,
-          explanation: 'الرقم 7 يمثل نقطة التعادل؛ أقل من 7 حمضي وأكبر من 7 قاعدي.',
+          explanation:
+              'الرقم 7 يمثل نقطة التعادل؛ أقل من 7 حمضي وأكبر من 7 قاعدي.',
           hint: 'يقع تماماً في منتصف المقياس من 0 إلى 14.',
           difficulty: 'سهل',
         ),
@@ -606,7 +688,12 @@ class AiAssistantService {
         const AiQuizQuestion(
           id: 'q_ar_2',
           question: 'في البلاغة العربية، ما هو الغرض البلاغي من استخدام صيغة الأمر في الدعاء لله تعالى؟',
-          options: ['الإلزام والوجوب', 'الدعاء والتوسل', 'التهديد والوعيد', 'التعجيز'],
+          options: [
+            'الإلزام والوجوب',
+            'الدعاء والتوسل',
+            'التهديد والوعيد',
+            'التعجيز',
+          ],
           correctIndex: 1,
           explanation: 'إذا كان الأمر موجهاً من الأدنى إلى الأعلى منزلة (كالعبد إلى ربه) يخرج غرضه البلاغي للدعاء.',
           hint: 'الأمر الموجه من العبد إلى خالقه عز وجل.',
@@ -628,7 +715,8 @@ class AiAssistantService {
     return [
       AiQuizQuestion(
         id: 'q_gen_1',
-        question: 'في دراسة "$subject"، ما هي أفضل طريقة لتثبيت المفاهيم في الذاكرة طويلة المدى؟',
+        question:
+            'في دراسة "$subject"، ما هي أفضل طريقة لتثبيت المفاهيم في الذاكرة طويلة المدى؟',
         options: [
           'إعادة القراءة السلبية عدة مرات متتالية',
           'التسميع والاسترجاع النشط (Active Recall) مع التكرار المتباعد',
@@ -656,7 +744,8 @@ class AiAssistantService {
       ),
       AiQuizQuestion(
         id: 'q_gen_3',
-        question: 'عند مراجعة موضوع مركب في "$subject"، ينصح بتطبيق تقنية فاينمان عن طريق:',
+        question:
+            'عند مراجعة موضوع مركب في "$subject"، ينصح بتطبيق تقنية فاينمان عن طريق:',
         options: [
           'حفظ التعريف الحرفي بدون تغيير أي كلمة',
           'شرح المفهوم بأسلوب مبسط جداً وكأنك تشرحه لشخص لا يعرف شيئاً عنه',
@@ -679,10 +768,38 @@ class AiAssistantService {
         .toList();
 
     final stopWords = {
-      'هذا', 'هذه', 'ذلك', 'تلك', 'التي', 'الذي', 'الذين', 'على', 'إلى', 'مع', 'عن', 'في', 'من', 'أن', 'إن', 'كان', 'كانت', 'يكون', 'ثم', 'حيث', 'كل', 'ما', 'لا', 'قد', 'بين'
+      'هذا',
+      'هذه',
+      'ذلك',
+      'تلك',
+      'التي',
+      'الذي',
+      'الذين',
+      'على',
+      'إلى',
+      'مع',
+      'عن',
+      'في',
+      'من',
+      'أن',
+      'إن',
+      'كان',
+      'كانت',
+      'يكون',
+      'ثم',
+      'حيث',
+      'كل',
+      'ما',
+      'لا',
+      'قد',
+      'بين',
     };
 
-    final filtered = words.where((w) => !stopWords.contains(w)).toSet().take(4).toList();
+    final filtered = words
+        .where((w) => !stopWords.contains(w))
+        .toSet()
+        .take(4)
+        .toList();
     if (filtered.isEmpty) {
       return ['مفاهيم أساسية', 'مراجعة', 'نقاط تركيز'];
     }

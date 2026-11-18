@@ -237,7 +237,7 @@ export const FlipClock: React.FC<FlipClockProps> = ({
         <div
           className="flip-group"
           title={t('الدقائق: {minutes}', { minutes: String(minutes) })}
-          aria-label={t('الدقائق: {minutes}', { minutes: String(minutes) })}
+          role="img" aria-label={t('الدقائق: {minutes}', { minutes: String(minutes) })}
         >
           <FlipDigitCard digit={m1} enableSound={!soundMuted && isActive} />
           <FlipDigitCard digit={m2} enableSound={!soundMuted && isActive} />
@@ -253,7 +253,7 @@ export const FlipClock: React.FC<FlipClockProps> = ({
         <div
           className="flip-group"
           title={t('الثواني: {seconds}', { seconds: String(seconds) })}
-          aria-label={t('الثواني: {seconds}', { seconds: String(seconds) })}
+          role="img" aria-label={t('الثواني: {seconds}', { seconds: String(seconds) })}
         >
           <FlipDigitCard digit={s1} enableSound={!soundMuted && isActive} />
           <FlipDigitCard digit={s2} enableSound={!soundMuted && isActive} />

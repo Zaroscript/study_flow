@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IPreferencesService {
@@ -10,100 +10,63 @@ abstract class IPreferencesService {
   Future<void> clearPreferences();
 }
 
+/// Preferences fail visibly rather than pretending an in-memory write is durable.
 class SharedPreferencesService implements IPreferencesService {
-  static const String _keyOnboardingCompleted =
-      'studyflow_onboarding_completed';
-  static const String _keyThemeMode = 'studyflow_theme_mode';
-
   SharedPreferences? _prefs;
-  // Fallback in-memory cache to guarantee zero runtime crashes and instant startup
-  final Map<String, dynamic> _memoryCache = {};
-
+  SharedPreferences get _store =>
+      _prefs ?? (throw StateError('Preferences not initialized'));
   @override
   Future<void> init() async {
-    try {
-      _prefs = await SharedPreferences.getInstance();
-      if (_prefs != null) {
-        _memoryCache[_keyOnboardingCompleted] = _prefs!.getBool(
-          _keyOnboardingCompleted,
-        );
-        _memoryCache[_keyThemeMode] = _prefs!.getString(_keyThemeMode);
-      }
-    } catch (_) {
-      // In tests or headless environments, fallback to memoryCache safely
-    }
+    _prefs = await SharedPreferences.getInstance();
   }
 
   @override
-  bool isOnboardingCompleted() {
-    if (_prefs != null) {
-      return _prefs!.getBool(_keyOnboardingCompleted) ?? false;
-    }
-    return (_memoryCache[_keyOnboardingCompleted] as bool?) ?? false;
-  }
-
+  bool isOnboardingCompleted() =>
+      _store.getBool('studyflow_onboarding_completed') ?? false;
   @override
   Future<bool> setOnboardingCompleted(bool value) async {
-    _memoryCache[_keyOnboardingCompleted] = value;
-    try {
-      if (_prefs != null) {
-        return await _prefs!.setBool(_keyOnboardingCompleted, value);
-      }
-    } catch (_) {}
+    final success = await _store.setBool(
+      'studyflow_onboarding_completed',
+      value,
+    );
+    if (!success) throw StateError('Preferences write failed');
     return true;
   }
 
   @override
-  ThemeMode getThemeMode() {
-    String? raw;
-    if (_prefs != null) {
-      raw = _prefs!.getString(_keyThemeMode);
-    } else {
-      raw = _memoryCache[_keyThemeMode] as String?;
-    }
-
-    switch (raw) {
-      case 'dark':
-        return ThemeMode.dark;
-      case 'light':
-        return ThemeMode.light;
-      case 'system':
-      default:
-        return ThemeMode.system;
-    }
-  }
-
+  ThemeMode getThemeMode() =>
+      switch (_store.getString('studyflow_theme_mode')) {
+        'dark' => ThemeMode.dark,
+        'light' => ThemeMode.light,
+        _ => ThemeMode.system,
+      };
   @override
   Future<bool> setThemeMode(ThemeMode mode) async {
-    String rawValue;
-    switch (mode) {
-      case ThemeMode.dark:
-        rawValue = 'dark';
-        break;
-      case ThemeMode.light:
-        rawValue = 'light';
-        break;
-      case ThemeMode.system:
-        rawValue = 'system';
-        break;
-    }
-
-    _memoryCache[_keyThemeMode] = rawValue;
-    try {
-      if (_prefs != null) {
-        return await _prefs!.setString(_keyThemeMode, rawValue);
-      }
-    } catch (_) {}
+    final success = await _store.setString('studyflow_theme_mode', mode.name);
+    if (!success) throw StateError('Theme write failed');
     return true;
+  }
+
+  String get languageCode => _store.getString('enote_locale') ?? 'ar';
+  Future<void> setLanguageCode(String value) async {
+    if (!['ar', 'en'].contains(value)) {
+      throw ArgumentError('Unsupported locale');
+    }
+    if (!await _store.setString('enote_locale', value)) {
+      throw StateError('Locale write failed');
+    }
   }
 
   @override
   Future<void> clearPreferences() async {
-    _memoryCache.clear();
-    try {
-      if (_prefs != null) {
-        await _prefs!.clear();
+    for (final key in [
+      'studyflow_onboarding_completed',
+      'studyflow_theme_mode',
+      'enote_locale',
+    ]) {
+      if (!await _store.remove(key)) {
+        throw StateError('Preferences reset failed');
       }
-    } catch (_) {}
+    }
   }
 }

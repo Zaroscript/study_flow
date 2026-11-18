@@ -24,16 +24,13 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.enote.studyflow"
-    compileSdkVersion 34
+    compileSdkVersion 36
     ndkVersion flutter.ndkVersion
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     sourceSets {
@@ -42,19 +39,46 @@ android {
 
     defaultConfig {
         applicationId "com.enote.studyflow"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdkVersion 24
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            if (System.getenv('ENOTE_STORE_FILE')) {
+                storeFile file(System.getenv('ENOTE_STORE_FILE'))
+                storePassword System.getenv('ENOTE_STORE_PASSWORD')
+                keyAlias System.getenv('ENOTE_KEY_ALIAS')
+                keyPassword System.getenv('ENOTE_KEY_PASSWORD')
+            }
+        }
+    }
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
         }
     }
+}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.name.toLowerCase().contains('release') } &&
+        ['ENOTE_STORE_FILE','ENOTE_STORE_PASSWORD','ENOTE_KEY_ALIAS','ENOTE_KEY_PASSWORD'].any { !System.getenv(it) }) {
+        throw new GradleException('Release signing is required. Configure ENOTE_STORE_FILE, ENOTE_STORE_PASSWORD, ENOTE_KEY_ALIAS and ENOTE_KEY_PASSWORD. Debug keys are never used for releases.')
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
 
 flutter {

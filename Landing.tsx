@@ -52,16 +52,15 @@ function playMechanicalTick() {
 const copy = {
   ar: {
     nav: ['الفكرة', 'المميزات', 'جرّب بنفسك', 'أسئلة شائعة'], open: 'جرّب نسخة الويب', lang: 'English',
-    downloadApk: 'تحميل تطبيق أندرويد (APK)', downloadNav: 'تطبيق أندرويد', downloadTag: 'v1.0.0 · 5.8 MB',
-    headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، ولّد خططك بالذكاء الاصطناعي الحقيقي، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · ذكاء اصطناعي · ساعة 3D · مكافآت · إيقاعك أنت.',
-    floatNote: 'الفكرة الحلوة؟ اكتبها.', floatTask: 'خطوة صغيرة. فرق كبير.', floatFocus: 'ساعة بومودورو 3D.', floatAi: 'مساعد ذكي حقيقي ✦',
-    strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'ذكاء اصطناعي حقيقي ومجاني', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
+    headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، جهّز خططك بأدوات المذاكرة، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · ذكاء اصطناعي · ساعة 3D · مكافآت · إيقاعك أنت.',
+    floatNote: 'الفكرة الحلوة؟ اكتبها.', floatTask: 'خطوة صغيرة. فرق كبير.', floatFocus: 'ساعة بومودورو 3D.', floatAi: 'مساعد دراسي ✦',
+    strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'مساعد دراسي ومجاني', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
     storyTitle: ['من زحمة الأفكار،', 'لوضوح الخطوة الجاية.'], storyBody: 'بين المحاضرة، الفكرة المفاجئة، وتراكم الملازم… ENote يجمع كل أدوات دراستك وتفوقك في مساحة واحدة هادئة ومحفزة.',
     features: [
       ['اكتب قبل ما الفكرة تطير.', 'ملاحظاتك كاملة، مرتبة في مجلدات، وتوصل لها بالبحث وقت ما تحتاجها.', 'مكان لكل فكرة'],
       ['يومك، خطوة بخطوة.', 'رتّب المهام والمواعيد والواجبات. خلّي خطتك واضحة، وسيب مساحة لليوم نفسه.', 'خطة بطريقتك'],
       ['ساعة بومودورو 3D القلابة.', 'حركة ميكانيكية واقعية مع صوت تكتكة اختياري وجلسات تركيز غامرة تفصلك عن أي تشتت.', 'وقت للتركيز'],
-      ['مساعد دراسي ذكي حقيقي.', 'توليد خطط مذاكرة في ثوانٍ، تلخيص فوري للمحاضرات، وبنوك أسئلة ذكية مدعومة بنماذج لغوية حقيقية مجاناً.', 'المساعد الذكي'],
+      ['أدوات مساعدة دراسية.', 'جهّز خطة للمذاكرة، جرّب أسئلة تدريبية، واستخرج نقاطًا من ملاحظاتك باستخدام أدوات محلية واضحة المصدر.', 'المساعد الذكي'],
       ['مكتبة الملازم والكتب.', 'نظّم مذكراتك وكتبك حسب المواد، وتابع صفحات قراءتك صفحة بصفحة مع احتفال عند الختم.', 'مكتبة الملازم'],
       ['نظام المكافآت والأوسمة.', 'حوّل مذاكرتك إلى رحلة مشوقة؛ اكسب نقاط الخبرة (XP)، ارتقِ بالمستويات، واجمع أوسمة الإنجاز.', 'المكافآت والجوائز']
     ],
@@ -89,16 +88,16 @@ const copy = {
     rewardsClaimed: 'تمت إضافة +50 XP! استمر في الإنجاز ✨',
     extrasTitle: 'تجربة متكاملة مصممة للإنجاز والتفوق.',
     extras: [
-      ['مساعد دراسي ذكي حقيقي ✦', 'توليد خطط مذاكرة متوازنة، بنوك أسئلة تفاعلية فورية، وتلخيص ذكي للمذكرات مدعوم بـ LLM مجاني بدون مفاتيح.'],
+      ['أدوات مساعدة دراسية ✦', 'قوالب خطط وتدريبات وأدوات استخراج نقاط من النص. خدمة AI الخارجية تحتاج إعدادًا من مشغّل التطبيق وتظهر النتائج المحلية بتوضيح صريح.'],
       ['ساعة بومودورو 3D القلابة', 'آلية flip ميكانيكية واقعية مع صوت التكتكة وضبط التركيز في بيئة دراسية غامرة.'],
       ['مكتبة الملازم والكتب', 'نظّم ملفاتك ومذكراتك في مجلدات لكل مادة دراسية وتابع عدد الصفحات المنجزة صفحة بصفحة.'],
       ['نظام مكافآت وأوسمة تحفيزية', 'اجمع نقاط الخبرة XP، نافس نفسك في مستويات متصاعدة، وافتح أوسمة الإنجاز مع كل خطوة.'],
       ['شاشات ترحيب Google Play-grade', 'تجربة إعداد مبهرة وسلسة تنقلك مباشرة من أول فتحة للتطبيق لتحديد هدفك ومرحلتك.'],
-      ['خصوصية وأمان أوفلاين 100%', 'بياناتك ومذكراتك مخزنة محلياً على جهازك، بدون أي تتبع أو إعلانات وبسرعة فائقة.']
+      ['بيانات محلية وخيارات واضحة', 'المذكرات تُحفظ محليًا. عند استخدام خدمة AI خارجية مفعّلة، تُرسل المدخلات اللازمة للمعالجة كما توضح سياسة الخصوصية.']
     ],
     faqTitle: 'كل ما تحتاج معرفته.',
     faqs: [
-      ['هل مساعد الذكاء الاصطناعي حقيقي ومجاني؟', 'نعم بالكامل! المساعد الذكي مدمج بنموذج لغوي حقيقي فائق الذكاء ومجاني 100% بدون أي مفاتيح API أو اشتراكات، ويتيح لك توليد خطط المذاكرة وتلخيص المذكرات وإجراء الاختبارات التفاعلية وحفظها بضغطة زر.'],
+      ['كيف تعمل أدوات المساعد الدراسي؟', 'نسخة Flutter تستخدم قوالب محلية للمذاكرة. الويب يدعم خدمة AI خارجية عند إعدادها من مشغّل الموقع؛ إذا لم تتوفر، تُعرض الأدوات المحلية مع بيان مصدر النتيجة. لا نَعِد بخدمة AI مجانية بلا حدود.'],
       ['أين ذهبت صفحة الإحصائيات؟', 'تم دمج جميع الرسوم البيانية وإحصائيات الأداء الأسبوعي وتوزيع الوقت مباشرة داخل صفحة «الرئيسية» في لوحة التحكم، واستُبدلت في شريط التنقل بصفحة «المكافآت والجوائز» لمتابعة أوسمتك ونقاط خبرتك.'],
       ['ما هي ساعة بومودورو 3D القلابة؟', 'تصميم skeuomorphic مبتكر لمؤقت التركيز يحاكي الساعات الميكانيكية الكلاسيكية بأرقام ثلاثية الأبعاد تقلب بسلاسة مع صوت تكتكة اختياري لتهيئة ذهنك لأعمق درجات التركيز.'],
       ['كيف تساعدني مكتبة الملازم في متابعة دراستي؟', 'تمكنك من تصنيف مذكراتك وكتبك حسب المواد في مجلدات ملونة، وتحديث عدد الصفحات المقروءة بأزرار سريعة (+5 و -5 وتحديد الصفحة)، مع شريط تقدم واحتفال عند ختم المرجع 100%.'],
@@ -108,16 +107,15 @@ const copy = {
   },
   en: {
     nav: ['The idea', 'Features', 'Try it out', 'Questions'], open: 'Try the web app', lang: 'العربية',
-    downloadApk: 'Download Android App (APK)', downloadNav: 'Android App', downloadTag: 'v1.0.0 · 5.8 MB',
-    headline: ['Room for ideas.', 'Time for you.'], intro: 'Give everything on your mind a place. Capture your notes, organize study materials, generate real AI plans, and earn rewards — with ENote.', explore: 'Meet ENote', note: 'Notes · Plans · Real AI · 3D Clock · Rewards · Your rhythm.',
-    floatNote: 'Good idea? Keep it.', floatTask: 'Small steps. Big difference.', floatFocus: '3D Flip Clock Pomodoro.', floatAi: 'Real AI Assistant ✦',
-    strip: ['Ideas worth keeping', 'Plans that fit your day', 'Real & free AI tutor', 'Mechanical 3D focus', 'Organized materials hub', 'Gamified reward badges'],
+    headline: ['Room for ideas.', 'Time for you.'], intro: 'Give everything on your mind a place. Capture your notes, organize study materials, generate study assistance plans, and earn rewards — with ENote.', explore: 'Meet ENote', note: 'Notes · Plans · Study assistant · 3D Clock · Rewards · Your rhythm.',
+    floatNote: 'Good idea? Keep it.', floatTask: 'Small steps. Big difference.', floatFocus: '3D Flip Clock Pomodoro.', floatAi: 'Study assistant ✦',
+    strip: ['Ideas worth keeping', 'Plans that fit your day', 'Local study tools', 'Mechanical 3D focus', 'Organized materials hub', 'Gamified reward badges'],
     storyTitle: ['From a busy mind,', 'to a clear next step.'], storyBody: 'The lecture, the sudden idea, the pile of handouts to finish… ENote brings all your study essentials together into one serene workspace.',
     features: [
       ['Catch it before it goes.', 'Keep full notes in folders, and find the thought you need with instant search.', 'Room for every idea'],
       ['Your day. Step by step.', 'Organize tasks, schedules, and homework. Make a clear plan with room for life.', 'A plan that fits'],
       ['3D Mechanical Flip Clock.', 'Authentic mechanical card flips with optional clockwork ticking and immersive focus sessions.', 'Time to tune in'],
-      ['Real & Free AI Assistant.', 'Generate custom study plans in seconds, summarize notes, and test recall with instant smart quizzes powered by real LLM.', 'Smart Assistant'],
+      ['Study tools with clear sources.', 'Build a study plan, extract points from notes and practice recall using clearly labelled local tools.', 'Smart Assistant'],
       ['Materials & Textbooks Hub.', 'Organize subject handouts in color-coded folders and track page-by-page reading progress.', 'Materials Hub'],
       ['Gamified Rewards & Trophies.', 'Turn your study journey into an inspiring adventure with XP, levels, and collectible achievement badges.', 'Rewards & Badges']
     ],
@@ -127,8 +125,8 @@ const copy = {
     planTitle: 'Make room in your day.', tasks: ['Review Physics Unit 1', 'Read Biology Chapter 3', 'Complete Calculus problem set'], newTask: 'New task', add: 'Add', completed: 'completed',
     focusTitle: '3D Mechanical Flip Clock.', focus: 'Focus session', start: 'Start timer', pause: 'Take a pause', reset: 'Reset timer',
     studyMode: 'Focus (25m)', breakMode: 'Break (5m)', longBreakMode: 'Long Break (15m)',
-    aiTitle: 'Real AI Study Plan & Rapid Quiz.', aiDesc: 'Enter topic and study hours, and let the real AI build structured phases with self-testing milestones.', aiGenerate: 'Generate AI Study Plan ✦',
-    aiGenerating: 'Thinking & generating with Real AI...',
+    aiTitle: 'Study Plan & Rapid Quiz.', aiDesc: 'Enter topic and study hours, and let the study assistance build structured phases with self-testing milestones.', aiGenerate: 'Generate AI Study Plan ✦',
+    aiGenerating: 'Thinking & generating your study plan...',
     aiPills: ['Physics: Laws of Motion', 'Biology: Genetics', 'Chemistry: Reaction Rates'],
     aiQuizQ: 'Q: What is the International System (SI) unit of force?',
     aiQuizOpts: ['Newton (N)', 'Joule (J)', 'Watt (W)'],
@@ -145,16 +143,16 @@ const copy = {
     rewardsClaimed: '+50 XP claimed! Keep up the momentum ✨',
     extrasTitle: 'Crafted for seamless learning and achievement.',
     extras: [
-      ['Real & Free AI Study Assistant ✦', 'Personalized study roadmaps, instant quizzes with scoring, and smart note summarization powered by real free LLM.'],
+      ['Local Study Tools ✦', 'Study templates and note extraction. Remote AI requires operator configuration, and local results are labelled.'],
       ['3D Mechanical Flip Clock', 'Authentic mechanical card flips, optional clockwork ticks, and distraction-free focus sprints.'],
       ['Smart Materials & Books Hub', 'Color-coded subject folders and page-by-page progress trackers with celebratory badges.'],
       ['Gamified Rewards & Levels', 'Earn XP, level up your academic rank, and collect shiny achievement badges for your daily consistency.'],
       ['Google Play-grade Onboarding', 'Smooth multi-step onboarding that tailors your academic level and study targets in seconds.'],
-      ['100% Offline-First Privacy', 'Your files and notes live on your device. Zero tracking, zero ads, full peace of mind.']
+      ['Local storage, clear choices', 'Notes are stored locally. If enabled, remote AI receives the input needed to process your request. See our privacy notice.']
     ],
     faqTitle: 'Frequently asked questions.',
     faqs: [
-      ['Is the AI Assistant real and free?', 'Yes, 100%! The AI Assistant is integrated with a real generative LLM engine that works completely free with zero API key setups, allowing you to generate study plans, test quizzes, and summaries instantly.'],
+      ['How do the study tools work?', 'Flutter uses local study templates. The web app supports remote AI when configured by the operator; otherwise it labels the local result. Unlimited free AI is not promised.'],
       ['Where did the Statistics page go?', 'All weekly performance charts and time distribution analytics are now integrated directly into the Dashboard page, and replaced in navigation with the new Rewards & Trophies screen.'],
       ['What is the 3D Flip Clock Pomodoro?', 'It is a skeuomorphic focus timer inspired by vintage mechanical split-flap clocks, featuring physical depth, smooth flipping animation, and optional mechanical ticking sound.'],
       ['How does the Materials Hub track reading progress?', 'You can organize handouts and PDFs by subject folder and update read pages using quick -5 and +5 buttons or direct page entry, complete with celebratory 100% badges.'],
@@ -191,11 +189,27 @@ function Phone({ language }: { language: Language }) {
   );
 }
 
+type ReleaseInfo = { version: string; apkUrl: string; sha256: string; sizeBytes: number };
+const RELEASE_URL = /^https:\/\/github\.com\/Zaroscript\/study_flow\/releases\/(?:latest\/download|download\/[A-Za-z0-9._-]+)\/ENote[A-Za-z0-9._-]*\.apk$/;
+
+// Only accept a manifest written by the release pipeline: verified fields, official release host.
+function parseRelease(data: unknown): ReleaseInfo | null {
+  if (!data || typeof data !== 'object') return null;
+  const r = data as Record<string, unknown>;
+  if (r.available !== true) return null;
+  if (typeof r.version !== 'string' || !/^\d+\.\d+\.\d+$/.test(r.version)) return null;
+  if (typeof r.apkUrl !== 'string' || !RELEASE_URL.test(r.apkUrl)) return null;
+  if (typeof r.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(r.sha256)) return null;
+  if (typeof r.sizeBytes !== 'number' || !(r.sizeBytes > 0)) return null;
+  return { version: r.version, apkUrl: r.apkUrl, sha256: r.sha256, sizeBytes: r.sizeBytes };
+}
+
 export default function Landing() {
   const root = useRef<HTMLDivElement>(null);
   const [language, setLanguage] = useState<Language>(() => {
     try {
-      return localStorage.getItem('enote_landing_language') === 'en' ? 'en' : 'ar';
+      const requested = new URLSearchParams(location.search).get('lang');
+      return requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_landing_language') === 'en' ? 'en' : 'ar';
     } catch {
       return 'ar';
     }
@@ -218,7 +232,7 @@ export default function Landing() {
   const [matPages, setMatPages] = useState(145);
   const [matFinished, setMatFinished] = useState(false);
 
-  // Real AI Assistant state
+  // Study assistant state
   const [aiTopicInput, setAiTopicInput] = useState('فيزياء: قوانين نيوتن والجاذبية');
   const [aiIsGenerating, setAiIsGenerating] = useState(false);
   const [aiGeneratedPhases, setAiGeneratedPhases] = useState<{ title: string; time: string }[]>([
@@ -234,15 +248,35 @@ export default function Landing() {
 
   const t = copy[language];
   const ar = language === 'ar';
+  const [release, setRelease] = useState<ReleaseInfo | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/release.json', { cache: 'no-store', signal: controller.signal })
+      .then((res) => (res.ok && (res.headers.get('content-type') || '').includes('json') ? res.json() : null))
+      .then((data) => setRelease(parseRelease(data)))
+      .catch(() => setRelease(null));
+    return () => controller.abort();
+  }, []);
+
+  const releaseMb = release ? (release.sizeBytes / 1e6).toFixed(1) : '';
+  const downloadButton = release ? (
+    <a href={release.apkUrl} className="lp-button lp-button-outline" rel="noopener" download>
+      <Download size={19} aria-hidden="true" />
+      {ar ? `تنزيل لأندرويد (${releaseMb} MB)` : `Download for Android (${releaseMb} MB)`}
+    </a>
+  ) : null;
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = ar ? 'rtl' : 'ltr';
     document.documentElement.style.colorScheme = 'dark';
     document.title = ar ? 'ENote — مساحة لأفكارك. وقت لإنجازك.' : 'ENote — Room for ideas. Time for you.';
+    try { localStorage.setItem('enote_landing_language', language); } catch {}
     try {
-      localStorage.setItem('enote_landing_language', language);
+      const url = new URL(location.href); url.searchParams.set('lang', language); history.replaceState(null, '', url);
     } catch {}
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t.intro);
     setNote(t.noteText);
     setTasks(t.tasks.map((text, i) => ({ text, done: i === 0 })));
     setSaved(false);
@@ -652,6 +686,7 @@ export default function Landing() {
   // Playground scene switch smooth transition
   useGSAP(
     () => {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       gsap.fromTo(
         '.lp-demo-panel',
         { autoAlpha: 0, y: 12 },
@@ -661,15 +696,9 @@ export default function Landing() {
     { scope: root, dependencies: [scene], revertOnUpdate: false }
   );
 
-  // Auto-scroll active tab into view in horizontal scrolling tablist on mobile/tablet
-  useEffect(() => {
-    const activeTab = document.getElementById(`tab-${scene}`);
-    if (activeTab) {
-      activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }, [scene]);
-
   const changeScene = (next: Scene) => {
+    const activeTab = document.getElementById(`tab-${next}`);
+    if (activeTab?.parentElement) { const bar = activeTab.parentElement; const tabBox = activeTab.getBoundingClientRect(); const barBox = bar.getBoundingClientRect(); bar.scrollBy({ left: tabBox.left - barBox.left - (barBox.width - tabBox.width) / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); }
     if (next === scene) return;
     setScene(next);
     setSaved(false);
@@ -744,16 +773,7 @@ export default function Landing() {
               {t.open}
               <ArrowUpRight size={17} />
             </a>
-            <a
-              href="/downloads/ENote-v1.0.0.apk"
-              download="ENote-v1.0.0.apk"
-              className="lp-button lp-button-apk"
-              onClick={() => setMenu(false)}
-            >
-              <Download size={17} />
-              <span>{t.downloadNav}</span>
-              <span className="lp-apk-tag">{t.downloadTag}</span>
-            </a>
+            
           </div>
         </nav>
         <div className="lp-header-actions">
@@ -761,15 +781,7 @@ export default function Landing() {
             <Globe2 size={16} />
             {t.lang}
           </button>
-          <a
-            className="lp-nav-apk"
-            href="/downloads/ENote-v1.0.0.apk"
-            download="ENote-v1.0.0.apk"
-            title={ar ? 'تحميل تطبيق أندرويد APK' : 'Download Android APK'}
-          >
-            <Download size={14} />
-            <span>{t.downloadNav}</span>
-          </a>
+          
           <a className="lp-nav-cta" href="/app">
             {t.open}
             <ArrowUpRight size={16} />
@@ -793,21 +805,21 @@ export default function Landing() {
                 {t.open}
                 <ArrowUpRight size={20} />
               </a>
-              <a
-                href="/downloads/ENote-v1.0.0.apk"
-                download="ENote-v1.0.0.apk"
-                className="lp-button lp-button-apk"
-                title={ar ? 'تحميل تطبيق الأندرويد المباشر APK' : 'Download Android APK'}
-              >
-                <Download size={20} />
-                <span>{t.downloadApk}</span>
-                <span className="lp-apk-tag">{t.downloadTag}</span>
-              </a>
+              {downloadButton}
               <a href="#playground" className="lp-text-link">
                 {t.explore}
                 <ArrowDown size={17} />
               </a>
             </div>
+            <p className="lp-release-status">
+              {release
+                ? ar
+                  ? `الإصدار ${release.version} · أندرويد 7.0 فأعلى · SHA-256: ${release.sha256.slice(0, 12)}… · قد يطلب أندرويد السماح بالتثبيت من هذا المصدر.`
+                  : `Version ${release.version} · Android 7.0+ · SHA-256: ${release.sha256.slice(0, 12)}… · Android may ask you to allow installs from this source.`
+                : ar
+                  ? 'نسخة Android قيد التجهيز؛ جرّب نسخة الويب الآن.'
+                  : 'Android release in preparation. Try the web app today.'}
+            </p>
             <div className="lp-hero-foot">
               <span className="lp-live-dot" />
               {t.note}
@@ -876,7 +888,7 @@ export default function Landing() {
           </a>
         </section>
 
-        <div className="lp-strip" aria-label={ar ? 'مساحة ليومك' : 'Room for your day'}>
+        <div className="lp-strip" role="group" aria-label={ar ? 'مساحة ليومك' : 'Room for your day'}>
           {t.strip.map((text) => (
             <React.Fragment key={text}>
               <span>{text}</span>
@@ -1030,14 +1042,14 @@ export default function Landing() {
                       </div>
                     </div>
                   ) : i === 3 ? (
-                    /* Feature 3: Real AI Study Assistant Card */
+                    /* Feature 3: Study assistant card */
                     <div className="lp-ai-art">
                       <div className="lp-ai-art-head">
                         <span className="lp-ai-art-badge">
                           <Sparkles size={13} />
-                          {ar ? 'ذكاء اصطناعي حقيقي ✦' : 'Real Free LLM ✦'}
+                          {ar ? 'مساعد دراسي ✦' : 'Study tools ✦'}
                         </span>
-                        <small style={{ color: '#94a3b8', fontSize: '10px' }}>{ar ? 'بدون مفاتيح API' : 'Zero Setup API'}</small>
+                        <small style={{ color: '#94a3b8', fontSize: '10px' }}>{ar ? 'معاينة توضيحية' : 'Sample preview'}</small>
                       </div>
 
                       <div className="lp-ai-art-topic">
@@ -1407,7 +1419,7 @@ export default function Landing() {
                     </div>
                   </div>
                 ) : scene === 'ai' ? (
-                  /* 4. Real AI Assistant Tab */
+                  /* 4. Study assistant tab */
                   <div className="lp-ai-demo">
                     <div className="lp-demo-panel-head">
                       <div>
@@ -1699,19 +1711,11 @@ export default function Landing() {
               {t.open}
               <ArrowUpRight size={20} />
             </a>
-            <a
-              href="/downloads/ENote-v1.0.0.apk"
-              download="ENote-v1.0.0.apk"
-              className="lp-button lp-button-apk"
-            >
-              <Download size={20} />
-              <span>{t.downloadApk}</span>
-              <span className="lp-apk-tag">{t.downloadTag}</span>
-            </a>
+            {downloadButton}
           </div>
         </section>
       </main>
-      <footer className="lp-footer">
+      <footer className="lp-footer"><a href="/privacy.html">{ar ? 'الخصوصية' : 'Privacy'}</a>
         <a className="lp-brand" href="#">
           <img src="/assets/enote-icon.png" width="34" height="34" alt="" />
           <span>ENote.</span>

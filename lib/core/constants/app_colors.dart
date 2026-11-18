@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Design tokens and color palette matching the original StudyFlow web application.
 class AppColors {

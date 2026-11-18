@@ -1,4 +1,4 @@
-// aiService.ts - Real & Free AI Assistant Client using Pollinations AI LLM Engine
+// Remote AI via a same-origin gateway, with explicitly labelled local study tools.
 
 export interface AiChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -14,6 +14,7 @@ export interface GeneratedStudyPhase {
 }
 
 export interface GeneratedStudyPlan {
+  source?: 'remote' | 'local';
   subject: string;
   hours: number;
   phases: GeneratedStudyPhase[];
@@ -21,6 +22,7 @@ export interface GeneratedStudyPlan {
 }
 
 export interface GeneratedSummary {
+  source?: 'remote' | 'local';
   title: string;
   keyPoints: string[];
   terms: string[];
@@ -28,151 +30,27 @@ export interface GeneratedSummary {
 }
 
 export interface GeneratedQuizQuestion {
+  source?: 'remote' | 'local';
   question: string;
   options: string[];
   correctIndex: number;
   explanation: string;
 }
 
-const POLLINATIONS_URL = 'https://text.pollinations.ai/';
-
-/**
- * Call the free, real LLM endpoint with conversation messages
- */
-export async function callRealAi(
-  messages: AiChatMessage[],
-  options: { model?: string; temperature?: number } = {}
-): Promise<string> {
-  const model = options.model || 'openai';
-  const systemMsg = messages.find((m) => m.role === 'system')?.content || '';
-  const nonSystemMsgs = messages.filter((m) => m.role !== 'system');
-
-  let promptText = '';
-  if (nonSystemMsgs.length === 1) {
-    promptText = nonSystemMsgs[0].content;
-  } else {
-    promptText = nonSystemMsgs
-      .map((m) => `${m.role === 'user' ? 'الطالب' : 'المساعد'}: ${m.content}`)
-      .join('\n');
-  }
-
-  // 1. Check if user configured a Google Gemini API key
-  const geminiKey =
-    typeof localStorage !== 'undefined'
-      ? localStorage.getItem('gemini_api_key') ||
-        localStorage.getItem('studyflow_gemini_key') ||
-        ''
-      : '';
-
-  if (geminiKey) {
-    try {
-      const gRes = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey.trim()}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `${
-                      systemMsg ? `[تعليمات النظام]: ${systemMsg}\n\n` : ''
-                    }${promptText}`,
-                  },
-                ],
-              },
-            ],
-          }),
-        }
-      );
-      if (gRes.ok) {
-        const gData = await gRes.json();
-        const reply = gData.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply && reply.trim()) return reply.trim();
-      }
-    } catch (e) {
-      console.warn('Gemini API call failed, trying fallback:', e);
-    }
-  }
-
-  // 2. Try Serverless / Local AI Proxy (Bypasses Cloudflare Turnstile, zero CORS, 100% Real LLM)
-  const encodedPrompt = encodeURIComponent(promptText.trim());
-  const encodedSystem = systemMsg ? `&system=${encodeURIComponent(systemMsg)}` : '';
-  const seed = Math.floor(Math.random() * 999999);
-
-  // 2a. Preferred: POST to /api/ai proxy (works on Vercel Edge/Serverless and local Vite)
-  try {
-    const postRes = await fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages,
-        prompt: promptText.trim(),
-        system: systemMsg,
-        model,
-        seed,
-      }),
-    });
-    if (postRes.ok) {
-      const text = await postRes.text();
-      if (
-        text &&
-        !text.includes('Missing Turnstile token') &&
-        text.trim().length > 0
-      ) {
-        return text.trim();
-      }
-    }
-  } catch (err) {
-    // Silent fallback to GET proxy
-  }
-
-  // 2b. Secondary: GET to /api/ai proxy
-  try {
-    const proxyUrl = `/api/ai/${encodedPrompt}?model=${model}${encodedSystem}&seed=${seed}`;
-    const proxyRes = await fetch(proxyUrl, { method: 'GET' });
-    if (proxyRes.ok) {
-      const text = await proxyRes.text();
-      if (
-        text &&
-        !text.includes('Missing Turnstile token') &&
-        text.trim().length > 0
-      ) {
-        return text.trim();
-      }
-    }
-  } catch (err) {
-    console.warn('AI Proxy calls failed, trying direct fallback:', err);
-  }
-
-  // 3. Direct browser GET call
+/** Requests leave the browser only through the bounded same-origin gateway. */
+export async function callRealAi(messages: AiChatMessage[], _options: { model?: string; temperature?: number } = {}): Promise<string> {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
-
+  const timeout = setTimeout(() => controller.abort(), 18000);
   try {
-    const getUrl = `https://text.pollinations.ai/${encodedPrompt}?model=${model}${encodedSystem}&seed=${seed}`;
-
-    const response = await fetch(getUrl, {
-      method: 'GET',
-      signal: controller.signal,
+    const response = await fetch('/api/ai', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages }), signal: controller.signal,
     });
-
-    clearTimeout(timeoutId);
-
-    if (response.ok) {
-      const text = await response.text();
-      if (text && !text.includes('Missing Turnstile token') && text.trim().length > 0) {
-        return text.trim();
-      }
-    }
-  } catch (err: any) {
-    clearTimeout(timeoutId);
-    console.warn('Direct AI call failed or timed out:', err);
-  }
-
-  // 3. High-Yield Pedagogical Expert Engine (dynamic, context-aware analysis)
-  return generatePedagogicalAdvice(promptText);
+    if (!response.ok) throw new Error(`AI_UNAVAILABLE_${response.status}`);
+    const text = await response.text();
+    if (!text.trim() || text.length > 64000 || text.trim().startsWith('<')) throw new Error('AI_INVALID_RESPONSE');
+    return text.trim();
+  } finally { clearTimeout(timeout); }
 }
 
 /**
@@ -308,13 +186,15 @@ Total available study hours: ${hours} hours.`;
     console.warn('Falling back to local template generator:', e);
   }
 
-  // Graceful fallback if network fails
+  // Local template: never present this result as a model response.
   const totalMins = hours * 60;
   const p1 = Math.round(totalMins * 0.3);
   const p2 = Math.round(totalMins * 0.5);
-  const p3 = Math.round(totalMins * 0.2);
+  const p3 = totalMins - p1 - p2;
+  const clock = (offset: number) => `${String(Math.floor((540+offset)/60)).padStart(2,'0')}:${String((540+offset)%60).padStart(2,'0')}`;
 
   return {
+    source: 'local',
     subject: topic,
     hours,
     phases: [
@@ -323,21 +203,21 @@ Total available study hours: ${hours} hours.`;
         duration: p1,
         desc: isArabic ? `قراءة استكشافية متأنية لـ «${topic}» وتحديد المفاهيم والمصطلحات الأساسية.` : `Careful exploratory review of "${topic}" and identification of key terms.`,
         startTime: '09:00',
-        endTime: `09:${p1 < 60 ? String(p1).padStart(2, '0') : '50'}`,
+        endTime: clock(p1),
       },
       {
         title: isArabic ? `المرحلة 2: حل التمارين والتطبيق العملي (${p2} دقيقة)` : `Phase 2: Practice & Exercises (${p2} min)`,
         duration: p2,
         desc: isArabic ? `حل تدريبات تطبيقية متنوعة على «${topic}» واختبار خطوات الحل الذاتي.` : `Solve targeted practical problems on "${topic}" and analyze solutions.`,
-        startTime: '10:00',
-        endTime: '11:15',
+        startTime: clock(p1),
+        endTime: clock(p1+p2),
       },
       {
         title: isArabic ? `المرحلة 3: المراجعة النشطة والتلخيص (${p3} دقيقة)` : `Phase 3: Active Recall & Review (${p3} min)`,
         duration: p3,
         desc: isArabic ? `استرجاع المفاهيم وتدوين الملاحظات الصعبة في بطاقة تلخيص سريعة.` : `Closed-book active recall and recording difficult points in notes.`,
-        startTime: '11:30',
-        endTime: '12:00',
+        startTime: clock(p1+p2),
+        endTime: clock(totalMins),
       },
     ],
     tips: [
@@ -430,7 +310,8 @@ Format your response as:
   // Fallback heuristic extraction
   const lines = notesText.split('\n').map(l => l.trim()).filter(l => l.length > 15);
   return {
-    title: isArabic ? 'ملخص ذكي: القوانين والمفاهيم الجوهرية' : 'Smart Summary: Core Concepts',
+    source: 'local',
+    title: isArabic ? 'استخراج محلي من النص' : 'Local text extraction',
     keyPoints: lines.slice(0, 3).length > 0 ? lines.slice(0, 3) : [
       isArabic ? 'أهمية الاستيعاب النظري المنظم للمادة.' : 'Importance of systematic theoretical understanding.',
       isArabic ? 'التطبيق العملي يثبت المعلومات ويمنع النسيان.' : 'Active application solidifies knowledge.',
@@ -500,6 +381,7 @@ Format:
 
   return [
     {
+      source: 'local',
       question: isArabic ? `ما هو المبدأ الأساسي في دراسة ${subjectName}؟` : `What is the core principle in ${subjectName}?`,
       options: isArabic ? ['الفهم العميق والتطبيق', 'الحفظ الأعمى', 'تجاهل الأساسيات', 'التسويف'] : ['Deep understanding & practice', 'Blind memorization', 'Ignoring basics', 'Procrastination'],
       correctIndex: 0,

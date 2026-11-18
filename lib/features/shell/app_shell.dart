@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,7 +40,7 @@ class _AppShellState extends ConsumerState<AppShell> {
           leading: expanded
               ? null
               : IconButton(
-                  tooltip: 'فتح القائمة',
+                  tooltip: context.tr('فتح القائمة'),
                   icon: const Icon(Icons.menu_rounded),
                   onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                 ),
@@ -63,19 +64,24 @@ class _AppShellState extends ConsumerState<AppShell> {
           ),
           actions: [
             IconButton(
-              tooltip: 'مركز الإشعارات',
+              tooltip: context.tr('مركز الإشعارات'),
               icon: Badge(
                 isLabelVisible: ref.watch(unreadNotificationsCountProvider) > 0,
                 label: Text(
                   '${ref.watch(unreadNotificationsCountProvider)}',
-                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 child: const Icon(Icons.notifications_outlined),
               ),
               onPressed: () => showNotificationsModal(context),
             ),
             IconButton(
-              tooltip: dark ? 'تفعيل المظهر الفاتح' : 'تفعيل المظهر الداكن',
+              tooltip: context.tr(
+                dark ? 'تفعيل المظهر الفاتح' : 'تفعيل المظهر الداكن',
+              ),
               icon: Icon(
                 dark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
               ),
@@ -127,27 +133,27 @@ class _AppShellState extends ConsumerState<AppShell> {
                     context.go(_routes[index]);
                   }
                 },
-                destinations: const [
+                destinations: [
                   NavigationDestination(
-                    icon: Icon(Icons.home_outlined),
-                    selectedIcon: Icon(Icons.home_rounded),
-                    label: 'الرئيسية',
+                    icon: const Icon(Icons.home_outlined),
+                    selectedIcon: const Icon(Icons.home_rounded),
+                    label: context.tr('الرئيسية'),
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.calendar_today_outlined),
-                    label: 'المخطط',
+                    icon: const Icon(Icons.calendar_today_outlined),
+                    label: context.tr('المخطط'),
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.timer_outlined),
-                    label: 'التركيز',
+                    icon: const Icon(Icons.timer_outlined),
+                    label: context.tr('التركيز'),
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.folder_outlined),
-                    label: 'المكتبة',
+                    icon: const Icon(Icons.folder_outlined),
+                    label: context.tr('المكتبة'),
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.grid_view_rounded),
-                    label: 'المزيد',
+                    icon: const Icon(Icons.grid_view_rounded),
+                    label: context.tr('المزيد'),
                   ),
                 ],
               ),

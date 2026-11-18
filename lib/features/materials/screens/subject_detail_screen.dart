@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart' hide MaterialType;
+import 'package:study_flow/core/utils/app_validators.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart' hide MaterialType;
 
 import '../../../core/widgets/app_sheet.dart';
 
@@ -20,8 +22,7 @@ class SubjectDetailScreen extends ConsumerWidget {
   final String folderId;
   final MaterialFolder? folder;
 
-  const SubjectDetailScreen({Key? key, required this.folderId, this.folder})
-    : super(key: key);
+  const SubjectDetailScreen({super.key, required this.folderId, this.folder});
 
   String _formatType(MaterialType type) {
     switch (type) {
@@ -94,7 +95,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'إضافة ملف أو كتاب جديد',
+                      context.tr('إضافة ملف أو كتاب جديد'),
                       style: AppTextStyles.cairo(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -103,7 +104,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                     IconButton(
                       onPressed: () => Navigator.pop(ctx),
                       icon: const Icon(Icons.close),
-                      tooltip: 'إغلاق',
+                      tooltip: context.tr('إغلاق'),
                     ),
                   ],
                 ),
@@ -147,7 +148,8 @@ class SubjectDetailScreen extends ConsumerWidget {
                         subject: folderName,
                         title: title,
                         type: selectedType,
-                        totalPages: int.tryParse(pagesCtrl.text) ?? 100,
+                        totalPages:
+                            AppValidators.parseInt(pagesCtrl.text) ?? 100,
                         readPages: 0,
                         description: descCtrl.text.trim(),
                         dateAdded: DateTime.now()
@@ -182,7 +184,7 @@ class SubjectDetailScreen extends ConsumerWidget {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'تحديث تقدم القراءة',
+          context.tr('تحديث تقدم القراءة'),
           style: AppTextStyles.cairo(fontWeight: FontWeight.bold),
         ),
         content: Column(
@@ -190,7 +192,7 @@ class SubjectDetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'أدخل رقم آخر صفحة قرأتها في "${item.title}":',
+              context.l10n.messageee6fe30168(context.display(item.title)),
               style: AppTextStyles.cairo(fontSize: 13),
             ),
             const SizedBox(height: 14),
@@ -204,11 +206,12 @@ class SubjectDetailScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text('إلغاء', style: AppTextStyles.cairo()),
+            child: Text(context.tr('إلغاء'), style: AppTextStyles.cairo()),
           ),
           ElevatedButton(
             onPressed: () {
-              final newPages = int.tryParse(pagesCtrl.text) ?? item.readPages;
+              final newPages =
+                  AppValidators.parseInt(pagesCtrl.text) ?? item.readPages;
               if (newPages >= item.totalPages) {
                 AppHaptics.milestone();
               } else {
@@ -220,7 +223,7 @@ class SubjectDetailScreen extends ConsumerWidget {
               Navigator.pop(ctx);
             },
             child: Text(
-              'تحديث',
+              context.tr('تحديث'),
               style: AppTextStyles.cairo(color: Colors.white),
             ),
           ),
@@ -250,7 +253,7 @@ class SubjectDetailScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            tooltip: 'إضافة ملف',
+            tooltip: context.tr('إضافة ملف'),
             onPressed: () =>
                 _showAddItemSheet(context, ref, currentFolder.name),
           ),
@@ -274,7 +277,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.25),
+                    color: AppColors.primary.withValues(alpha: 0.25),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -300,11 +303,11 @@ class SubjectDetailScreen extends ConsumerWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          '${items.length} ملفات',
+                          context.l10n.files(items.length),
                           style: AppTextStyles.cairo(
                             color: Colors.white,
                             fontSize: 12,
@@ -316,9 +319,11 @@ class SubjectDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'جميع الكتب والمذكرات والملخصات الدراسية الخاصة بهذه المادة',
+                    context.tr(
+                      'جميع الكتب والمذكرات والملخصات الدراسية الخاصة بهذه المادة',
+                    ),
                     style: AppTextStyles.cairo(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 13,
                     ),
                   ),
@@ -362,7 +367,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                                 vertical: 3,
                               ),
                               decoration: BoxDecoration(
-                                color: typeBadgeColor.withOpacity(0.12),
+                                color: typeBadgeColor.withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -381,7 +386,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                                     Icons.edit_note_rounded,
                                     color: AppColors.primary,
                                   ),
-                                  tooltip: 'تحديث الصفحات',
+                                  tooltip: context.tr('تحديث الصفحات'),
                                   onPressed: () => _showUpdateProgressDialog(
                                     context,
                                     ref,
@@ -389,7 +394,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                                   ),
                                 ),
                                 IconButton(
-                                  tooltip: 'حذف العنصر',
+                                  tooltip: context.tr('حذف العنصر'),
                                   icon: const Icon(
                                     Icons.delete_outline,
                                     size: 20,
@@ -432,7 +437,10 @@ class SubjectDetailScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'تقدم القراءة: ${item.readPages} من ${item.totalPages} صفحة',
+                              context.l10n.messageb531bc554d(
+                                context.display(item.readPages),
+                                context.display(item.totalPages),
+                              ),
                               style: AppTextStyles.cairo(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,

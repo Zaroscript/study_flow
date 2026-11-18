@@ -1,3 +1,5 @@
+import '../../../l10n/locale_provider.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/ai_assistant_models.dart';
@@ -28,39 +30,33 @@ class AiAssistantState {
 }
 
 final aiAssistantServiceProvider = Provider<AiAssistantService>((ref) {
-  return AiAssistantService.instance;
+  return AiAssistantService.forLanguage(ref.watch(localeProvider).languageCode);
 });
 
 final aiAssistantProvider =
     StateNotifierProvider<AiAssistantNotifier, AiAssistantState>((ref) {
-  final service = ref.watch(aiAssistantServiceProvider);
-  return AiAssistantNotifier(service);
-});
+      final service = ref.watch(aiAssistantServiceProvider);
+      return AiAssistantNotifier(service);
+    });
 
 class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
   final AiAssistantService _service;
 
-  AiAssistantNotifier(this._service)
-      : super(
-          AiAssistantState(
-            messages: [
-              AiChatMessage(
-                id: 'welcome_init',
-                sender: AiSender.assistant,
-                timestamp: DateTime.now(),
-                type: AiMessageType.text,
-                content: '''أهلاً بك يا بطل! أنا مساعدك الدراسي الذكي في StudyFlow 🧠✨
-
-أنا هنا لأساعدك في رحلتك الدراسية بأحدث أساليب التعلم الفعّال:
-• 📅 **تخطيط المذاكرة الذكي**: تقسيم المواد المعقدة إلى جلسات مركزة مع فترات راحة بومودورو.
-• 📝 **بنك الاختبارات والكويز**: تدريب تفاعلي فوري بأسئلة اختيار من متعدد مع شرح الحل.
-• 💡 **تلخيص الملاحظات والأفكار**: تحويل دفاتر وملاحظات دراستك لنقاط مراجعة سريعة.
-
-جرّب اختيار أحد الاقتراحات السريعة أدناه أو اكتب لي أي سؤال مباشرة! 👇''',
-              ),
-            ],
-          ),
-        );
+  AiAssistantNotifier(AiAssistantService service)
+    : _service = service,
+      super(
+        AiAssistantState(
+          messages: [
+            AiChatMessage(
+              id: 'welcome_init',
+              sender: AiSender.assistant,
+              timestamp: DateTime.now(),
+              type: AiMessageType.text,
+              content: service.labels.localWelcome,
+            ),
+          ],
+        ),
+      );
 
   void setCategory(String category) {
     state = state.copyWith(selectedCategory: category);
@@ -85,6 +81,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
 
     // Realistic micro-delay for smooth AI conversation feel without freezing UI
     await Future.delayed(const Duration(milliseconds: 350));
+    if (!mounted) return;
 
     final reply = _service.handleUserPrompt(query, history: state.messages);
 
@@ -101,7 +98,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     final userMsg = AiChatMessage(
       id: 'usr_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.user,
-      content: 'أريد خطة دراسية ذكية لمادة "$subject" مدتها $hours ساعات.',
+      content: _service.labels.localPlanRequest(subject, hours.toString()),
       timestamp: DateTime.now(),
       type: AiMessageType.text,
     );
@@ -112,6 +109,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     );
 
     await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
 
     final plan = _service.generateStudyPlan(
       subject: subject,
@@ -121,7 +119,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     final reply = AiChatMessage(
       id: 'bot_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.assistant,
-      content: '✨ قمت ببرمجة خطة دراسية احترافية لمادة **${plan.subject}** موزعة على **${plan.availableHours} ساعات** مع توزيع الطاقة والتركيز.',
+      content: _service.labels.localPlanReply(plan.subject),
       timestamp: DateTime.now(),
       type: AiMessageType.studyPlan,
       studyPlan: plan,
@@ -141,7 +139,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     final userMsg = AiChatMessage(
       id: 'usr_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.user,
-      content: 'اختبرني في مادة "$subject" بمستوى $difficulty ($count أسئلة).',
+      content: _service.labels.localQuizRequest(subject),
       timestamp: DateTime.now(),
       type: AiMessageType.text,
     );
@@ -152,6 +150,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     );
 
     await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
 
     final quiz = _service.generateQuiz(
       subject: subject,
@@ -162,7 +161,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     final reply = AiChatMessage(
       id: 'bot_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.assistant,
-      content: '🎯 إليك كويز تجريبي لمادة **${quiz.subject}** ($difficulty). اختر الإجابة الأصح لتحصل على التصحيح الفوري:',
+      content: _service.labels.localQuizReply,
       timestamp: DateTime.now(),
       type: AiMessageType.quiz,
       quiz: quiz,
@@ -178,11 +177,11 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     required String content,
     String? title,
   }) async {
-    final noteName = title ?? 'ملاحظة دراسية';
+    final noteName = title ?? _service.labels.localNote;
     final userMsg = AiChatMessage(
       id: 'usr_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.user,
-      content: 'لخص لي الملاحظة: "$noteName".',
+      content: _service.labels.localNoteRequest(noteName),
       timestamp: DateTime.now(),
       type: AiMessageType.text,
     );
@@ -193,6 +192,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     );
 
     await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
 
     final insight = _service.generateNoteInsights(
       content: content,
@@ -202,7 +202,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
     final reply = AiChatMessage(
       id: 'bot_${DateTime.now().millisecondsSinceEpoch}',
       sender: AiSender.assistant,
-      content: '💡 هذه أبرز مفاهيم ونقاط المراجعة السريعة المستخرجة من "$noteName":',
+      content: _service.labels.localNoteReply,
       timestamp: DateTime.now(),
       type: AiMessageType.summary,
       noteInsight: insight,
@@ -246,7 +246,7 @@ class AiAssistantNotifier extends StateNotifier<AiAssistantState> {
           sender: AiSender.assistant,
           timestamp: DateTime.now(),
           type: AiMessageType.text,
-          content: 'تم بدء محادثة جديدة! كيف يمكنني مساعدتك في دراستك اليوم؟ 🎓',
+          content: _service.labels.localNewChat,
         ),
       ],
       selectedCategory: 'all',

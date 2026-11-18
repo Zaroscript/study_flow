@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppProgressBar extends StatelessWidget {
   final double progress; // between 0.0 and 1.0 (or percentage 0-100)
@@ -8,13 +8,13 @@ class AppProgressBar extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   const AppProgressBar({
-    Key? key,
+    super.key,
     required this.progress,
     this.color,
     this.backgroundColor,
     this.height = 8,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,11 @@ class AppProgressBar extends StatelessWidget {
           borderRadius: radius,
         ),
         child: TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 350),
+          duration:
+              MediaQuery.disableAnimationsOf(context) ||
+                  MediaQuery.accessibleNavigationOf(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 350),
           curve: Curves.easeOutCubic,
           tween: Tween<double>(begin: 0.0, end: normalized),
           builder: (context, animatedFactor, _) {

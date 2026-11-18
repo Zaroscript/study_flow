@@ -44,7 +44,8 @@ class AiStudySessionPhase {
       description: json['description'] as String? ?? '',
       cognitiveLevel: json['cognitiveLevel'] as String? ?? 'فهم وتطبيق',
       energyBadge: json['energyBadge'] as String? ?? 'طاقة عالية ⚡',
-      subtasks: (json['subtasks'] as List<dynamic>?)
+      subtasks:
+          (json['subtasks'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
@@ -115,12 +116,15 @@ class AiStudyPlan {
       subject: json['subject'] as String? ?? '',
       availableHours: json['availableHours'] as int? ?? 2,
       overview: json['overview'] as String? ?? '',
-      phases: (json['phases'] as List<dynamic>?)
-              ?.map((e) =>
-                  AiStudySessionPhase.fromJson(e as Map<String, dynamic>))
+      phases:
+          (json['phases'] as List<dynamic>?)
+              ?.map(
+                (e) => AiStudySessionPhase.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
-      smartTips: (json['smartTips'] as List<dynamic>?)
+      smartTips:
+          (json['smartTips'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
@@ -186,7 +190,8 @@ class AiQuizQuestion {
     return AiQuizQuestion(
       id: json['id'] as String? ?? '',
       question: json['question'] as String? ?? '',
-      options: (json['options'] as List<dynamic>?)
+      options:
+          (json['options'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
@@ -263,11 +268,13 @@ class AiQuiz {
       id: json['id'] as String? ?? '',
       subject: json['subject'] as String? ?? '',
       difficulty: json['difficulty'] as String? ?? 'متوسط',
-      questions: (json['questions'] as List<dynamic>?)
+      questions:
+          (json['questions'] as List<dynamic>?)
               ?.map((e) => AiQuizQuestion.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      userAnswers: (json['userAnswers'] as Map<String, dynamic>?)?.map(
+      userAnswers:
+          (json['userAnswers'] as Map<String, dynamic>?)?.map(
             (k, v) => MapEntry(int.parse(k), v as int),
           ) ??
           const {},
@@ -331,15 +338,18 @@ class AiNoteInsight {
       id: json['id'] as String? ?? '',
       title: json['title'] as String? ?? '',
       summary: json['summary'] as String? ?? '',
-      keyTakeaways: (json['keyTakeaways'] as List<dynamic>?)
+      keyTakeaways:
+          (json['keyTakeaways'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
-      actionItems: (json['actionItems'] as List<dynamic>?)
+      actionItems:
+          (json['actionItems'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
-      keywords: (json['keywords'] as List<dynamic>?)
+      keywords:
+          (json['keywords'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],

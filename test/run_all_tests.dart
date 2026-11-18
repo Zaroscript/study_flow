@@ -1,19 +1,21 @@
-import 'profile_validation_test.dart' as profile_validation;
-import 'profile_persistence_test.dart' as profile_persistence;
-import 'onboarding_completion_test.dart' as onboarding_completion;
-import 'theme_persistence_test.dart' as theme_persistence;
-import 'database_migration_test.dart' as database_migration;
-import 'navigation_flow_test.dart' as navigation_flow;
-import 'prompt03_features_test.dart' as prompt03_features;
-import 'ai_assistant_test.dart' as ai_assistant;
-import 'flip_clock_widget_test.dart' as flip_clock_widget;
-import 'notifications_test.dart' as notifications;
-import 'onboarding_test.dart' as onboarding;
+import 'dart:io';
+
+import 'legacy/profile_validation_smoke.dart' as profile_validation;
+import 'legacy/profile_persistence_smoke.dart' as profile_persistence;
+import 'legacy/onboarding_completion_smoke.dart' as onboarding_completion;
+import 'legacy/theme_persistence_smoke.dart' as theme_persistence;
+import 'legacy/database_migration_smoke.dart' as database_migration;
+import 'legacy/navigation_flow_smoke.dart' as navigation_flow;
+import 'legacy/prompt03_features_smoke.dart' as prompt03_features;
+import 'legacy/ai_assistant_smoke.dart' as ai_assistant;
+import 'legacy/flip_clock_widget_smoke.dart' as flip_clock_widget;
+import 'legacy/notifications_smoke.dart' as notifications;
+import 'legacy/onboarding_smoke.dart' as onboarding;
 
 Future<void> main() async {
-  print('========================================================');
-  print('🧪 StudyFlow Suite — Comprehensive Automated Tests 🧪');
-  print('========================================================\n');
+  stdout.writeln('========================================================');
+  stdout.writeln('🧪 StudyFlow Suite — Comprehensive Automated Tests 🧪');
+  stdout.writeln('========================================================\n');
 
   profile_validation.main();
   await profile_persistence.main();
@@ -27,7 +29,9 @@ Future<void> main() async {
   await notifications.main();
   onboarding.main();
 
-  print('========================================================');
-  print('✨ ALL 60+ TEST CASES COMPLETED AND PASSED WITH 100% SUCCESS ✨');
-  print('========================================================');
+  stdout.writeln('========================================================');
+  stdout.writeln(
+    'Legacy smoke fixtures completed; production verification uses flutter test.',
+  );
+  stdout.writeln('========================================================');
 }

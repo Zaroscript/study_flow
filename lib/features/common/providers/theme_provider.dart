@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/local/preferences/preferences_service.dart';
@@ -20,8 +20,8 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
   bool get isDarkMode => state == ThemeMode.dark;
 
   Future<void> setTheme(ThemeMode mode) async {
-    state = mode;
     await _prefs.setThemeMode(mode);
+    if (mounted) state = mode;
   }
 
   Future<void> toggleTheme() async {

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,7 +33,8 @@ class DashboardScreen extends ConsumerWidget {
     final materials = ref.watch(materialsProvider);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final firstName = profile?.name.trim().split(' ').first ?? 'يا صديقي';
+    final firstName =
+        profile?.name.trim().split(' ').first ?? context.tr('يا صديقي');
 
     // 7-Day Performance Statistics & Today's Category Distribution
     final days = List.generate(
@@ -85,7 +87,7 @@ class DashboardScreen extends ConsumerWidget {
         ),
         TextButton(
           onPressed: () => context.go(route),
-          child: const Text('عرض الكل'),
+          child: Text(context.tr('عرض الكل')),
         ),
       ],
     );
@@ -100,7 +102,7 @@ class DashboardScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('يومك صفحة جديدة. ابدأ بمهمة واحدة.'),
+                  Text(context.tr('يومك صفحة جديدة. ابدأ بمهمة واحدة.')),
                   const SizedBox(height: 16),
                   AppButton(
                     text: 'إضافة مهمة',
@@ -148,9 +150,9 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           heading('خطوة نحو أهدافك', '/goals'),
           if (goals.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text('أضف هدفك الأول وابدأ متابعة تقدّمك.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(context.tr('أضف هدفك الأول وابدأ متابعة تقدّمك.')),
             ),
           ...goals
               .take(3)
@@ -171,7 +173,10 @@ class DashboardScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '${goal.current} من ${goal.target}',
+                        context.l10n.messagec991cdd692(
+                          context.display(goal.current),
+                          context.display(goal.target),
+                        ),
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -186,7 +191,9 @@ class DashboardScreen extends ConsumerWidget {
 
     final rewardsPanel = AppCard(
       color: isDark ? const Color(0xFF1E1B4B) : const Color(0xFFEEF2FF),
-      border: Border.all(color: const Color(0xFF6366F1).withOpacity(0.35)),
+      border: Border.all(
+        color: const Color(0xFF6366F1).withValues(alpha: 0.35),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -208,17 +215,23 @@ class DashboardScreen extends ConsumerWidget {
               ),
               const SizedBox(width: 14),
               Expanded(
+                flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'المكافآت والجوائز (${rewards.currentXP} XP)',
+                      context.l10n.message30abd8f96f(
+                        context.display(rewards.currentXP),
+                      ),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'المستوى ${rewards.level} · ${rewards.levelTitle}',
+                      context.l10n.message34a64aeb49(
+                        context.display(rewards.level),
+                        context.display(rewards.levelTitle),
+                      ),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: const Color(0xFF6366F1),
                         fontWeight: FontWeight.w600,
@@ -227,10 +240,17 @@ class DashboardScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              TextButton.icon(
-                onPressed: () => context.go('/rewards'),
-                icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-                label: const Text('سجل الجوائز'),
+              Flexible(
+                flex: 2,
+                child: TextButton.icon(
+                  onPressed: () => context.go('/rewards'),
+                  icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+                  label: Text(
+                    context.tr('سجل الجوائز'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ],
           ),
@@ -241,16 +261,29 @@ class DashboardScreen extends ConsumerWidget {
             height: 8,
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            spacing: 12,
+            runSpacing: 4,
             children: [
               Text(
-                '🔥 السلسلة: ${rewards.streakDays} أيام متواصلة',
-                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+                context.l10n.message0b8b5f7fdc(
+                  context.display(rewards.streakDays),
+                ),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
-                '🏆 الأوسمة: ${rewards.badges.where((b) => b.isUnlocked).length} من ${rewards.badges.length} مفتوحة',
-                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+                context.l10n.messagee8c8186e98(
+                  context.display(
+                    rewards.badges.where((b) => b.isUnlocked).length,
+                  ),
+                  context.display(rewards.badges.length),
+                ),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -270,15 +303,18 @@ class DashboardScreen extends ConsumerWidget {
                 child: Semantics(
                   header: true,
                   child: Text(
-                    'إحصائيات الأداء الأسبوعي',
+                    context.tr('إحصائيات الأداء الأسبوعي'),
                     style: theme.textTheme.titleLarge,
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withOpacity(0.1),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -292,7 +328,11 @@ class DashboardScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Text('توزيع المهام المنجزة فعلياً خلال الأيام السبعة الأخيرة.'),
+          Text(
+            context.tr(
+              'توزيع المهام المنجزة فعلياً خلال الأيام السبعة الأخيرة.',
+            ),
+          ),
           const SizedBox(height: 16),
           ...List.generate(
             7,
@@ -309,7 +349,7 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        '${counts[index]} مهام',
+                        context.l10n.tasks(counts[index]),
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -332,7 +372,7 @@ class DashboardScreen extends ConsumerWidget {
           if (distribution.isNotEmpty) ...[
             const Divider(height: 28),
             Text(
-              'توزيع وقت المذاكرة المخطط اليوم',
+              context.tr('توزيع وقت المذاكرة المخطط اليوم'),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -343,17 +383,26 @@ class DashboardScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
                   children: [
-                    Icon(Icons.schedule, size: 16, color: theme.colorScheme.primary),
+                    Icon(
+                      Icons.schedule,
+                      size: 16,
+                      color: theme.colorScheme.primary,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(child: Text(CategoryConstants.getLabel(item.key))),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withOpacity(0.12),
+                        color: theme.colorScheme.primary.withValues(
+                          alpha: 0.12,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '${item.value} دقيقة',
+                        context.l10n.minutes(item.value),
                         style: TextStyle(
                           fontSize: 12,
                           color: theme.colorScheme.primary,
@@ -375,7 +424,7 @@ class DashboardScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PageHeader(
-            title: 'مرحبًا، $firstName',
+            title: '${context.tr('مرحبًا،')} $firstName',
             description: 'كل خطوة صغيرة تقرّبك من أهدافك. هذه خطتك لليوم.',
           ),
           AppCard(
@@ -384,14 +433,16 @@ class DashboardScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'وقتك يستاهل خطة حلوة.',
+                  context.tr('وقتك يستاهل خطة حلوة.'),
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'رتّب أولوياتك وابدأ بمهمة واحدة. خذ استراحة قصيرة بين جلسات التركيز.',
+                  context.tr(
+                    'رتّب أولوياتك وابدأ بمهمة واحدة. خذ استراحة قصيرة بين جلسات التركيز.',
+                  ),
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                   ),
@@ -408,51 +459,73 @@ class DashboardScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           AppCard(
             color: isDark ? AppColors.cardDark : Colors.white,
-            border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppColors.primary, AppColors.secondary],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.auto_awesome_rounded,
-                    color: Colors.white,
-                    size: 26,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'المساعد الدراسي الذكي (AI)',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'خطط مذاكرة تفاعلية، كويزات فورية، وتلخيص ذكي لملاحظاتك الدراسية.',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-                AppButton(
+            border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Stack the action under the copy on narrow cards or with
+                // enlarged text, so the row never overflows.
+                final compact = constraints.maxWidth < 560;
+                final assistantButton = AppButton(
                   text: 'تحدث مع المساعد',
                   icon: Icons.chat_bubble_outline_rounded,
+                  isFullWidth: compact,
                   onPressed: () => context.go('/ai-assistant'),
-                ),
-              ],
+                );
+                final summary = Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [AppColors.primary, AppColors.secondary],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.auto_awesome_rounded,
+                        color: Colors.white,
+                        size: 26,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.tr('المساعد الدراسي الذكي (AI)'),
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            context.tr(
+                              'خطط مذاكرة تفاعلية، كويزات فورية، وتلخيص ذكي لملاحظاتك الدراسية.',
+                            ),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (!compact) ...[
+                      const SizedBox(width: 12),
+                      assistantButton,
+                    ],
+                  ],
+                );
+                if (!compact) return summary;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    summary,
+                    const SizedBox(height: 16),
+                    assistantButton,
+                  ],
+                );
+              },
             ),
           ),
           const SizedBox(height: 20),
@@ -519,9 +592,9 @@ class DashboardScreen extends ConsumerWidget {
               children: [
                 heading('الواجبات القادمة', '/homework'),
                 if (pending.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text('لا توجد واجبات معلقة. أحسنت!'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Text(context.tr('لا توجد واجبات معلقة. أحسنت!')),
                   ),
                 ...pending
                     .take(3)

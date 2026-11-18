@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/widgets/app_button.dart';
@@ -58,10 +59,10 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                   ),
                 ),
                 TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'بحث في الملاحظات',
-                    hintText: 'ابحث في العنوان أو المحتوى…',
-                    prefixIcon: Icon(Icons.search),
+                  decoration: InputDecoration(
+                    labelText: context.tr('بحث في الملاحظات'),
+                    hintText: context.tr('ابحث في العنوان أو المحتوى…'),
+                    prefixIcon: const Icon(Icons.search),
                   ),
                   onChanged: (value) => setState(() => _query = value),
                 ),
@@ -71,7 +72,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                   runSpacing: 8,
                   children: [
                     FilterChip(
-                      label: const Text('الكل'),
+                      label: Text(context.tr('الكل')),
                       selected: _folder == null,
                       onSelected: (_) {
                         AppHaptics.selection();
@@ -98,8 +99,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                   notes.isEmpty
                       ? AppEmptyState.initial(
                           title: 'مكتبتك تبدأ بفكرة',
-                          description:
-                              'أضف أول ملخص أو فكرة لتنظيم استذكارك والرجوع إليها لاحقًا.',
+                          description: 'أضف أول ملخص أو فكرة لتنظيم استذكارك والرجوع إليها لاحقًا.',
                           icon: Icons.note_alt_outlined,
                           actionLabel: 'إضافة ملاحظة جديدة',
                           onAction: () => _edit(),
@@ -159,10 +159,10 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                           TextButton.icon(
                             onPressed: () => _edit(note),
                             icon: const Icon(Icons.edit_outlined),
-                            label: const Text('فتح وتعديل'),
+                            label: Text(context.tr('فتح وتعديل')),
                           ),
                           IconButton(
-                            tooltip: 'حذف الملاحظة',
+                            tooltip: context.tr('حذف الملاحظة'),
                             icon: Icon(
                               Icons.delete_outline,
                               color: scheme.error,
@@ -236,16 +236,16 @@ class _NoteEditorState extends ConsumerState<_NoteEditor> {
       final discard = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('تجاهل التغييرات؟'),
-          content: const Text('توجد تعديلات لم تُحفظ في الملاحظة.'),
+          title: Text(context.tr('تجاهل التغييرات؟')),
+          content: Text(context.tr('توجد تعديلات لم تُحفظ في الملاحظة.')),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('متابعة التعديل'),
+              child: Text(context.tr('متابعة التعديل')),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('تجاهل التغييرات'),
+              child: Text(context.tr('تجاهل التغييرات')),
             ),
           ],
         ),
@@ -278,7 +278,7 @@ class _NoteEditorState extends ConsumerState<_NoteEditor> {
       if (mounted) {
         setState(() => _saving = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تعذّر الحفظ. حاول مرة أخرى.')),
+          SnackBar(content: Text(context.tr('تعذّر الحفظ. حاول مرة أخرى.'))),
         );
       }
     }
@@ -287,7 +287,7 @@ class _NoteEditorState extends ConsumerState<_NoteEditor> {
   @override
   Widget build(BuildContext context) => PopScope(
     canPop: !_dirty && !_saving,
-    onPopInvoked: (didPop) {
+    onPopInvokedWithResult: (didPop, result) {
       if (!didPop) _close();
     },
     child: Padding(
@@ -312,7 +312,7 @@ class _NoteEditorState extends ConsumerState<_NoteEditor> {
                   ),
                 ),
                 IconButton(
-                  tooltip: 'إغلاق',
+                  tooltip: context.tr('إغلاق'),
                   onPressed: _saving ? null : _close,
                   icon: const Icon(Icons.close),
                 ),
@@ -321,6 +321,7 @@ class _NoteEditorState extends ConsumerState<_NoteEditor> {
             const SizedBox(height: 16),
             AppTextField(
               label: 'العنوان',
+              validation: FieldValidation.required,
               controller: _title,
               validator: AppValidators.required,
             ),

@@ -21,7 +21,7 @@ async function run() {
   const page = await context.newPage();
   page.setDefaultTimeout(7000);
   page.on('pageerror', error=>report.errors.push(error.message));
-  const axe = process.env.ENOTE_AXE_PATH || path.join(os.tmpdir(),'enote-axe-core/package/axe.min.js');
+  const axe = process.env.ENOTE_AXE_PATH || require.resolve('axe-core/axe.min.js');
   const axeAvailable = await fs.access(axe).then(()=>true).catch(()=>false);
   const navigate = async label => {
     const link=page.locator('.sf-sidebar nav').getByRole('link',{name:label,exact:true});
@@ -30,7 +30,7 @@ async function run() {
   };
   const check = name => { report.flows.push(name); console.log(`PASS ${name}`); };
   try {
-    await page.goto(process.env.ENOTE_BASE_URL || 'http://localhost:3000',{waitUntil:'domcontentloaded'});
+    await page.goto(process.env.ENOTE_BASE_URL || 'http://localhost:3000/app',{waitUntil:'domcontentloaded'});
     await page.getByLabel('اللغة',{exact:true}).selectOption('en');
     await page.getByLabel('Full name',{exact:true}).fill('Alex Smith');
     await page.getByLabel('Education level',{exact:true}).selectOption('المرحلة الثانوية');
@@ -60,7 +60,7 @@ async function run() {
     check('Complete, delete and restore a task');
     await page.reload({waitUntil:'domcontentloaded'});
     assert.equal(await page.locator('html').getAttribute('lang'),'en');
-    assert.equal(await page.locator('.sf-page-header h1').innerText(),'Daily planner');
+    assert.equal(await page.locator('.sf-page-header h1:visible').innerText(),'Daily planner');
     await navigate('Goals');
     await page.evaluate(()=>history.back());
     await page.waitForFunction(()=>location.hash==='#planner');
@@ -101,7 +101,7 @@ async function run() {
     await page.waitForTimeout(1300);
     await navigate('Focus timer');
     assert.equal(await page.getByRole('button',{name:'Pause',exact:true}).isVisible(),true);
-    assert.notEqual(await page.locator('.sf-timer-readout > span').first().innerText(),'25:00');
+    assert.match(await page.getByRole('timer').getAttribute('aria-label'), /24.*59|24.*58|24.*57/);
     await page.getByRole('button',{name:'Pause',exact:true}).click();
     await page.getByRole('button',{name:'Timer settings (minutes)',exact:true}).click();
     await page.getByLabel('Focus time (minutes)',{exact:true}).fill('0');
@@ -113,7 +113,8 @@ async function run() {
     for(let index=0;index<15;index++){await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.closest('.sf-sidebar')!==null),true);}
     assert.equal(await page.locator('main').getAttribute('inert'),'');
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('.sf-sidebar').isVisible(),false);
+    assert.equal(await page.locator('.sf-sidebar').getAttribute('aria-hidden'),'true');
+    await page.waitForTimeout(300);
     check('Drawer traps focus, makes background inert and closes with Escape');
     await navigate('Settings');
     const dataBefore=await page.evaluate(()=>localStorage.getItem('studyflow_data'));
@@ -122,12 +123,12 @@ async function run() {
     assert.equal(await page.evaluate(()=>localStorage.getItem('studyflow_data')),dataBefore);
     await page.getByLabel('اللغة',{exact:true}).selectOption('en');
     check('Switching languages preserves all user content');
-    const routes=[['dashboard','Home'],['planner','Daily planner'],['pomodoro','Focus timer'],['homework','Homework'],['goals','Goals'],['habits','Habits'],['notes','Notes'],['stats','Statistics'],['settings','Settings']];
-    const arabic=['الرئيسية','المخطط اليومي','مؤقت التركيز','الواجبات','الأهداف','العادات','الملاحظات','الإحصائيات','الإعدادات'];
+    const routes=[['dashboard','Home'],['planner','Daily planner'],['pomodoro','Focus timer'],['homework','Homework'],['goals','Goals'],['habits','Habits'],['notes','Notes'],['materials','Materials & Library'],['ai','AI Assistant'],['rewards','Rewards & Trophies'],['settings','Settings']];
+    const arabic=['الرئيسية','المخطط اليومي','مؤقت التركيز','الواجبات','الأهداف','العادات','الملاحظات','المكتبة والملازم','المساعد الذكي','المكافآت والجوائز','الإعدادات'];
     await fs.mkdir(path.join(output,'after'),{recursive:true});
     for(const language of ['en','ar']){
       await page.setViewportSize({width:1440,height:1000});
-      await navigate(language==='en'?'Settings':'الإعدادات');
+      await navigate(await page.locator('html').getAttribute('lang')==='en'?'Settings':'الإعدادات');
       await page.locator('#app-language').selectOption(language);
       for(const theme of ['light','dark']){
         const current=await page.evaluate(()=>document.body.classList.contains('dark')?'dark':'light');
@@ -150,7 +151,7 @@ async function run() {
               report.accessibility.push({id,theme,violations});
             }
           }
-          console.log(`CHECKED ${language}/${theme}/${width}: 9 screens`);
+          console.log(`CHECKED ${language}/${theme}/${width}: ${routes.length} screens`);
         }
       }
     }

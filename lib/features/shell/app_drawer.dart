@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,10 +13,10 @@ class AppDrawer extends ConsumerWidget {
   final bool persistent;
 
   const AppDrawer({
-    Key? key,
+    super.key,
     required this.currentRoute,
     this.persistent = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,7 +124,7 @@ class AppDrawer extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        'رفيقك الدراسي',
+                        context.tr('رفيقك الدراسي'),
                         style: AppTextStyles.cairo(
                           fontSize: 11,
                           color: isDark
@@ -181,7 +182,7 @@ class AppDrawer extends ConsumerWidget {
                         size: 20,
                       ),
                       title: Text(
-                        title,
+                        context.tr(title),
                         style: AppTextStyles.cairo(
                           fontSize: 13,
                           fontWeight: isSelected
@@ -217,7 +218,7 @@ class AppDrawer extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: 18,
-                      backgroundColor: AppColors.primary.withOpacity(0.2),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.2),
                       child: Text(
                         profile?.name.isNotEmpty == true
                             ? profile!.name.characters.first
@@ -243,7 +244,7 @@ class AppDrawer extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            profile?.grade ?? 'النسخة الذكية',
+                            context.tr(profile?.grade ?? 'النسخة الذكية'),
                             style: AppTextStyles.cairo(
                               fontSize: 11,
                               color: isDark

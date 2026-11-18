@@ -95,7 +95,8 @@ class NotificationChannel {
     NotificationChannel(
       id: goals,
       name: 'تنبيهات الأهداف والمواعيد النهائية',
-      description: 'تحذيرات لاقتراب الموعد النهائي للأهداف أو الاحتفال بإنجازها',
+      description:
+          'تحذيرات لاقتراب الموعد النهائي للأهداف أو الاحتفال بإنجازها',
       importance: NotificationPriority.high,
     ),
     NotificationChannel(
@@ -231,7 +232,7 @@ class NotificationPreferences {
     this.taskReminderMinutesBefore = 15,
     this.pomodoroAlertsEnabled = true,
     this.goalAlertsEnabled = true,
-    this.dailyBriefingEnabled = true,
+    this.dailyBriefingEnabled = false,
     this.dailyBriefingHour = 8,
     this.dailyBriefingMinute = 0,
     this.soundEnabled = true,
@@ -251,17 +252,14 @@ class NotificationPreferences {
     bool? vibrationEnabled,
   }) {
     return NotificationPreferences(
-      notificationsEnabled:
-          notificationsEnabled ?? this.notificationsEnabled,
-      taskRemindersEnabled:
-          taskRemindersEnabled ?? this.taskRemindersEnabled,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      taskRemindersEnabled: taskRemindersEnabled ?? this.taskRemindersEnabled,
       taskReminderMinutesBefore:
           taskReminderMinutesBefore ?? this.taskReminderMinutesBefore,
       pomodoroAlertsEnabled:
           pomodoroAlertsEnabled ?? this.pomodoroAlertsEnabled,
       goalAlertsEnabled: goalAlertsEnabled ?? this.goalAlertsEnabled,
-      dailyBriefingEnabled:
-          dailyBriefingEnabled ?? this.dailyBriefingEnabled,
+      dailyBriefingEnabled: dailyBriefingEnabled ?? this.dailyBriefingEnabled,
       dailyBriefingHour: dailyBriefingHour ?? this.dailyBriefingHour,
       dailyBriefingMinute: dailyBriefingMinute ?? this.dailyBriefingMinute,
       soundEnabled: soundEnabled ?? this.soundEnabled,
@@ -292,7 +290,7 @@ class NotificationPreferences {
           (json['taskReminderMinutesBefore'] as num?)?.toInt() ?? 15,
       pomodoroAlertsEnabled: json['pomodoroAlertsEnabled'] as bool? ?? true,
       goalAlertsEnabled: json['goalAlertsEnabled'] as bool? ?? true,
-      dailyBriefingEnabled: json['dailyBriefingEnabled'] as bool? ?? true,
+      dailyBriefingEnabled: json['dailyBriefingEnabled'] as bool? ?? false,
       dailyBriefingHour: (json['dailyBriefingHour'] as num?)?.toInt() ?? 8,
       dailyBriefingMinute: (json['dailyBriefingMinute'] as num?)?.toInt() ?? 0,
       soundEnabled: json['soundEnabled'] as bool? ?? true,

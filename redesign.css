@@ -363,9 +363,9 @@ html[dir=ltr] .sf-text-link svg { transform: rotate(180deg); }
 .sf-stepper { display: inline-flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
 .sf-step-btn { height: 34px; padding: 0 11px; border-radius: 8px; border: 1px solid var(--control-line); background: var(--surface); color: var(--ink); font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; white-space: nowrap; transition: all 140ms ease; user-select: none; }
 .sf-step-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.sf-complete-btn { font-size: 12px; font-weight: 700; padding: 0 12px; height: 34px; border-radius: 8px; background: var(--surface); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.35); display: inline-flex; align-items: center; gap: 5px; cursor: pointer; white-space: nowrap; transition: all 140ms ease; user-select: none; }
-.sf-complete-btn:hover { background: #10b981; color: white; border-color: #10b981; }
-.sf-completed-banner { display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; color: #10b981; font-size: 12px; font-weight: 700; width: 100%; }
+.sf-complete-btn { font-size: 12px; font-weight: 700; padding: 0 12px; height: 34px; border-radius: 8px; background: var(--surface); color: #137052; border: 1px solid rgba(16, 185, 129, 0.35); display: inline-flex; align-items: center; gap: 5px; cursor: pointer; white-space: nowrap; transition: all 140ms ease; user-select: none; }
+.sf-complete-btn:hover { background: #137052; color: white; border-color: #0f5c43; }
+.sf-completed-banner { display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; color: #137052; font-size: 12px; font-weight: 700; width: 100%; }
 .sf-reset-read-btn { background: transparent; border: none; color: var(--muted); font-size: 11px; text-decoration: underline; cursor: pointer; padding: 2px 6px; font-weight: 600; }
 .sf-reset-read-btn:hover { color: var(--ink); }
 
@@ -520,7 +520,7 @@ html[dir=ltr] .sf-text-link svg { transform: rotate(180deg); }
   background: linear-gradient(180deg, var(--surface) 0%, rgba(245, 158, 11, 0.03) 100%);
 }
 .sf-reward-card.locked {
-  opacity: 0.75;
+  opacity: 1;
 }
 .sf-reward-head {
   display: flex;
@@ -605,3 +605,15 @@ html[dir=ltr] .sf-text-link svg { transform: rotate(180deg); }
   .animate-fade-in, .animate-pulse-ring { animation: none; }
   .sf-content .transition-all { transition-property: none; }
 }
+
+/* Readable states on both composite surfaces. */
+.sf-reward-pill.locked { color: var(--ink); }
+.sf-reward-card.locked .text-gray-400 { color: var(--muted); }
+.sf-reward-card .text-amber-500 { color: #885700; background: #fff2d8; }
+.sf-ai-phase .text-indigo-500, .sf-ai-phase .text-indigo-600 { color: #5142ae; }
+.dark .sf-ai-phase .text-indigo-500, .dark .sf-ai-phase .text-indigo-600 { color: #cabdff; }
+/* Dark-mode contrast: accent greens/indigos tuned for light surfaces fall below 4.5:1 on dark cards. */
+.dark .sf-complete-btn, .dark .sf-completed-banner { color: #6ee7b7; border-color: rgba(110, 231, 183, 0.35); }
+.dark .sf-complete-btn:hover { background: #6ee7b7; color: #052e1f; border-color: #6ee7b7; }
+.dark .flip-status-pill > span:not(.flip-beacon) { color: #ece9ff; }
+.dark .flip-status-pill > .opacity-60 { color: #c9c6e0; opacity: 1; }

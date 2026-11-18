@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import '../../notifications/providers/notifications_provider.dart';
+
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:study_flow/l10n/language_button.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +19,7 @@ import '../widgets/grade_card_selector.dart';
 import '../widgets/onboarding_page_indicator.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -72,7 +76,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_currentPage < _totalPages - 1) {
       AppHaptics.selectionClick();
       _pageController.nextPage(
-        duration: const Duration(milliseconds: 380),
+        duration:
+            MediaQuery.disableAnimationsOf(context) ||
+                MediaQuery.accessibleNavigationOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 380),
         curve: Curves.easeOutCubic,
       );
     }
@@ -82,7 +90,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_currentPage > 0) {
       AppHaptics.selectionClick();
       _pageController.previousPage(
-        duration: const Duration(milliseconds: 380),
+        duration:
+            MediaQuery.disableAnimationsOf(context) ||
+                MediaQuery.accessibleNavigationOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 380),
         curve: Curves.easeOutCubic,
       );
     }
@@ -92,7 +104,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     AppHaptics.selectionClick();
     _pageController.animateToPage(
       1,
-      duration: const Duration(milliseconds: 400),
+      duration:
+          MediaQuery.disableAnimationsOf(context) ||
+              MediaQuery.accessibleNavigationOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 400),
       curve: Curves.easeInOutCubic,
     );
   }
@@ -102,9 +118,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final grade = _selectedGrade ?? 'المرحلة الثانوية';
 
     if (name.isEmpty) {
-      _pageController.animateToPage(1,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut);
+      _pageController.animateToPage(
+        1,
+        duration:
+            MediaQuery.disableAnimationsOf(context) ||
+                MediaQuery.accessibleNavigationOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
       setState(() => _nameError = 'يرجى إدخال اسم الطالب.');
       return;
     }
@@ -116,11 +138,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       final profile = UserProfile(name: name, grade: grade);
 
       // Persist profile in SQLite database via Riverpod notifier
-      await ref.read(profileProvider.notifier).saveProfile(profile);
+      await ref.read(studyFlowRepositoryProvider).saveProfile(profile);
+
+      if (!mounted) return;
+      await ref.read(studyFlowRepositoryProvider).saveFeatureState(
+        'studyPreferences',
+        {
+          'dailyTargetMinutes': _selectedDailyTargetMinutes,
+          'preferredTime': _preferredTime,
+          'dailyReminder': _enableDailyReminder,
+        },
+      );
+      if (!mounted) return;
+
+      final notifications = ref.read(notificationServiceProvider);
+      await notifications.updatePreferences(
+        notifications.preferences.copyWith(
+          dailyBriefingEnabled: _enableDailyReminder,
+          dailyBriefingHour: _preferredTime == 'صباحي' ? 8 : 18,
+        ),
+      );
+      if (!mounted) return;
+      if (_enableDailyReminder) await notifications.requestPermission();
+      if (!mounted) return;
 
       // Persist onboarding completed flag in SharedPreferences
       await ref.read(preferencesServiceProvider).setOnboardingCompleted(true);
 
+      if (!mounted) return;
+      await ref.read(profileProvider.notifier).saveProfile(profile);
       AppHaptics.heavyImpact();
 
       if (mounted) {
@@ -141,7 +187,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF13111C) : const Color(0xFFF8F9FD),
+      appBar: AppBar(
+        title: const Text('ENote'),
+        actions: const [LanguageButton()],
+      ),
+      backgroundColor: isDark
+          ? const Color(0xFF13111C)
+          : const Color(0xFFF8F9FD),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -150,15 +202,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               children: [
                 // Top Action Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Back Button or App Logo
                       if (_currentPage > 0)
                         IconButton(
-                          icon: const Icon(Icons.arrow_forward_rounded), // RTL Back
-                          tooltip: 'السابق',
+                          icon: const Icon(
+                            Icons.arrow_forward_rounded,
+                          ), // RTL Back
+                          tooltip: context.tr('السابق'),
                           onPressed: _previousPage,
                         )
                       else
@@ -170,10 +227,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 gradient: const LinearGradient(
-                                  colors: [AppColors.primary, AppColors.secondary],
+                                  colors: [
+                                    AppColors.primary,
+                                    AppColors.secondary,
+                                  ],
                                 ),
                               ),
-                              child: const Icon(Icons.school, color: Colors.white, size: 18),
+                              child: const Icon(
+                                Icons.school,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -181,7 +245,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               style: AppTextStyles.cairo(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
-                                color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                                color: isDark
+                                    ? Colors.white
+                                    : AppColors.textPrimaryLight,
                               ),
                             ),
                           ],
@@ -195,7 +261,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           if (index < _currentPage) {
                             _pageController.animateToPage(
                               index,
-                              duration: const Duration(milliseconds: 300),
+                              duration:
+                                  MediaQuery.disableAnimationsOf(context) ||
+                                      MediaQuery.accessibleNavigationOf(context)
+                                  ? Duration.zero
+                                  : const Duration(milliseconds: 300),
                               curve: Curves.easeOutCubic,
                             );
                           }
@@ -207,7 +277,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         TextButton(
                           onPressed: _skipToSetup,
                           child: Text(
-                            'تخطي',
+                            context.tr('تخطي'),
                             style: AppTextStyles.cairo(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -225,7 +295,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 Expanded(
                   child: PageView(
                     controller: _pageController,
-                    onPageChanged: (page) => setState(() => _currentPage = page),
+                    onPageChanged: (page) =>
+                        setState(() => _currentPage = page),
                     physics: const BouncingScrollPhysics(),
                     children: [
                       _buildWelcomeSlide(isDark),
@@ -250,13 +321,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       child: Column(
         children: [
           const SizedBox(height: 12),
-          const AnimatedPulseEmblem(
-            icon: Icons.school_rounded,
-            size: 96,
-          ),
+          const AnimatedPulseEmblem(icon: Icons.school_rounded, size: 96),
           const SizedBox(height: 24),
           Text(
-            'مرحباً بك في ENote',
+            context.tr('مرحباً بك في ENote'),
             textAlign: TextAlign.center,
             style: AppTextStyles.cairo(
               fontSize: 26,
@@ -266,12 +334,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            'منظومتك الدراسية المتكاملة لإدارة المذاكرة، مؤقت التركيز، والمكتبة بدون تشتت.',
+            context.tr(
+              'منظومتك الدراسية المتكاملة لإدارة المذاكرة، مؤقت التركيز، والمكتبة بدون تشتت.',
+            ),
             textAlign: TextAlign.center,
             style: AppTextStyles.cairo(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
               height: 1.5,
             ),
           ),
@@ -290,7 +362,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             icon: Icons.folder_open_rounded,
             color: Colors.blue,
             title: 'مكتبة ملازم ومراجع منظمة',
-            desc: 'ملف خاص لكل مادة، تتبع لصفحات القراءة، وروابط محاضرات سريعة.',
+            desc:
+                'ملف خاص لكل مادة، تتبع لصفحات القراءة، وروابط محاضرات سريعة.',
             isDark: isDark,
           ),
           const SizedBox(height: 12),
@@ -323,7 +396,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'دعنا نتعرف عليك',
+            context.tr('دعنا نتعرف عليك'),
             style: AppTextStyles.cairo(
               fontSize: 22,
               fontWeight: FontWeight.w800,
@@ -332,10 +405,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'اسمك ومرحلتك الدراسية يساعدانا على تهيئة المخطط والمواد المناسبة لك.',
+            context.tr(
+              'اسمك ومرحلتك الدراسية يساعدانا على تهيئة المخطط والمواد المناسبة لك.',
+            ),
             style: AppTextStyles.cairo(
               fontSize: 13,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 22),
@@ -359,7 +436,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
           // Grade Selector Heading
           Text(
-            'اختر المرحلة الدراسية',
+            context.tr('اختر المرحلة الدراسية'),
             style: AppTextStyles.cairo(
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -410,7 +487,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'عادات وأهداف المذاكرة',
+            context.tr('عادات وأهداف المذاكرة'),
             style: AppTextStyles.cairo(
               fontSize: 22,
               fontWeight: FontWeight.w800,
@@ -419,17 +496,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'حدّد وتيرتك اليومية لبناء عادات دراسية مستمرة دون إرهاق.',
+            context.tr(
+              'حدّد وتيرتك اليومية لبناء عادات دراسية مستمرة دون إرهاق.',
+            ),
             style: AppTextStyles.cairo(
               fontSize: 13,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 24),
 
           // Daily Target Minutes
           Text(
-            'هدف التركيز اليومي المطلوب:',
+            context.tr('هدف التركيز اليومي المطلوب:'),
             style: AppTextStyles.cairo(
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -450,7 +531,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       setState(() => _selectedDailyTargetMinutes = mins);
                     },
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
+                      duration:
+                          MediaQuery.disableAnimationsOf(context) ||
+                              MediaQuery.accessibleNavigationOf(context)
+                          ? Duration.zero
+                          : const Duration(milliseconds: 180),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: isSel
@@ -460,7 +545,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         border: Border.all(
                           color: isSel
                               ? AppColors.primary
-                              : (isDark ? const Color(0xFF2C2A3C) : const Color(0xFFE5E7EB)),
+                              : (isDark
+                                    ? const Color(0xFF2C2A3C)
+                                    : const Color(0xFFE5E7EB)),
                         ),
                       ),
                       child: Column(
@@ -470,14 +557,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             style: AppTextStyles.cairo(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
-                              color: isSel ? Colors.white : (isDark ? Colors.white : AppColors.textPrimaryLight),
+                              color: isSel
+                                  ? Colors.white
+                                  : (isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight),
                             ),
                           ),
                           Text(
-                            'دقيقة',
+                            context.tr('دقيقة'),
                             style: AppTextStyles.cairo(
                               fontSize: 11,
-                              color: isSel ? Colors.white70 : AppColors.textMutedLight,
+                              color: isSel
+                                  ? Colors.white70
+                                  : AppColors.textMutedLight,
                             ),
                           ),
                         ],
@@ -492,7 +585,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
           // Preferred Study Time
           Text(
-            'الوقت المفضل للمذاكرة:',
+            context.tr('الوقت المفضل للمذاكرة:'),
             style: AppTextStyles.cairo(
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -513,15 +606,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       setState(() => _preferredTime = t['id']!);
                     },
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
+                      duration:
+                          MediaQuery.disableAnimationsOf(context) ||
+                              MediaQuery.accessibleNavigationOf(context)
+                          ? Duration.zero
+                          : const Duration(milliseconds: 180),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: isSel
-                            ? AppColors.primary.withOpacity(0.12)
+                            ? AppColors.primary.withValues(alpha: 0.12)
                             : (isDark ? const Color(0xFF1E1C2A) : Colors.white),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isSel ? AppColors.primary : const Color(0xFFE5E7EB),
+                          color: isSel
+                              ? AppColors.primary
+                              : const Color(0xFFE5E7EB),
                           width: isSel ? 2 : 1,
                         ),
                       ),
@@ -533,7 +632,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             style: AppTextStyles.cairo(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
-                              color: isSel ? AppColors.primary : (isDark ? Colors.white : AppColors.textPrimaryLight),
+                              color: isSel
+                                  ? AppColors.primary
+                                  : (isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight),
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -541,7 +644,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             t['desc']!,
                             style: AppTextStyles.cairo(
                               fontSize: 11,
-                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                              color: isDark
+                                  ? AppColors.textMutedDark
+                                  : AppColors.textMutedLight,
                             ),
                           ),
                         ],
@@ -562,10 +667,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.secondary.withOpacity(0.12),
+                    color: AppColors.secondary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(Icons.notifications_active_outlined, color: AppColors.secondary, size: 22),
+                  child: const Icon(
+                    Icons.notifications_active_outlined,
+                    color: AppColors.secondary,
+                    size: 22,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -573,18 +682,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'تذكيرات المذاكرة الذكية',
+                        context.tr('تذكيرات المذاكرة الذكية'),
                         style: AppTextStyles.cairo(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimaryLight,
                         ),
                       ),
                       Text(
-                        'إشعارات مشجعة وتنبيهات لمهام اليوم',
+                        context.tr('إشعارات مشجعة وتنبيهات لمهام اليوم'),
                         style: AppTextStyles.cairo(
                           fontSize: 11,
-                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          color: isDark
+                              ? AppColors.textMutedDark
+                              : AppColors.textMutedLight,
                         ),
                       ),
                     ],
@@ -592,7 +705,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
                 Switch.adaptive(
                   value: _enableDailyReminder,
-                  activeColor: AppColors.primary,
+                  activeThumbColor: AppColors.primary,
                   onChanged: (val) {
                     AppHaptics.selectionClick();
                     setState(() => _enableDailyReminder = val);
@@ -636,7 +749,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF10B981).withOpacity(0.35),
+                  color: const Color(0xFF10B981).withValues(alpha: 0.35),
                   blurRadius: 28,
                   offset: const Offset(0, 10),
                 ),
@@ -651,7 +764,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           const SizedBox(height: 24),
 
           Text(
-            'أنت جاهز للانطلاق!',
+            context.tr('أنت جاهز للانطلاق!'),
             textAlign: TextAlign.center,
             style: AppTextStyles.cairo(
               fontSize: 26,
@@ -661,11 +774,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'تم إعداد وتخصيص مساحتك الأكاديمية بنجاح.',
+            context.tr('تم إعداد وتخصيص مساحتك الأكاديمية بنجاح.'),
             textAlign: TextAlign.center,
             style: AppTextStyles.cairo(
               fontSize: 14,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 24),
@@ -772,7 +887,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Container(
             padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.12),
+              color: color.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: color, size: 22),
@@ -795,7 +910,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   desc,
                   style: AppTextStyles.cairo(
                     fontSize: 12,
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    color: isDark
+                        ? AppColors.textMutedDark
+                        : AppColors.textMutedLight,
                     height: 1.4,
                   ),
                 ),
@@ -811,13 +928,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.danger.withOpacity(0.1),
+        color: AppColors.danger.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.danger.withOpacity(0.3)),
+        border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
-          const Icon(Icons.error_outline_rounded, color: AppColors.danger, size: 18),
+          const Icon(
+            Icons.error_outline_rounded,
+            color: AppColors.danger,
+            size: 18,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

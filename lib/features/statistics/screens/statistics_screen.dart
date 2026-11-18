@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/category_constants.dart';
@@ -68,12 +69,12 @@ class StatisticsScreen extends ConsumerWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'المهام المكتملة خلال أسبوع',
+                  context.tr('المهام المكتملة خلال أسبوع'),
                   style: theme.textTheme.titleLarge,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text('تُجمع المهام حسب اليوم المحدد لها في المخطط.'),
+              Text(context.tr('تُجمع المهام حسب اليوم المحدد لها في المخطط.')),
               const SizedBox(height: 20),
               ...List.generate(
                 7,
@@ -86,7 +87,7 @@ class StatisticsScreen extends ConsumerWidget {
                           Expanded(
                             child: Text(weekdays[days[index].weekday - 1]),
                           ),
-                          Text('${counts[index]} مهام'),
+                          Text(context.l10n.tasks(counts[index])),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -112,19 +113,23 @@ class StatisticsScreen extends ConsumerWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'توزيع الوقت المخطط اليوم',
+                  context.tr('توزيع الوقت المخطط اليوم'),
                   style: theme.textTheme.titleLarge,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'هذه أوقات مجدولة في المخطط، وليست قياسًا لوقت التركيز الفعلي.',
+              Text(
+                context.tr(
+                  'هذه أوقات مجدولة في المخطط، وليست قياسًا لوقت التركيز الفعلي.',
+                ),
               ),
               const SizedBox(height: 16),
               if (distribution.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
-                  child: Text('أضف أوقاتًا لمهام اليوم ليظهر توزيع وقتك هنا.'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Text(
+                    context.tr('أضف أوقاتًا لمهام اليوم ليظهر توزيع وقتك هنا.'),
+                  ),
                 ),
               ...distribution.entries.map(
                 (item) => ListTile(
@@ -134,7 +139,7 @@ class StatisticsScreen extends ConsumerWidget {
                     color: theme.colorScheme.primary,
                   ),
                   title: Text(CategoryConstants.getLabel(item.key)),
-                  trailing: Text('${item.value} دقيقة'),
+                  trailing: Text(context.l10n.minutes(item.value)),
                 ),
               ),
             ],

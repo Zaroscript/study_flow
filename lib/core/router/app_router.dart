@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +12,6 @@ import '../../features/homework/screens/homework_screen.dart';
 import '../../features/goals/screens/goals_screen.dart';
 import '../../features/habits/screens/habits_screen.dart';
 import '../../features/notes/screens/notes_screen.dart';
-import '../../features/statistics/screens/statistics_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/materials/screens/materials_screen.dart';
 import '../../features/materials/screens/subject_detail_screen.dart';
@@ -32,8 +31,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/dashboard',
     redirect: (BuildContext context, GoRouterState state) {
       final isOnboarding = state.matchedLocation == '/onboarding';
-      final profile = ref.read(profileProvider);
-      final hasCompleted = prefs.isOnboardingCompleted() || profile != null;
+      final hasCompleted = prefs.isOnboardingCompleted();
 
       // If user hasn't completed onboarding and isn't on onboarding, redirect
       if (!hasCompleted && !isOnboarding) {

@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        generate_for:
+          - lib/data/local/database/sqlite_database.dart
+          - lib/data/local/database/record_table.dart

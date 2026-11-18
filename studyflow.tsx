@@ -1,3 +1,5 @@
+import { decodeWorkspace } from './web-storage';
+import { StorageRecovery } from './StorageRecovery';
 import React, { useState, useEffect, useMemo, useRef, useId, useCallback, lazy, Suspense, createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { localDateKey, validGoal, validTimer, scheduledMinutes } from './ui-utils';
@@ -107,15 +109,16 @@ const AppProvider = ({ children }) => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
+  const [damagedData, setDamagedData] = useState<string | null>(null);
   const [data, setData] = useState(() => {
     const saved = readStorage('studyflow_data');
     if (saved) {
       try {
-        const parsedData = JSON.parse(saved);
+        const parsedData = decodeWorkspace(saved, INITIAL_DATA);
         // Safely merge saved data with INITIAL_DATA to ensure no missing keys from app updates
         return { ...INITIAL_DATA, ...parsedData };
       } catch (error) {
-        console.error("Error parsing local storage data, falling back to initial data:", error);
+        setDamagedData(saved);
         return INITIAL_DATA;
       }
     }
@@ -161,7 +164,7 @@ const AppProvider = ({ children }) => {
         const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'studyflow_data', 'main');
         const snap = await getDoc(docRef);
         if (snap.exists()) {
-          setData(prev => ({ ...prev, ...snap.data() }));
+          setData(decodeWorkspace(JSON.stringify(snap.data()), INITIAL_DATA));
         } else {
           // If no cloud data exists yet, push the current local data up securely
           await setDoc(docRef, data);
@@ -177,9 +180,9 @@ const AppProvider = ({ children }) => {
 
   // 3. Save data to LocalStorage & Firebase Cloud Instantly
   useEffect(() => {
-    setStorageError(!writeStorage('studyflow_data', JSON.stringify(data)));
+    setStorageError(!(damagedData ? true : writeStorage('studyflow_data', JSON.stringify(data))));
     
-    if (user && db && !isFirebaseLoading) {
+    if (!damagedData && user && db && !isFirebaseLoading) {
        const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'studyflow_data', 'main');
        setDoc(docRef, data, { merge: true }).catch(console.error);
     }
@@ -215,6 +218,8 @@ const AppProvider = ({ children }) => {
     setUndoItem(null); notify(t('تمت استعادة العنصر'));
   };
   const resetData = () => { setData(structuredClone(INITIAL_DATA)); setUndoItem(null); notify(t('تمت إعادة الضبط')); };
+
+  if (damagedData) return <StorageRecovery raw={damagedData} onRecover={() => { if (!writeStorage('enote_recovery_original', damagedData)) return; localStorage.removeItem('studyflow_data'); location.reload(); }} />;
 
   return (
     <AppContext.Provider value={{ data, updateData, addItem, updateItem, deleteItem, theme, toggleTheme, language, setLanguage, notify, resetData }}>
@@ -1998,7 +2003,7 @@ const AiAssistantView = () => {
     try {
       const realPlan = await generateRealPlan(topic.trim(), Number(hours) || 2, ar);
       setPlan(realPlan);
-      notify(ar ? 'تم توليد خطة المذاكرة بالذكاء الاصطناعي الحقيقي!' : 'Generated real study plan with AI!');
+      notify(ar ? 'الخطة جاهزة. راجع مصدر النتيجة أدناه.' : 'Plan ready. Check its source below.');
     } catch (err) {
       console.warn(err);
       notify(ar ? 'تم تجهيز خطة المذاكرة المقترحة!' : 'Study plan ready!');
@@ -2045,6 +2050,7 @@ const AiAssistantView = () => {
       : 'Ohm’s law states that the current through a conductor between two points is directly proportional to the voltage across the two points, provided the temperature remains constant. Mathematically: V = I × R, where V is voltage (volts), I is current (amperes), and R is resistance (ohms). Resistors can be connected in series to increase equivalent resistance or in parallel to decrease it.'
   );
   const [summaryData, setSummaryData] = useState<{
+    source?: 'remote' | 'local';
     title: string;
     keyPoints: string[];
     terms: string[];
@@ -2058,7 +2064,7 @@ const AiAssistantView = () => {
     try {
       const realSum = await summarizeRealNotes(summaryInput.trim(), ar);
       setSummaryData(realSum);
-      notify(ar ? 'تم التلخيص بنجاح بواسطة الذكاء الاصطناعي الحقيقي!' : 'Successfully summarized with Real AI!');
+      notify(ar ? 'الملخص جاهز. راجع مصدر النتيجة أدناه.' : 'Summary ready. Check its source below.');
     } catch (err) {
       console.warn(err);
       notify(ar ? 'تم استخراج التلخيص بنجاح!' : 'Summary ready!');
@@ -2080,6 +2086,7 @@ const AiAssistantView = () => {
     ].join('\n');
 
     addItem('notes', {
+      date: localDateKey(),
       title: summaryData.title,
       content,
       folder: 'ملخصات ذكية',
@@ -2128,7 +2135,7 @@ const AiAssistantView = () => {
       const replyTime = new Intl.DateTimeFormat(getLocale(), { hour: '2-digit', minute: '2-digit' }).format(new Date());
       setMessages(prev => [...prev, {
         role: 'bot',
-        text: generatePedagogicalAdvice(query),
+        text: (ar ? 'قالب نصائح محلي — خدمة AI غير متاحة.\n\n' + generatePedagogicalAdvice(query) : 'Local study tips — remote AI is unavailable. Break your work into a small goal, use a focus timer and review what you recall.'),
         time: replyTime
       }]);
     } finally {
@@ -2142,6 +2149,8 @@ const AiAssistantView = () => {
 
   return (
     <div className="animate-fade-in sf-ai-hub">
+      <p className="sf-ai-source-notice">{ar ? 'أدوات محلية وقوالب دراسية. إرسال النص لخدمة AI خارجية يتم فقط عند توفر إعدادها. راجع سياسة الخصوصية.' : 'Local study tools and templates. Remote AI is used only when configured. See the privacy notice.'} <a href="/privacy.html">{ar ? 'الخصوصية' : 'Privacy'}</a></p>
+      <p role="status">{ar ? 'مصدر النتيجة: ' : 'Result source: '}{(tab==='plan' ? plan?.source : tab==='summary' ? summaryData?.source : 'local') === 'local' ? (ar ? 'قالب محلي / استخراج نص؛ ليس استجابة نموذج AI.' : 'Local template / text extraction; not an AI model response.') : (ar ? 'استجابة خدمة خارجية عند نجاح الطلب؛ راجع دقتها.' : 'Remote provider on a successful request; verify its accuracy.')}</p>
       <PageHeader
         title={t('المساعد الذكي')}
         description={t('رفيقك الذكي لتنظيم المذاكرة، توليد الخطط، والاختبارات السريعة.')}
@@ -2239,7 +2248,7 @@ const AiAssistantView = () => {
           {plan && (
             <Card>
               <div className="sf-section-head mb-4">
-                <h2>{t('مراحل الخطة المقترحة')} — <span className="text-indigo-500 font-bold">{plan.subject}</span></h2>
+                <h2>{t('مراحل الخطة المقترحة')} — <span className="text-indigo-500 dark:text-indigo-300 font-bold">{plan.subject}</span></h2>
                 <span className="sf-tag">{plan.hours} {t('ساعات')}</span>
               </div>
               <div className="space-y-3">
@@ -2453,7 +2462,7 @@ const AiAssistantView = () => {
 
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-300 mb-2 flex items-center gap-1.5">
                     <CheckSquare size={14} />
                     <span>{t('النقاط الجوهرية المستخلصة')}</span>
                   </h3>
@@ -2468,7 +2477,7 @@ const AiAssistantView = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-300 mb-2 flex items-center gap-1.5">
                     <FileText size={14} />
                     <span>{t('المصطلحات والقوانين الهامة')}</span>
                   </h3>
@@ -2483,7 +2492,7 @@ const AiAssistantView = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-300 mb-2 flex items-center gap-1.5">
                     <HelpCircle size={14} />
                     <span>{t('أسئلة مراجعة سريعة')}</span>
                   </h3>
@@ -2581,7 +2590,7 @@ const AppLayout = () => {
     if(!menuOpen||!compact)return;
     const previous=document.activeElement, overflow=document.body.style.overflow;
     document.body.style.overflow='hidden';drawer.current?.querySelector('button,a')?.focus();
-    const keydown=event=>{if(event.key==='Escape')setMenuOpen(false);if(event.key==='Tab'){const items=[...drawer.current.querySelectorAll('button,a[href]')];const first=items[0],last=items[items.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}};
+    const keydown=event=>{if(event.key==='Escape')setMenuOpen(false);if(event.key==='Tab'){const items=[...drawer.current.querySelectorAll('button,a[href]')].filter(item=>item.getClientRects().length&&!item.disabled);const first=items[0],last=items[items.length-1];if(!drawer.current.contains(document.activeElement)){event.preventDefault();first?.focus()}else if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}};
     document.addEventListener('keydown',keydown);return()=>{document.body.style.overflow=overflow;document.removeEventListener('keydown',keydown);previous?.focus?.()};
   },[menuOpen,compact]);
   const screens={dashboard:<Dashboard navigate={navigate}/>,planner:<DailyPlanner/>,materials:<MaterialsHub/>,ai:<AiAssistantView/>,rewards:<RewardsView navigate={navigate}/>,homework:<Homework/>,goals:<Goals/>,habits:<Habits/>,notes:<Notes/>,settings:<SettingsView/>};

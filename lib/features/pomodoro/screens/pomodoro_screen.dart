@@ -1,6 +1,12 @@
+import '../../notifications/models/notification_item_model.dart';
+import '../../common/providers/persistent_notifier.dart';
+
+import 'package:study_flow/core/utils/app_validators.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../core/widgets/app_sheet.dart';
 
@@ -24,7 +30,7 @@ import '../../notifications/providers/notifications_provider.dart';
 enum PomodoroMode { study, shortBreak, longBreak }
 
 class PomodoroScreen extends ConsumerStatefulWidget {
-  const PomodoroScreen({Key? key}) : super(key: key);
+  const PomodoroScreen({super.key});
 
   @override
   ConsumerState<PomodoroScreen> createState() => _PomodoroScreenState();
@@ -91,6 +97,12 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
   }
 
   void _switchMode(PomodoroMode newMode) {
+    unawaited(
+      ref
+          .read(notificationServiceProvider)
+          .cancelScheduledNotification('pomodoro-active')
+          .catchError(reportStorageFailure),
+    );
     AppHaptics.selection();
     final settings = ref.read(pomodoroSettingsProvider);
     _timer?.cancel();
@@ -101,10 +113,23 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
     });
   }
 
-  void _startTimer() {
+  Future<void> _startTimer() async {
     AppHaptics.medium();
     _timer?.cancel();
     _deadline = DateTime.now().add(Duration(seconds: _timeLeft));
+    await ref
+        .read(notificationServiceProvider)
+        .scheduleNotification(
+          id: 'pomodoro-active',
+          title: 'ENote',
+          body: Localizations.localeOf(context).languageCode == 'ar'
+              ? 'انتهت جلسة المؤقت'
+              : 'Timer session complete',
+          scheduledTime: _deadline!,
+          type: NotificationType.pomodoro,
+          channelId: NotificationChannel.pomodoro,
+        );
+    if (!mounted) return;
     setState(() => _isActive = true);
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) {
@@ -128,6 +153,12 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
 
   void _toggleTimer() {
     if (_isActive) {
+      unawaited(
+        ref
+            .read(notificationServiceProvider)
+            .cancelScheduledNotification('pomodoro-active')
+            .catchError(reportStorageFailure),
+      );
       AppHaptics.light();
       _timer?.cancel();
       setState(() => _isActive = false);
@@ -137,6 +168,12 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
   }
 
   void _resetTimer() {
+    unawaited(
+      ref
+          .read(notificationServiceProvider)
+          .cancelScheduledNotification('pomodoro-active')
+          .catchError(reportStorageFailure),
+    );
     AppHaptics.light();
     final settings = ref.read(pomodoroSettingsProvider);
     _timer?.cancel();
@@ -152,21 +189,29 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
   }
 
   void _handleTimerComplete() async {
+    await ref
+        .read(notificationServiceProvider)
+        .cancelScheduledNotification('pomodoro-active');
+    if (!mounted) return;
     final settings = ref.read(pomodoroSettingsProvider);
 
     // 1. Trigger Sound & Haptic Alarm
     AppHaptics.milestone();
     await PomodoroAlarmService.triggerAlarm(_alarmSettings);
+    if (!mounted) return;
 
     // 2. Trigger System & Notifications Center Alert
-    ref.read(notificationServiceProvider).triggerPomodoroFinishNotification(
-      isWorkSession: _currentMode == PomodoroMode.study,
-    );
+    await ref
+        .read(notificationServiceProvider)
+        .triggerPomodoroFinishNotification(
+          isWorkSession: _currentMode == PomodoroMode.study,
+        );
 
     if (!mounted) return;
 
     if (_currentMode == PomodoroMode.study) {
-      ref.read(statsProvider.notifier).addStudyMinutes(settings.study);
+      await ref.read(statsProvider.notifier).addStudyMinutes(settings.study);
+      if (!mounted) return;
       // Reward student with XP + unlock badge!
       ref
           .read(rewardsProvider.notifier)
@@ -210,7 +255,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                title,
+                context.tr(title),
                 style: AppTextStyles.cairo(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -220,7 +265,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
           ],
         ),
         content: Text(
-          message,
+          context.tr(message),
           style: AppTextStyles.cairo(fontSize: 14, height: 1.5),
         ),
         actions: [
@@ -231,7 +276,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                 _extendFiveMinutes();
               },
               child: Text(
-                'تمديد 5 دقائق',
+                context.tr('تمديد 5 دقائق'),
                 style: AppTextStyles.cairo(
                   color: AppColors.secondary,
                   fontWeight: FontWeight.bold,
@@ -244,7 +289,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
               onConfirm();
             },
             child: Text(
-              'حسناً',
+              context.tr('حسناً'),
               style: AppTextStyles.cairo(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -292,7 +337,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'إعدادات المؤقت والمنبه',
+                      context.tr('إعدادات المؤقت والمنبه'),
                       style: AppTextStyles.cairo(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -300,7 +345,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.close),
-                      tooltip: 'إغلاق',
+                      tooltip: context.tr('إغلاق'),
                       onPressed: () => Navigator.pop(ctx),
                     ),
                   ],
@@ -308,18 +353,21 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                 const SizedBox(height: 16),
                 AppTextField(
                   label: 'وقت التركيز (دقائق)',
+                  validation: FieldValidation.focusMinutes,
                   controller: studyCtrl,
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 12),
                 AppTextField(
                   label: 'استراحة قصيرة (دقائق)',
+                  validation: FieldValidation.shortBreakMinutes,
                   controller: breakCtrl,
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 12),
                 AppTextField(
                   label: 'استراحة طويلة (دقائق)',
+                  validation: FieldValidation.longBreakMinutes,
                   controller: longBreakCtrl,
                   keyboardType: TextInputType.number,
                 ),
@@ -327,7 +375,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
 
                 // Alarm toggles
                 Text(
-                  'خيارات التنبيه (Alarm)',
+                  context.tr('خيارات التنبيه (Alarm)'),
                   style: AppTextStyles.cairo(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -337,11 +385,11 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    'تشغيل صوت المنبه',
+                    context.tr('تشغيل صوت المنبه'),
                     style: AppTextStyles.cairo(fontSize: 14),
                   ),
                   subtitle: Text(
-                    'رنين صوتي فوري عند انتهاء الجلسة',
+                    context.tr('رنين صوتي فوري عند انتهاء الجلسة'),
                     style: AppTextStyles.cairo(fontSize: 11),
                   ),
                   value: sound,
@@ -350,11 +398,11 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    'اهتزاز الجهاز (Vibration)',
+                    context.tr('اهتزاز الجهاز (Vibration)'),
                     style: AppTextStyles.cairo(fontSize: 14),
                   ),
                   subtitle: Text(
-                    'تنبيه بالاهتزاز لتأكيد انتهاء الوقت',
+                    context.tr('تنبيه بالاهتزاز لتأكيد انتهاء الوقت'),
                     style: AppTextStyles.cairo(fontSize: 11),
                   ),
                   value: vibration,
@@ -366,9 +414,11 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                   isFullWidth: true,
                   onPressed: () async {
                     final newSettings = PomodoroSettings(
-                      study: int.tryParse(studyCtrl.text) ?? 25,
-                      breakDuration: int.tryParse(breakCtrl.text) ?? 5,
-                      longBreak: int.tryParse(longBreakCtrl.text) ?? 15,
+                      study: AppValidators.parseInt(studyCtrl.text) ?? 25,
+                      breakDuration:
+                          AppValidators.parseInt(breakCtrl.text) ?? 5,
+                      longBreak:
+                          AppValidators.parseInt(longBreakCtrl.text) ?? 15,
                     );
                     await ref
                         .read(pomodoroSettingsProvider.notifier)
@@ -425,7 +475,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.settings_outlined),
-                      tooltip: 'إعدادات المؤقت والمنبه',
+                      tooltip: context.tr('إعدادات المؤقت والمنبه'),
                       onPressed: _showSettingsSheet,
                     ),
                     Container(
@@ -435,7 +485,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: _alarmSettings.soundEnabled
-                            ? AppColors.primary.withOpacity(0.12)
+                            ? AppColors.primary.withValues(alpha: 0.12)
                             : (isDark
                                   ? const Color(0xFF334155)
                                   : const Color(0xFFF1F5F9)),
@@ -480,8 +530,10 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                         : const Color(0xFFF1F5F9),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 4,
+                    runSpacing: 4,
                     children: [
                       _ModeTab(
                         label: 'تركيز',
@@ -512,8 +564,10 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                         : const Color(0xFFF1F5F9),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 4,
+                    runSpacing: 4,
                     children: [
                       GestureDetector(
                         onTap: () => setState(() => _useFlipClock = true),
@@ -530,7 +584,9 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                             boxShadow: _useFlipClock
                                 ? [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.06),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.06,
+                                      ),
                                       blurRadius: 4,
                                       offset: const Offset(0, 1),
                                     ),
@@ -538,7 +594,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                                 : null,
                           ),
                           child: Text(
-                            'ساعة قلابة 3D',
+                            context.tr('ساعة قلابة 3D'),
                             style: AppTextStyles.cairo(
                               fontSize: 11,
                               fontWeight: _useFlipClock
@@ -546,11 +602,11 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                                   : FontWeight.w500,
                               color: _useFlipClock
                                   ? (isDark
-                                      ? Colors.white
-                                      : AppColors.textPrimaryLight)
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight)
                                   : (isDark
-                                      ? AppColors.textMutedDark
-                                      : AppColors.textMutedLight),
+                                        ? AppColors.textMutedDark
+                                        : AppColors.textMutedLight),
                             ),
                           ),
                         ),
@@ -570,7 +626,9 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                             boxShadow: !_useFlipClock
                                 ? [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.06),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.06,
+                                      ),
                                       blurRadius: 4,
                                       offset: const Offset(0, 1),
                                     ),
@@ -578,7 +636,7 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                                 : null,
                           ),
                           child: Text(
-                            'مؤشر دائري',
+                            context.tr('مؤشر دائري'),
                             style: AppTextStyles.cairo(
                               fontSize: 11,
                               fontWeight: !_useFlipClock
@@ -586,11 +644,11 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                                   : FontWeight.w500,
                               color: !_useFlipClock
                                   ? (isDark
-                                      ? Colors.white
-                                      : AppColors.textPrimaryLight)
+                                        ? Colors.white
+                                        : AppColors.textPrimaryLight)
                                   : (isDark
-                                      ? AppColors.textMutedDark
-                                      : AppColors.textMutedLight),
+                                        ? AppColors.textMutedDark
+                                        : AppColors.textMutedLight),
                             ),
                           ),
                         ),
@@ -628,8 +686,9 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                             backgroundColor: isDark
                                 ? const Color(0xFF334155)
                                 : const Color(0xFFE2E8F0),
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(modeColor),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              modeColor,
+                            ),
                             strokeCap: StrokeCap.round,
                           ),
                         ),
@@ -662,41 +721,44 @@ class _PomodoroScreenState extends ConsumerState<PomodoroScreen> {
                 const SizedBox(height: 36),
 
                 // Controls
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Reset Button
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isDark
-                              ? AppColors.borderDark
-                              : AppColors.borderLight,
-                          width: 1.5,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Reset Button
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isDark
+                                ? AppColors.borderDark
+                                : AppColors.borderLight,
+                            width: 1.5,
+                          ),
+                        ),
+                        child: IconButton(
+                          tooltip: context.tr('إعادة تشغيل المؤقت'),
+                          icon: const Icon(Icons.rotate_left_rounded, size: 24),
+                          onPressed: _resetTimer,
                         ),
                       ),
-                      child: IconButton(
-                        tooltip: 'إعادة تشغيل المؤقت',
-                        icon: const Icon(Icons.rotate_left_rounded, size: 24),
-                        onPressed: _resetTimer,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
+                      const SizedBox(width: 16),
 
-                    // Play/Pause Button
-                    AppButton(
-                      text: _isActive ? 'إيقاف مؤقت' : 'ابدأ التركيز',
-                      icon: _isActive
-                          ? Icons.pause_rounded
-                          : Icons.play_arrow_rounded,
-                      variant: _isActive
-                          ? AppButtonVariant.danger
-                          : AppButtonVariant.primary,
-                      height: 52,
-                      onPressed: _toggleTimer,
-                    ),
-                  ],
+                      // Play/Pause Button
+                      AppButton(
+                        text: _isActive ? 'إيقاف مؤقت' : 'ابدأ التركيز',
+                        icon: _isActive
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded,
+                        variant: _isActive
+                            ? AppButtonVariant.danger
+                            : AppButtonVariant.primary,
+                        height: 52,
+                        onPressed: _toggleTimer,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -734,7 +796,7 @@ class _ModeTab extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -742,7 +804,7 @@ class _ModeTab extends StatelessWidget {
               : null,
         ),
         child: Text(
-          label,
+          context.tr(label),
           style: AppTextStyles.cairo(
             fontSize: 13,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,

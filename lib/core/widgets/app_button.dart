@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:study_flow/l10n/ui_labels.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../utils/app_haptics.dart';
 
@@ -48,7 +49,9 @@ class AppButton extends StatelessWidget {
                 Icon(icon, size: 20),
                 const SizedBox(width: 8),
               ],
-              Flexible(child: Text(text, textAlign: TextAlign.center)),
+              Flexible(
+                child: Text(context.tr(text), textAlign: TextAlign.center),
+              ),
             ],
           );
     final style = ButtonStyle(
