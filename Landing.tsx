@@ -54,7 +54,7 @@ const copy = {
     nav: ['الفكرة', 'المميزات', 'أسئلة شائعة'], lang: 'English', navTeam: 'الفريق', getCta: 'احصل على ENote',
     headline: ['مساحة لأفكارك.', 'وقت لإنجازك.'], intro: 'كل اللي في بالك، له مكان. نظّم مذكراتك وملازمك، جهّز خططك بأدوات المذاكرة، واكسب المكافآت مع ENote.', explore: 'اكتشف ENote', note: 'ملاحظات · خطط · مساعد دراسي · ساعة 3D · مكافآت · إيقاعك أنت.',
     floatNote: 'الفكرة الحلوة؟ اكتبها.', floatTask: 'خطوة صغيرة. فرق كبير.', floatFocus: 'ساعة بومودورو 3D.', floatAi: 'مساعد دراسي ✦',
-    strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'مساعد دراسي ومجاني', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
+    strip: ['أفكار تستاهل مكان', 'خطط على مقاس يومك', 'مساعد دراسي', 'تركيز ميكانيكي غامر', 'مكتبة ملازم منظمة', 'مكافآت وأوسمة تحفيزية'],
     storyTitle: ['من زحمة الأفكار،', 'لوضوح الخطوة الجاية.'], storyBody: 'بين المحاضرة، الفكرة المفاجئة، وتراكم الملازم… ENote يجمع كل أدوات دراستك وتفوقك في مساحة واحدة هادئة ومحفزة.',
     features: [
       ['اكتب قبل ما الفكرة تطير.', 'ملاحظاتك كاملة، مرتبة في مجلدات، وتوصل لها بالبحث وقت ما تحتاجها.'],
@@ -76,12 +76,12 @@ const copy = {
     rewardsClaimed: 'تمت إضافة +50 XP! استمر في الإنجاز ✨',
     extrasTitle: 'تجربة متكاملة مصممة للإنجاز والتفوق.',
     extras: [
-      ['أدوات مساعدة دراسية ✦', 'قوالب خطط وتدريبات وأدوات استخراج نقاط من النص. خدمة AI الخارجية تحتاج إعدادًا من مشغّل التطبيق وتظهر النتائج المحلية بتوضيح صريح.'],
+      ['أدوات مساعدة دراسية ✦', 'قوالب خطط وتدريبات وأدوات استخراج نقاط من النص، كلها محلية على جهازك وتظهر كل نتيجة بتوضيح صريح لمصدرها.'],
       ['ساعة بومودورو 3D القلابة', 'آلية flip ميكانيكية واقعية مع صوت التكتكة وضبط التركيز في بيئة دراسية غامرة.'],
       ['مكتبة الملازم والكتب', 'نظّم ملفاتك ومذكراتك في مجلدات لكل مادة دراسية وتابع عدد الصفحات المنجزة صفحة بصفحة.'],
       ['نظام مكافآت وأوسمة تحفيزية', 'اجمع نقاط الخبرة XP، نافس نفسك في مستويات متصاعدة، وافتح أوسمة الإنجاز مع كل خطوة.'],
-      ['شاشات ترحيب Google Play-grade', 'تجربة إعداد مبهرة وسلسة تنقلك مباشرة من أول فتحة للتطبيق لتحديد هدفك ومرحلتك.'],
-      ['بيانات محلية وخيارات واضحة', 'المذكرات تُحفظ محليًا. عند استخدام خدمة AI خارجية مفعّلة، تُرسل المدخلات اللازمة للمعالجة كما توضح سياسة الخصوصية.']
+      ['شاشات ترحيب مخصّصة لك', 'تجربة إعداد مبهرة وسلسة تنقلك مباشرة من أول فتحة للتطبيق لتحديد هدفك ومرحلتك.'],
+      ['بيانات محلية وخيارات واضحة', 'المذكرات تُحفظ على جهازك ولا تُرسل إلى أي مكان. التفاصيل في سياسة الخصوصية.']
     ],
     getTitle: 'احصل على ENote.', getBody: 'ثبّته على موبايلك الأندرويد في 3 خطوات.',
     androidTitle: 'ENote لأندرويد', androidSoon: 'نسخة أندرويد قيد التجهيز، وهتلاقي زر التنزيل هنا أول ما تجهز.', getApk: 'نزّل ملف الـ APK',
@@ -94,7 +94,7 @@ const copy = {
     faqTitle: 'كل ما تحتاج معرفته.',
     faqs: [
       ['كيف أثبّت تطبيق أندرويد؟', 'نزّل ملف الـ APK من هذه الصفحة وافتحه. التطبيق غير منشور على Google Play بعد، فقد يطلب أندرويد السماح بالتثبيت من هذا المصدر. ملف الـ APK في هذه الصفحة موقّع بمفتاح إصدار، وبصمته (SHA-256) مكتوبة في وصف الإصدار على GitHub لمن يحب يتحقق منه.'],
-      ['كيف تعمل أدوات المساعد الدراسي؟', 'التطبيق يستخدم قوالب محلية للمذاكرة، وتُعرض كل نتيجة مع بيان مصدرها. لا نَعِد بخدمة AI مجانية بلا حدود.'],
+      ['كيف تعمل أدوات المساعد الدراسي؟', 'المساعد الدراسي يعمل بقوالب محلية على جهازك، وتُعرض كل نتيجة مع بيان مصدرها. لا توجد خدمة ذكاء اصطناعي خارجية، ولا يُرسل أي نص تكتبه إلى أي مكان.'],
       ['أين ذهبت صفحة الإحصائيات؟', 'تم دمج جميع الرسوم البيانية وإحصائيات الأداء الأسبوعي وتوزيع الوقت مباشرة داخل صفحة «الرئيسية» في لوحة التحكم، واستُبدلت في شريط التنقل بصفحة «المكافآت والجوائز» لمتابعة أوسمتك ونقاط خبرتك.'],
       ['ما هي ساعة بومودورو 3D القلابة؟', 'تصميم skeuomorphic مبتكر لمؤقت التركيز يحاكي الساعات الميكانيكية الكلاسيكية بأرقام ثلاثية الأبعاد تقلب بسلاسة مع صوت تكتكة اختياري لتهيئة ذهنك لأعمق درجات التركيز.'],
       ['كيف تساعدني مكتبة الملازم في متابعة دراستي؟', 'تمكنك من تصنيف مذكراتك وكتبك حسب المواد في مجلدات ملونة، وتحديث عدد الصفحات المقروءة بأزرار سريعة (+5 و -5 وتحديد الصفحة)، مع شريط تقدم واحتفال عند ختم المرجع 100%.'],
@@ -128,12 +128,12 @@ const copy = {
     rewardsClaimed: '+50 XP claimed! Keep up the momentum ✨',
     extrasTitle: 'Crafted for seamless learning and achievement.',
     extras: [
-      ['Local Study Tools ✦', 'Study templates and note extraction. Remote AI requires operator configuration, and local results are labelled.'],
+      ['Local Study Tools ✦', 'Study templates and note extraction, all running on your device, with every result labelled.'],
       ['3D Mechanical Flip Clock', 'Authentic mechanical card flips, optional clockwork ticks, and distraction-free focus sprints.'],
       ['Smart Materials & Books Hub', 'Color-coded subject folders and page-by-page progress trackers with celebratory badges.'],
       ['Gamified Rewards & Levels', 'Earn XP, level up your academic rank, and collect shiny achievement badges for your daily consistency.'],
-      ['Google Play-grade Onboarding', 'Smooth multi-step onboarding that tailors your academic level and study targets in seconds.'],
-      ['Local storage, clear choices', 'Notes are stored locally. If enabled, remote AI receives the input needed to process your request. See our privacy notice.']
+      ['Personalized Onboarding', 'Smooth multi-step onboarding that tailors your academic level and study targets in seconds.'],
+      ['Local storage, clear choices', 'Notes are stored on your device and are not sent anywhere. See our privacy notice.']
     ],
     getTitle: 'Get ENote.', getBody: 'Install it on your Android phone in three steps.',
     androidTitle: 'ENote for Android', androidSoon: 'The Android release is in preparation. The download button will appear here when it is ready.', getApk: 'Download the APK',
@@ -146,7 +146,7 @@ const copy = {
     faqTitle: 'Frequently asked questions.',
     faqs: [
       ['How do I install the Android app?', 'Download the APK from this page and open it. The app is not on Google Play yet, so Android may ask you to allow installs from this source. The APK on this page is signed with a release key, and its SHA-256 is listed in the release notes on GitHub if you want to verify it.'],
-      ['How do the study tools work?', 'The app uses local study templates and labels where each result comes from. Unlimited free AI is not promised.'],
+      ['How do the study tools work?', 'The study assistant works from local templates on your device, and every result says where it comes from. There is no external AI service, and nothing you write is sent anywhere.'],
       ['Where did the Statistics page go?', 'All weekly performance charts and time distribution analytics are now integrated directly into the Dashboard page, and replaced in navigation with the new Rewards & Trophies screen.'],
       ['What is the 3D Flip Clock Pomodoro?', 'It is a skeuomorphic focus timer inspired by vintage mechanical split-flap clocks, featuring physical depth, smooth flipping animation, and optional mechanical ticking sound.'],
       ['How does the Materials Hub track reading progress?', 'You can organize handouts and PDFs by subject folder and update read pages using quick -5 and +5 buttons or direct page entry, complete with celebratory 100% badges.'],
