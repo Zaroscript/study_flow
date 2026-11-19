@@ -30,12 +30,6 @@
               root.dir = 'ltr';
               root.setAttribute('data-lang-mismatch', '');
             }
-          } else {
-            // Workspace (/app) keeps its own language preference.
-            var language = requested === 'en' || requested === 'ar' ? requested : localStorage.getItem('enote_language') === 'en' ? 'en' : 'ar';
-            root.lang = language;
-            root.dir = language === 'ar' ? 'rtl' : 'ltr';
-            root.style.colorScheme = localStorage.getItem('studyflow_theme') === 'dark' ? 'dark' : 'light';
           }
         } catch (e) {}
       })();
@@ -43,10 +37,6 @@
   </head>
   <body>
     <div id="root"><!-- seo:body --><!-- /seo:body --></div>
-    <script>
-      // The workspace route shares this shell; drop the landing's static copy there before React mounts.
-      if (/^\/app(\/|$)/.test(location.pathname)) document.getElementById('root').textContent = '';
-    </script>
     <script type="module" src="/main.tsx"></script>
   </body>
 </html>

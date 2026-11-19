@@ -2,21 +2,21 @@
 <!-- Static fallback only. `pnpm build` (scripts/prerender-seo.cjs) regenerates dist/sitemap.xml with the build date and SITE_URL. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://study-flow.vercel.app/</loc>
+    <loc>https://study-flow-dusky-six.vercel.app/</loc>
     <lastmod>2026-11-19</lastmod>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://study-flow.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://study-flow.vercel.app/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://study-flow.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://study-flow-dusky-six.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://study-flow-dusky-six.vercel.app/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://study-flow-dusky-six.vercel.app/" />
   </url>
   <url>
-    <loc>https://study-flow.vercel.app/en/</loc>
+    <loc>https://study-flow-dusky-six.vercel.app/en/</loc>
     <lastmod>2026-11-19</lastmod>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://study-flow.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://study-flow.vercel.app/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://study-flow.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://study-flow-dusky-six.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://study-flow-dusky-six.vercel.app/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://study-flow-dusky-six.vercel.app/" />
   </url>
   <url>
-    <loc>https://study-flow.vercel.app/privacy</loc>
+    <loc>https://study-flow-dusky-six.vercel.app/privacy</loc>
     <lastmod>2026-11-19</lastmod>
   </url>
 </urlset>

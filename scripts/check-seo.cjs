@@ -26,14 +26,14 @@ if (args[0] === '--live') {
     const get = async (p) => { const r = await fetch(base + p, { redirect: 'manual' }); return { status: r.status, headers: r.headers, text: await r.text() }; };
     const expectations = [
       ['/', 200], ['/en/', 200], ['/en', 200], ['/privacy', 200], ['/robots.txt', 200], ['/sitemap.xml', 200], ['/manifest.json', 200],
-      ['/app', 200], ['/does-not-exist-seo-check', 404], ['/en/does-not-exist', 404],
+      ['/does-not-exist-seo-check', 404], ['/en/does-not-exist', 404],
     ];
     for (const [p, status] of expectations) { const r = await get(p); check(r.status === status, `live ${p} -> ${status}`, `got ${r.status}`); }
     check(/<title>[^<]*(الخصوصية|Privacy)/.test((await get('/privacy')).text), 'live /privacy serves the privacy page (not the app shell)');
     const redirect = await get('/?lang=en');
     check([301, 308].includes(redirect.status) && /\/en\/?(\?.*)?$/.test(redirect.headers.get('location') || ''), 'live /?lang=en redirects permanently to /en/', `${redirect.status} ${redirect.headers.get('location')}`);
     const app = await get('/app');
-    check(/noindex/i.test(app.headers.get('x-robots-tag') || ''), 'live /app sends X-Robots-Tag: noindex');
+    check([301, 308].includes(app.status) && /^(\/|https?:\/\/[^/]+\/?)$/.test(app.headers.get('location') || ''), 'live /app redirects to the landing page', `${app.status} ${app.headers.get('location')}`);
     const nf = await get('/does-not-exist-seo-check');
     check(/noindex/i.test(nf.text), '404 page is noindex');
     for (const [p, lang] of [['/', 'ar'], ['/en/', 'en']]) {
@@ -217,7 +217,7 @@ function offline(outDir) {
     check(!(config.rewrites || []).some((r) => /^\/\(\.\*\)$/.test(r.source) || r.source === '/:path*'), 'vercel.json has no catch-all rewrite (no soft-404s)');
     const sim = simulateVercel(config, outDir);
     const expectations = [
-      ['/', 200, 'index.html'], ['/en/', 200, 'en/index.html'], ['/en', 200, 'en/index.html'], ['/privacy', 200, 'privacy.html'], ['/app', 200, 'index.html'], ['/app/settings', 200, 'index.html'],
+      ['/', 200, 'index.html'], ['/en/', 200, 'en/index.html'], ['/en', 200, 'en/index.html'], ['/privacy', 200, 'privacy.html'],
       ['/robots.txt', 200, 'robots.txt'], ['/sitemap.xml', 200, 'sitemap.xml'], ['/manifest.json', 200, 'manifest.json'], ['/release.json', null, null],
       ['/assets/og-enote-ar.png', 200, 'assets/og-enote-ar.png'], ['/does-not-exist', 404, '404.html'], ['/en/nope', 404, '404.html'], ['/privacy/extra', 404, '404.html'],
     ];
@@ -229,7 +229,9 @@ function offline(outDir) {
     const r1 = sim('/?lang=en'); check([301, 308].includes(r1.status) && r1.location === '/en/', '[sim] /?lang=en -> permanent redirect to /en/', JSON.stringify(r1));
     const r2 = sim('/privacy.html'); check(r2.status === 308 && r2.location === '/privacy', '[sim] /privacy.html -> 308 /privacy (cleanUrls)', JSON.stringify(r2));
     const r3 = sim('/downloads/ENote.apk'); check(r3.status === 307 || r3.status === 308, '[sim] /downloads/* still redirects to GitHub releases', JSON.stringify(r3));
-    check(/noindex/.test(sim('/app').headers['x-robots-tag'] || '') && /noindex/.test(sim('/app/x').headers['x-robots-tag'] || '') && !sim('/').headers['x-robots-tag'], '[sim] /app and /app/* carry X-Robots-Tag noindex; / does not');
+    const r4 = sim('/app'); const r5 = sim('/app/settings');
+    check([301, 308].includes(r4.status) && r4.location === '/' && [301, 308].includes(r5.status) && r5.location === '/', '[sim] /app and /app/* redirect to the landing page', JSON.stringify([r4, r5]));
+    check(!(config.api || (config.rewrites || []).length), 'vercel.json has no rewrites left (no /api, no app shell)');
     for (const k of ['x-content-type-options', 'referrer-policy', 'x-frame-options']) check(!!sim('/').headers[k] && !!sim('/en/').headers[k], `[sim] security header ${k} on pages`);
     check(sim('/release.json').headers['cache-control'] === 'no-cache' && /immutable/.test(sim('/bundle/index-AbCd1234.js').headers['cache-control'] || '') && !/immutable/.test(sim('/assets/fonts/Cairo.woff2').headers['cache-control'] || '') && !/immutable/.test(sim('/assets/icons/icon-192.png').headers['cache-control'] || ''), '[sim] release.json no-cache; hashed /bundle immutable; unhashed /assets short-lived');
   }

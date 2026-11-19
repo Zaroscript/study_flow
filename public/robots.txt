@@ -1,8 +1,6 @@
-# ENote landing: https://study-flow.vercel.app/
-# Everything public is crawlable. /app (the workspace shell) is kept out of the index with an
-# X-Robots-Tag: noindex header from vercel.json; it is NOT disallowed here, because a disallowed URL
-# can never show Google that noindex.
+# ENote landing: https://study-flow-dusky-six.vercel.app/
+# Everything public is crawlable.
 User-agent: *
 Allow: /
 
-Sitemap: https://study-flow.vercel.app/sitemap.xml
+Sitemap: https://study-flow-dusky-six.vercel.app/sitemap.xml

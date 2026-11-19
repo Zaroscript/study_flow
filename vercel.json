@@ -21,20 +21,16 @@
       ],
       "destination": "/en/",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
     },
     {
       "source": "/app",
-      "destination": "/index.html"
+      "destination": "/",
+      "permanent": true
     },
     {
       "source": "/app/:path*",
-      "destination": "/index.html"
+      "destination": "/",
+      "permanent": true
     }
   ],
   "headers": [
@@ -56,24 +52,6 @@
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors 'none'"
-        }
-      ]
-    },
-    {
-      "source": "/app",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
-        }
-      ]
-    },
-    {
-      "source": "/app/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
         }
       ]
     },
