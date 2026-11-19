@@ -1,8 +1,8 @@
 {
   "available": true,
-  "version": "1.0.1",
-  "apkUrl": "https://github.com/Zaroscript/study_flow/releases/download/v1.0.1/ENote-1.0.1.apk",
-  "sha256": "b02fb842ef6854487e496559a0b0a49c6b18af9f45dad25542b2edfc0d186d14",
-  "sizeBytes": 73955837,
+  "version": "1.0.2",
+  "apkUrl": "https://github.com/Zaroscript/study_flow/releases/download/v1.0.2/ENote-1.0.2.apk",
+  "sha256": "6956bcfc6c0732143b9011320c5fb07cafd0391f9cd71390302f8c4c88544ec9",
+  "sizeBytes": 73955809,
   "minAndroid": "7.0"
 }

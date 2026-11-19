@@ -108,7 +108,7 @@ body{font-size:16px}
 <details class="toc-narrow"><summary>في هذه الصفحة</summary><nav aria-label="في هذه الصفحة"><ol><li><a href="#ar-short">باختصار</a></li><li><a href="#ar-device">ما يبقى على جهازك</a></li><li><a href="#ar-none">ما لا يجمعه ENote</a></li><li><a href="#ar-perms">الأذونات ولماذا</a></li><li><a href="#ar-hosting">التنزيل والاستضافة</a></li><li><a href="#ar-kids">الطلاب والقاصرون</a></li><li><a href="#ar-choices">خياراتك</a></li><li><a href="#ar-changes">تغييرات هذه السياسة</a></li><li><a href="#ar-contact">التواصل</a></li></ol></nav></details>
 <section class="note" id="ar-short" aria-labelledby="ar-short-h"><span class="tape" aria-hidden="true"></span><h2 id="ar-short-h">باختصار</h2>
 <ul>
-<li>ملاحظاتك ومهامك وأهدافك وعاداتك تبقى على جهازك. تطبيق أندرويد بلا حساب ولا تسجيل، وكوده لا يرسل بياناتك إلى أي مكان.</li>
+<li>ملاحظاتك ومهامك وأهدافك وعاداتك تبقى على جهازك. تطبيق أندرويد بلا حساب ولا تسجيل، وهو لا يملك إذن الإنترنت أصلًا، فلا يستطيع إرسال بياناتك إلى أي مكان.</li>
 <li>لا إعلانات ولا أدوات تحليلات أو تتبّع ولا خدمة تقارير أعطال، لا في التطبيق ولا في هذا الموقع.</li>
 <li>لا توجد نسخة ويب من التطبيق ولا خدمة ذكاء اصطناعي: لا يصل أي نص تكتبه إلى أي خادم.</li>
 <li>تستطيع حذف كل شيء في أي وقت. التفاصيل في قسم «خياراتك».</li>
@@ -124,6 +124,7 @@ body{font-size:16px}
 <ul>
 <li>لا حسابات ولا بريد إلكتروني ولا كلمات مرور.</li>
 <li>لا موقع جغرافي، ولا جهات اتصال، ولا كاميرا، ولا ميكروفون، ولا وصول إلى ملفاتك. هذه الأذونات غير مطلوبة أصلًا.</li>
+<li>لا إذن للإنترنت (من الإصدار 1.0.2): لا يستطيع التطبيق الاتصال بأي شبكة. الإصدار 1.0.1 كان يعلن هذا الإذن دون أن يستخدمه.</li>
 <li>لا إعلانات، ولا أدوات تحليلات، ولا تتبّع، ولا خدمة تقارير أعطال خارجية، ولا ملفات تعريف ارتباط يضعها ENote.</li>
 <li>لا خطوط ولا سكربتات من مواقع أخرى: خطوط الصفحة الرئيسية وهذه الصفحة تُحمَّل من الموقع نفسه.</li>
 </ul></section>
@@ -136,8 +137,6 @@ body{font-size:16px}
 <dd>لإعادة جدولة التذكيرات بعد إعادة تشغيل الهاتف أو تحديث التطبيق.</dd>
 <dt>الاهتزاز</dt>
 <dd>لاهتزاز خفيف عند اللمس أو عند حدوث خطأ في إدخال.</dd>
-<dt>الإنترنت</dt>
-<dd>الإذن مُعلَن في التطبيق، لكن كود التطبيق الحالي لا يُجري أي طلبات شبكة ولا يرسل بياناتك. أي تغيير في هذا سيُذكر هنا.</dd>
 </dl></section>
 <section class="sec" id="ar-hosting" aria-labelledby="ar-hosting-h"><h2 id="ar-hosting-h">التنزيل والاستضافة</h2>
 <p>ملف التثبيت لأندرويد (APK) يُنزَّل من صفحات الإصدارات في <bdi lang="en" dir="ltr">GitHub</bdi> (المستودع <bdi lang="en" dir="ltr">Zaroscript/study_flow</bdi>). عند التنزيل يستقبل <bdi lang="en" dir="ltr">GitHub</bdi> طلبك، ويخضع ذلك لسياسة خصوصية <bdi lang="en" dir="ltr">GitHub</bdi>.</p>
@@ -147,7 +146,7 @@ body{font-size:16px}
 <p>ENote مصمَّم للطلاب، وبعضهم قد يكون دون الثامنة عشرة. لا يطلب التطبيق حسابًا ولا بريدًا ولا بيانات اتصال، ولا يرسل بيانات الدراسة إلى أي جهة. وإذا كنت وليّ أمر، فاعلم أن مساعد ENote الدراسي يعمل بقوالب محلية على الجهاز، وأنه لا توجد خدمة ذكاء اصطناعي تستقبل ما يكتبه الطالب، ولا نسخة ويب من التطبيق.</p></section>
 <section class="sec" id="ar-choices" aria-labelledby="ar-choices-h"><h2 id="ar-choices-h">خياراتك</h2>
 <ul>
-<li><strong>في تطبيق أندرويد:</strong> من الإعدادات اضغط «مسح جميع البيانات». يحذف ذلك بيانات الدراسة والإعدادات والتنبيهات المجدولة ويعيد التطبيق إلى شاشة البداية. ملف الأخطاء المحلي يبقى حتى حذف التطبيق أو مسح مساحته من إعدادات أندرويد.</li>
+<li><strong>في تطبيق أندرويد:</strong> من الإعدادات اضغط «مسح جميع البيانات». يحذف ذلك بيانات الدراسة والإعدادات والتنبيهات المجدولة ويعيد التطبيق إلى شاشة البداية. ومن الإصدار 1.0.2 يُحذف معها ملف الأخطاء المحلي أيضًا (في 1.0.1 كان يبقى حتى حذف التطبيق).</li>
 <li><strong>حذف التطبيق:</strong> إلغاء تثبيت ENote من أندرويد يزيل بياناته من الجهاز.</li>
 <li><strong>التذكيرات:</strong> تستطيع إيقاف الإشعارات في أي وقت من إعدادات أندرويد.</li>
 </ul></section>
@@ -180,7 +179,7 @@ body{font-size:16px}
 <details class="toc-narrow"><summary>On this page</summary><nav aria-label="On this page"><ol><li><a href="#en-short">The short version</a></li><li><a href="#en-device">What stays on your device</a></li><li><a href="#en-none">What ENote does not collect</a></li><li><a href="#en-perms">Permissions and why</a></li><li><a href="#en-hosting">Downloads and hosting</a></li><li><a href="#en-kids">Students and minors</a></li><li><a href="#en-choices">Your choices</a></li><li><a href="#en-changes">Changes to this policy</a></li><li><a href="#en-contact">Contact</a></li></ol></nav></details>
 <section class="note" id="en-short" aria-labelledby="en-short-h"><span class="tape" aria-hidden="true"></span><h2 id="en-short-h">The short version</h2>
 <ul>
-<li>Your notes, tasks, goals and habits stay on your device. The Android app has no account or sign-up, and its code does not send your data anywhere.</li>
+<li>Your notes, tasks, goals and habits stay on your device. The Android app has no account or sign-up, and it has no internet permission at all, so it cannot send your data anywhere.</li>
 <li>No ads, no analytics, no tracking and no crash-reporting service, in the app or on this site.</li>
 <li>There is no web version of the app and no AI service: nothing you type is sent to any server.</li>
 <li>You can delete everything at any time. See &ldquo;Your choices&rdquo; below.</li>
@@ -196,6 +195,7 @@ body{font-size:16px}
 <ul>
 <li>No accounts, email addresses or passwords.</li>
 <li>No location, contacts, camera, microphone or access to your files. Those permissions are not requested at all.</li>
+<li>No internet permission (from version 1.0.2): the app cannot connect to any network. Version 1.0.1 declared the permission without using it.</li>
 <li>No ads, analytics, tracking, outside crash reporting, and no cookies set by ENote.</li>
 <li>No fonts or scripts from other sites: fonts on the home page and on this page load from the site itself.</li>
 </ul></section>
@@ -208,8 +208,6 @@ body{font-size:16px}
 <dd>To schedule reminders again after the phone restarts or the app is updated.</dd>
 <dt>Vibration</dt>
 <dd>For a light vibration on touch, or when an input is wrong.</dd>
-<dt>Internet</dt>
-<dd>The permission is declared in the app, but the app's current code makes no network requests and does not send your data. Any change to this will be stated here.</dd>
 </dl></section>
 <section class="sec" id="en-hosting" aria-labelledby="en-hosting-h"><h2 id="en-hosting-h">Downloads and hosting</h2>
 <p>The Android installer (APK) is downloaded from the releases page on GitHub (repository <code>Zaroscript/study_flow</code>). When you download it, GitHub receives your request, under GitHub's own privacy policy.</p>
@@ -219,7 +217,7 @@ body{font-size:16px}
 <p>ENote is made for students, and some may be under 18. The app asks for no account, email or contact details, and does not send study data anywhere. If you are a parent or guardian: ENote's study assistant works from local templates on the device, there is no AI service that receives what a student writes, and there is no web version of the app.</p></section>
 <section class="sec" id="en-choices" aria-labelledby="en-choices-h"><h2 id="en-choices-h">Your choices</h2>
 <ul>
-<li><strong>In the Android app:</strong> open Settings and tap &ldquo;Reset all data&rdquo;. It deletes study data, settings and scheduled reminders and returns the app to the welcome screen. The local error log stays until the app is uninstalled or its storage is cleared in Android settings.</li>
+<li><strong>In the Android app:</strong> open Settings and tap &ldquo;Reset all data&rdquo;. It deletes study data, settings and scheduled reminders and returns the app to the welcome screen. From version 1.0.2 it also deletes the local error log (in 1.0.1 the log stayed until the app was uninstalled).</li>
 <li><strong>Uninstall:</strong> removing ENote from Android removes its data from the device.</li>
 <li><strong>Reminders:</strong> you can switch notifications off at any time in Android settings.</li>
 </ul></section>
