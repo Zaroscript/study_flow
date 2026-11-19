@@ -17,6 +17,7 @@ import '../../common/providers/study_flow_state_provider.dart';
 import '../../notifications/models/notification_item_model.dart';
 import '../../notifications/providers/notifications_provider.dart';
 import '../../materials/providers/materials_provider.dart';
+import '../../../core/utils/crash_log.dart';
 import '../../rewards/providers/rewards_provider.dart';
 import '../../ai_assistant/providers/ai_assistant_provider.dart';
 
@@ -85,6 +86,7 @@ class SettingsScreen extends ConsumerWidget {
                 await notifications.clearAllData();
                 await repository.clearAllData();
                 await preferences.clearPreferences();
+                await CrashLog.clear();
                 container.invalidate(materialsProvider);
                 container.invalidate(rewardsProvider);
                 container.invalidate(aiAssistantProvider);
